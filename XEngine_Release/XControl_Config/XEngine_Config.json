@@ -17,6 +17,7 @@
     "tszLogFile": "./XControl_Log/XEngien_Control.log"
   },
   "VersionList": [
+    "3.3.1.1001 Build20221020",
     "3.3.0.1001 Build20220715",
     "3.2.0.1001 Build20220419",
     "3.1.0.1001 Build20211228",
