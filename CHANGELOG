@@ -1,3 +1,13 @@
+XEngine_XControl V3.3.1.1001
+
+更新:匹配xengine v7.42版本
+修正:编译警告
+修正:udp接受函数不正确的问题
+
+update:match xengine 7.42 version
+fixed:build warn
+fixed:udp recv function does not rigth
+======================================================================================
 XEngine_XControl V3.3.0.1001
 
 增加:http提交信息到服务器
