@@ -43,7 +43,7 @@ XHTHREAD XControl_Thread_UDPTask()
 		XENGINE_PROTOCOLHDR st_ProtocolHdr;
 
 		memset(&st_ProtocolHdr, '\0', sizeof(XENGINE_PROTOCOLHDR));
-		if (XClient_TCPSelect_RecvPkt(hUDPSocket, &ptszMsgBuffer, &nMsgLen, &st_ProtocolHdr))
+		if (XClient_UDPSelect_RecvPkt(hUDPSocket, &ptszMsgBuffer, &nMsgLen, &st_ProtocolHdr))
 		{
 			XControl_Task_ProtocolParse(ptszMsgBuffer, nMsgLen);
 			BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
