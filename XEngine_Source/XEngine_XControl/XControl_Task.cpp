@@ -85,7 +85,6 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	{
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DOWNFILE:
 	{
-		XNETHANDLE xhTask;
 		CHAR tszFileUrl[MAX_PATH];
 		CHAR tszSaveUrl[MAX_PATH];
 
@@ -94,7 +93,8 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		strcpy(tszFileUrl, st_JsonRoot["DownloadUrl"].asCString());
 		strcpy(tszSaveUrl, st_JsonRoot["SaveUrl"].asCString());
 
-		if (!DownLoad_Http_Create(&xhTask, tszFileUrl, tszSaveUrl))
+		XHANDLE xhTask = DownLoad_Http_Create(tszFileUrl, tszSaveUrl);
+		if (NULL == xhTask)
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:下载任务处理失败,错误码:%lX", Download_GetLastError());
 			return FALSE;
@@ -139,7 +139,6 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_UPFILE:
 	{
-		XNETHANDLE xhTask;
 		CHAR tszUPFile[MAX_PATH];
 		CHAR tszUPUrl[MAX_PATH];
 
@@ -148,7 +147,8 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		strcpy(tszUPFile, st_JsonRoot["UPLoadFile"].asCString());
 		strcpy(tszUPUrl, st_JsonRoot["UPLoadUrl"].asCString());
 
-		if (!DownLoad_Ftp_Create(&xhTask, tszUPFile, tszUPUrl, FALSE, FALSE))
+		XHANDLE xhTask = DownLoad_Ftp_Create(tszUPFile, tszUPUrl, FALSE, FALSE);
+		if (NULL == xhTask)
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:FTP上传任务处理失败,错误码:%lX", Download_GetLastError());
 			return FALSE;
