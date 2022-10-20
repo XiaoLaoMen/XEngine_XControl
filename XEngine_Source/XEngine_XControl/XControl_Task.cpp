@@ -6,12 +6,7 @@ XHTHREAD XControl_Thread_HttpTask()
 	{
 		int nBLen = 0;
 		CHAR* ptszMsgBody = NULL;
-		APIHELP_HTTPPARAMENT st_HTTPParam;
-
-		memset(&st_HTTPParam, '\0', sizeof(APIHELP_HTTPPARAMENT));
-		
-		st_HTTPParam.nTimeConnect = 2;
-		if (APIHelp_HttpRequest_Get(st_ServiceConfig.tszTaskUrl, &ptszMsgBody, &nBLen, NULL, NULL, NULL, &st_HTTPParam))
+		if (APIHelp_HttpRequest_Custom("GET", st_ServiceConfig.tszTaskUrl, NULL, NULL, &ptszMsgBody, &nBLen))
 	    {
 			XControl_Task_ProtocolParse(ptszMsgBody, nBLen);
 			BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBody);
@@ -242,17 +237,13 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_REPORT:
 	{
-		APIHELP_HTTPPARAMENT st_HTTPParam;
-		memset(&st_HTTPParam, '\0', sizeof(APIHELP_HTTPPARAMENT));
-
-		st_HTTPParam.nTimeConnect = 2;
 		if (0 == st_JsonRoot["nType"].asInt())
 		{
 			int nHWLen = 4096;
 			CHAR tszHWBuffer[4096];
 			memset(tszHWBuffer, '\0', sizeof(tszHWBuffer));
 			XControl_Info_HardWare(tszHWBuffer, &nHWLen);
-			APIHelp_HttpRequest_Post(st_JsonRoot["tszIPAddr"].asCString(), tszHWBuffer, NULL, NULL, NULL, NULL, NULL, &st_HTTPParam);
+			APIHelp_HttpRequest_Custom("POST", st_JsonRoot["tszIPAddr"].asCString(), tszHWBuffer);
 		}
 		else
 		{
@@ -260,7 +251,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 			CHAR tszSWBuffer[4096];
 			memset(tszSWBuffer, '\0', sizeof(tszSWBuffer));
 			XControl_Info_SoftWare(tszSWBuffer, &nSWLen);
-			APIHelp_HttpRequest_Post(st_JsonRoot["tszIPAddr"].asCString(), tszSWBuffer, NULL, NULL, NULL, NULL, NULL, &st_HTTPParam);
+			APIHelp_HttpRequest_Custom("POST", st_JsonRoot["tszIPAddr"].asCString(), tszSWBuffer);
 		}
 	}
 		break;
