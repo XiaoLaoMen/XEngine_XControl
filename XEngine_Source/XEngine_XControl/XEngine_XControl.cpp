@@ -4,12 +4,10 @@ BOOL bIsRun = FALSE;
 BOOL bExist = FALSE;
 XLOG xhLog = NULL;
 SOCKET hTCPSocket = 0;
-SOCKET hUDPSocket = 0;
 int m_nTaskSerial = 0;
 
 shared_ptr<std::thread> pSTDThread_Http = NULL;
 shared_ptr<std::thread> pSTDThread_TCP = NULL;
-shared_ptr<std::thread> pSTDThread_UDP = NULL;
 shared_ptr<std::thread> pSTDThread_App = NULL;
 XENGINE_SERVERCONFIG st_ServiceConfig;
 XENGINE_CONFIGAPP st_APPConfig;
@@ -29,16 +27,11 @@ void ServiceApp_Stop(int signo)
 		{
 			pSTDThread_TCP->join();
 		}
-		if (NULL != pSTDThread_UDP)
-		{
-			pSTDThread_UDP->join();
-		}
 		if (NULL != pSTDThread_App)
 		{
 			pSTDThread_App->join();
 		}
 		XClient_TCPSelect_Close(hTCPSocket);
-		XClient_UDPSelect_Close(hUDPSocket);
 		HelpComponents_XLog_Destroy(xhLog);
 		bExist = TRUE;
 		exit(0);
@@ -121,14 +114,6 @@ int main(int argc, char** argv)
 		goto NETSERVICE_APPEXIT;
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，创建TCP任务线程成功");
-	//启用UDP客户端线程
-	pSTDThread_UDP = make_shared<std::thread>(XControl_Thread_UDPTask);
-	if (!pSTDThread_UDP->joinable())
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "启动服务中，创建UDP任务线程失败");
-		goto NETSERVICE_APPEXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，创建UDP任务线程成功");
 	//启用HTTP客户端
 	pSTDThread_Http = make_shared<std::thread>(XControl_Thread_HttpTask);
 	if (!pSTDThread_Http->joinable())
@@ -169,16 +154,11 @@ NETSERVICE_APPEXIT:
 		{
 			pSTDThread_TCP->join();
 		}
-		if (NULL != pSTDThread_UDP)
-		{
-			pSTDThread_UDP->join();
-		}
 		if (NULL != pSTDThread_App)
 		{
 			pSTDThread_App->join();
 		}
 		XClient_TCPSelect_Close(hTCPSocket);
-		XClient_UDPSelect_Close(hUDPSocket);
 		HelpComponents_XLog_Destroy(xhLog);
 	}
 

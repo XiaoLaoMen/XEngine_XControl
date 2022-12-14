@@ -34,24 +34,6 @@ XHTHREAD XControl_Thread_TCPTask()
 	}
 	return 0;
 }
-XHTHREAD XControl_Thread_UDPTask()
-{
-	while (bIsRun)
-	{
-		int nMsgLen = 0;
-		CHAR* ptszMsgBuffer = NULL;
-		XENGINE_PROTOCOLHDR st_ProtocolHdr;
-
-		memset(&st_ProtocolHdr, '\0', sizeof(XENGINE_PROTOCOLHDR));
-		if (XClient_UDPSelect_RecvPkt(hUDPSocket, &ptszMsgBuffer, &nMsgLen, &st_ProtocolHdr))
-		{
-			XControl_Task_ProtocolParse(ptszMsgBuffer, nMsgLen);
-			BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
-		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(st_ServiceConfig.st_Time.nUDPThreadTime));
-	}
-	return 0;
-}
 //////////////////////////////////////////////////////////////////////////
 BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 {
@@ -223,17 +205,8 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_CONNECT:
-		if (IPPROTO_TCP == st_JsonRoot["nIPType"].asUInt())
-		{
-			XClient_TCPSelect_Close(hTCPSocket);
-			XClient_TCPSelect_Create(&hTCPSocket, st_JsonRoot["tszIPAddr"].asCString(), st_JsonRoot["nPort"].asInt());
-		}
-		else
-		{
-			XClient_UDPSelect_Close(hUDPSocket);
-			XClient_UDPSelect_Create(&hUDPSocket);
-			XClient_UDPSelect_Bind(hUDPSocket, st_JsonRoot["nPort"].asInt());
-		}
+		XClient_TCPSelect_Close(hTCPSocket);
+		XClient_TCPSelect_Create(&hTCPSocket, st_JsonRoot["tszIPAddr"].asCString(), st_JsonRoot["nPort"].asInt());
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_REPORT:
 	{

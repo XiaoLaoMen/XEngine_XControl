@@ -45,12 +45,10 @@ extern BOOL bIsRun;
 extern BOOL bExist;
 extern XLOG xhLog;
 extern SOCKET hTCPSocket;
-extern SOCKET hUDPSocket;
 extern int m_nTaskSerial;
 
 extern shared_ptr<std::thread> pSTDThread_Http;
 extern shared_ptr<std::thread> pSTDThread_TCP;
-extern shared_ptr<std::thread> pSTDThread_UDP;
 extern shared_ptr<std::thread> pSTDThread_App;
 extern XENGINE_SERVERCONFIG st_ServiceConfig;
 extern XENGINE_CONFIGAPP st_APPConfig;
