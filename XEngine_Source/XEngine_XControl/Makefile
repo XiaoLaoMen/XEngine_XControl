@@ -3,7 +3,7 @@ RELEASE = 0
 UNICODE = 0  
 INCLUDE = -I ./ -I ../XEngine_ThirdPart/jsoncpp
 LOADBIN = 0
-LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_OPenSsl -lXClient_Socket -lHelpComponents_XLog -lXEngine_ProcFile -lXEngine_SystemApi -lRfcComponents_EmailClient -lNetHelp_APIHelp -lXEngine_Download \
+LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_OPenSsl -lHelpComponents_XLog -lXEngine_ProcFile -lXEngine_SystemApi -lNetHelp_APIHelp -lXEngine_Download \
       -lXControl_Infomation -lXControl_Configure -lXControl_Protocol \
 	  -ljsoncpp
 LIBEX = -ldl -lpthread 
@@ -15,7 +15,7 @@ ifeq ($(shell uname),Darwin)
 			  -L ../XEngine_ThirdPart/jsoncpp
 	LOADSO = 
 else
-	LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_Client -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents -L /usr/local/lib/XEngine_Release/XEngine_SystemSdk -L /usr/local/lib/XEngine_Release/XEngine_RfcComponents -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -L /usr/local/lib/XEngine_Release/XEngine_DownLoad \
+	LOADBIN = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents -L /usr/local/lib/XEngine_Release/XEngine_SystemSdk -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -L /usr/local/lib/XEngine_Release/XEngine_DownLoad \
 	          -L ../XControl_Infomation -L ../XControl_Configure -L ../XControl_Protocol \
 			  -L ../XEngine_ThirdPart/jsoncpp
 endif

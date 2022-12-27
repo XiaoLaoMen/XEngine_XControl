@@ -21,25 +21,6 @@ XHTHREAD XControl_Thread_HttpTask()
 	}
 	return 0;
 }
-XHTHREAD XControl_Thread_TCPTask()
-{
-	while (bIsRun)
-	{
-		int nMsgLen = 0;
-		CHAR* ptszMsgBuffer = NULL;
-		XENGINE_PROTOCOLHDR st_ProtocolHdr;
-
-		memset(&st_ProtocolHdr, '\0', sizeof(XENGINE_PROTOCOLHDR));
-
-		if (XClient_TCPSelect_RecvPkt(hTCPSocket, &ptszMsgBuffer, &nMsgLen, &st_ProtocolHdr))
-		{
-			XControl_Task_ProtocolParse(ptszMsgBuffer, nMsgLen);
-			BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBuffer);
-		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(st_ServiceConfig.st_Time.nTCPThreadTime));
-	}
-	return 0;
-}
 //////////////////////////////////////////////////////////////////////////
 BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 {
@@ -209,10 +190,6 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求执行命令失败,错误码:%lX", SystemApi_GetLastError());
 			return FALSE;
 		}
-		break;
-	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_CONNECT:
-		XClient_TCPSelect_Close(hTCPSocket);
-		XClient_TCPSelect_Create(&hTCPSocket, st_JsonRoot["tszIPAddr"].asCString(), st_JsonRoot["nPort"].asInt());
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_REPORT:
 	{

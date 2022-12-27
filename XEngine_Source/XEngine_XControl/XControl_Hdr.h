@@ -22,8 +22,6 @@ using namespace std;
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
-#include <XEngine_Include/XEngine_Client/XClient_Define.h>
-#include <XEngine_Include/XEngine_Client/XClient_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Error.h>
 #include <XEngine_Include/XEngine_DownLoad/DownLoad_Define.h>
@@ -44,7 +42,6 @@ using namespace std;
 extern BOOL bIsRun;
 extern BOOL bExist;
 extern XLOG xhLog;
-extern SOCKET hTCPSocket;
 extern __int64u m_nTaskSerial;
 
 extern shared_ptr<std::thread> pSTDThread_Http;
@@ -61,7 +58,6 @@ extern XENGINE_CONFIGAPP st_APPConfig;
 #ifdef _MSC_BUILD
 #pragma comment(lib,"Ws2_32.lib")
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib.lib")
-#pragma comment(lib,"XEngine_Client/XClient_Socket.lib")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIHelp.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi.lib")
