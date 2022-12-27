@@ -8,6 +8,7 @@
 #include <aclapi.h>
 #include <TlHelp32.h>
 #include <XEngine_Include/XEngine_CommHdr.h>
+#include <XEngine_Include/XEngine_ProtocolHdr.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Define.h>
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Define.h>
@@ -28,7 +29,6 @@ using namespace std;
 //    Purpose:     公有头文件
 //    History:
 *********************************************************************/
-
 extern XLOG xhLog;
 extern DWORD dwThreadID;
 extern TCHAR tszServiceName[];
