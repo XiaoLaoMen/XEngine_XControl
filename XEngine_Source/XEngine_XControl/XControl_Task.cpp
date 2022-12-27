@@ -10,7 +10,7 @@ XHTHREAD XControl_Thread_HttpTask()
 		int nBLen = 0;
 		CHAR* ptszMsgBody = NULL;
 
-		_stprintf(tszTaskUrl, _T("api?function=gettask&serial=%d"), m_nTaskSerial);
+		_stprintf(tszTaskUrl, _T("api?function=gettask&serial=%llu"), m_nTaskSerial);
 
 		if (APIHelp_HttpRequest_Custom("GET", st_ServiceConfig.tszTaskUrl, NULL, NULL, &ptszMsgBody, &nBLen))
 	    {
@@ -56,7 +56,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	delete pSt_JsonReader;
 	pSt_JsonReader = NULL;
 	//获得任务序列号
-	int nTaskSerial = st_JsonRoot["nTaskSerial"].asUInt();
+	__int64u nTaskSerial = st_JsonRoot["nTaskSerial"].asUInt64();
 	if (nTaskSerial != m_nTaskSerial)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:任务序列号不正确");
@@ -233,6 +233,9 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 			APIHelp_HttpRequest_Custom("POST", st_JsonRoot["tszIPAddr"].asCString(), tszSWBuffer);
 		}
 	}
+		break;
+	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SERIAL:
+		m_nTaskSerial = st_JsonRoot["nSerial"].asUInt64();
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_USER:
 		break;

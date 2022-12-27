@@ -45,7 +45,7 @@ extern BOOL bIsRun;
 extern BOOL bExist;
 extern XLOG xhLog;
 extern SOCKET hTCPSocket;
-extern int m_nTaskSerial;
+extern __int64u m_nTaskSerial;
 
 extern shared_ptr<std::thread> pSTDThread_Http;
 extern shared_ptr<std::thread> pSTDThread_TCP;

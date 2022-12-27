@@ -4,7 +4,7 @@ BOOL bIsRun = FALSE;
 BOOL bExist = FALSE;
 XLOG xhLog = NULL;
 SOCKET hTCPSocket = 0;
-int m_nTaskSerial = 0;
+__int64u m_nTaskSerial = 0;
 
 shared_ptr<std::thread> pSTDThread_Http = NULL;
 shared_ptr<std::thread> pSTDThread_TCP = NULL;
