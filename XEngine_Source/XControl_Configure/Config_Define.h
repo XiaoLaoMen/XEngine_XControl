@@ -24,11 +24,11 @@ typedef struct tag_XEngine_ServerConfig
 		int nCheckTime;
 		int nErrorTime;
 		int nHTTPThreadTime;
-		int nTCPThreadTime;
 	}st_Time;
 	struct
 	{
-		CHAR tszLogFile[MAX_PATH];
+		CHAR tszLogControl[MAX_PATH];
+		CHAR tszLogDeamon[MAX_PATH];
 		int nMaxSize;
 		int nMaxCount;
 		int nLogLeave;

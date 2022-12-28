@@ -51,7 +51,7 @@ int main(int argc, char** argv)
 	}
 	st_XLogConfig.XLog_MaxBackupFile = st_ServiceConfig.st_XLog.nMaxCount;
 	st_XLogConfig.XLog_MaxSize = st_ServiceConfig.st_XLog.nMaxSize;
-	strcpy(st_XLogConfig.tszFileName, st_ServiceConfig.st_XLog.tszLogFile);
+	strcpy(st_XLogConfig.tszFileName, st_ServiceConfig.st_XLog.tszLogControl);
 	xhLog = HelpComponents_XLog_Init(HELPCOMPONENTS_XLOG_OUTTYPE_FILE | HELPCOMPONENTS_XLOG_OUTTYPE_STD, &st_XLogConfig);
 	if (NULL == xhLog)
 	{
@@ -116,7 +116,7 @@ int main(int argc, char** argv)
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，初始化进程的守护线程成功");
 
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，所有服务已经启动完毕,程序运行中,XEngine版本:%s,服务器发行次数:%d,版本;%s...", BaseLib_OperatorVer_XGetStr(), st_ServiceConfig.st_Version.pStl_ListVer->size(), st_ServiceConfig.st_Version.pStl_ListVer->front().c_str());
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，所有服务已经启动完毕,程序运行中,XEngine版本:%s,服务器发行次数:%d,版本;%s", BaseLib_OperatorVer_XGetStr(), st_ServiceConfig.st_Version.pStl_ListVer->size(), st_ServiceConfig.st_Version.pStl_ListVer->front().c_str());
 	while (TRUE)
 	{
 		if (bExist)

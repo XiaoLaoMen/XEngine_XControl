@@ -71,7 +71,7 @@ void WINAPI ServiceMain()
 	//////////////////////////////////////////////////////////////////////////
 	st_XLogConfig.XLog_MaxBackupFile = st_ServiceConfig.st_XLog.nMaxCount;
 	st_XLogConfig.XLog_MaxSize = st_ServiceConfig.st_XLog.nMaxSize;
-	strcpy(st_XLogConfig.tszFileName, "./XControl_Log/XEngine_Deamon.log");
+	strcpy(st_XLogConfig.tszFileName, st_ServiceConfig.st_XLog.tszLogDeamon);
 	xhLog = HelpComponents_XLog_Init(HELPCOMPONENTS_XLOG_OUTTYPE_FILE | HELPCOMPONENTS_XLOG_OUTTYPE_STD, &st_XLogConfig);
 	if (NULL == xhLog)
 	{
