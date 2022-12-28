@@ -10,18 +10,15 @@ c c++
 轻量级后台服务管理工具,通过HTTP或者TCP协议来控制你的计算机  
 
 #### 软件特性
-1. 支持收集计算机信息并且发送到你的邮件  
-2. 支持HTTP请求指定地址任务    
-3. 支持多种多样的任务列表和自定义任务  
-4. 支持一些高级特性  
-5. 支持HTTP任务接受处理  
-6. 支持TCP,UDP连接协议控制  
-7. 支持守护本地服务和程序以及策略控制  
+1. 支持多种多样的任务列表和自定义任务  
+2. 支持一些高级特性  
+3. 支持HTTP任务接受处理   
+4. 支持守护本地服务和程序以及策略控制  
 
 ## 安装教程
 
 #### XEngine环境
-必须安装XEngine,版本需要V7.38或者以上版本,安装XEngine可以参考其Readme文档  
+必须安装XEngine,版本需要V7.46或者以上版本,安装XEngine可以参考其Readme文档  
 GITEE:https://gitee.com/xyry/libxengine  
 GITHUB:https://github.com/libxengine/xengine
 
@@ -37,7 +34,7 @@ macos执行:./XEngine_LINEnv.sh -i 3
 
 #### Linux
 Linux使用Makefile编译  
-UBUNTU20.04 x64或者CENTOS8 x64均可  
+UBUNTU20.04 x64或者RockyLinux8 x64均可  
 在控制台运行
 
 #### MacOS
@@ -64,7 +61,6 @@ make FLAGS=CleanAll 清理编译
 - XEngine_Source    源代目录结构  
 
 ## 系统任务列表
-没有需要执行的任务  
 下载并且运行一个程序  
 删除指定文件  
 删除指定目录  
@@ -75,15 +71,13 @@ make FLAGS=CleanAll 清理编译
 结束指定进程  
 远程关闭计算机  
 执行命令  
-连接  
 信息报告  
-用户自定义开始  
+设定序列号  
 
 ## 开发计划
 远程录音录像  
 远程桌面,摄像头监控  
 优化代码  
-起始序列号设置  
 
 ## 参与贡献
 

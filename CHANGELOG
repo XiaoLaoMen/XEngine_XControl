@@ -1,3 +1,25 @@
+XEngine_XControl V3.4.0.1001
+
+增加:使用配置文件中的文件名为deamon日志名
+增加:增加新的请求协议用于设置序列号
+修改:http获取任务现在可以设置序列号
+修改:序列号类型从int修改为int64
+删除:udp网络支持
+删除:tcp网络支持
+删除:连接请求协议
+删除:xrpc协议相关代码
+删除:不需要的编译选项
+
+added:use file name of configure as log file for deamon
+added:add new request protocol for set serial
+modify:http get task can be set serial
+modify:serial type to int64 from int
+delete:udp socket support
+delete:tcp socket support
+delete:connect protocol
+delete:xrpc about code
+delete:does not need complie option
+======================================================================================
 XEngine_XControl V3.3.1.1001
 
 更新:匹配xengine v7.42版本

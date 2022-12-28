@@ -10,18 +10,15 @@ Computer process deamon service. Remote control software
 Lightweight background service management tool,control your computer with HTTP or TCP protocol  
 
 #### Software feature
-1. Support the collection of computer information and send it to your email  
-2. Support HTTP request to specify the address task  
-3. Support a variety of task lists and custom tasks  
-4. Support some advanced features  
-5. Support HTTP task acceptance processing  
-6. support connect protocol for tcp and udp  
-7. support deamon local service and process and Strategy control
+1. Support a variety of task lists and custom tasks  
+2. Support some advanced features  
+3. Support HTTP task acceptance processing  
+4. support deamon local service and process and Strategy control
 
 #### Installation
 
 #### XEngine Evn
-you must install XEngine,need V7.38 or above,install XEngine can be refer to xengine Readme docment  
+you must install XEngine,need V7.46 or above,install XEngine can be refer to xengine Readme docment  
 GITEE:https://gitee.com/xyry/libxengine  
 GITHUB:https://github.com/libxengine/xengine
 
@@ -37,7 +34,7 @@ Just Run it.
 
 #### Linux
 Linux use Makefile to complie  
-supproted ubuntu x64 or centos x64  
+supproted ubuntu x64 or RockyLinux x64  
 
 #### MacOS
 Linux use Makefile to complie,terminal exection,Requires mac 12 and above  
@@ -62,7 +59,6 @@ make FLAGS=CleanAll clear
 - XEngine_Source    code    directory
 
 ## system task list
-nothing to do...   
 delete file  
 delete dir  
 upload a file to ftp  
@@ -72,9 +68,8 @@ pop message
 terminal process  
 remote shutdown computre  
 execute command  
-connenct  
-information report
-user custom protocol start  
+information report  
+set serial  
 
 ## Participate in contribution
 
