@@ -29,13 +29,13 @@ using namespace std;
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
-#include "../XControl_Protocol.h"
-#include "../XControl_Configure/Config_Define.h"
-#include "../XControl_Configure/Config_Error.h"
-#include "../XControl_Infomation/XInfo_Define.h"
-#include "../XControl_Infomation/XInfo_Error.h"
-#include "../XControl_Protocol/Protocol_Define.h"
-#include "../XControl_Protocol/Protocol_Error.h"
+#include "../../XControl_Protocol.h"
+#include "../../XControl_Configure/Config_Define.h"
+#include "../../XControl_Configure/Config_Error.h"
+#include "../../XControl_Infomation/XInfo_Define.h"
+#include "../../XControl_Infomation/XInfo_Error.h"
+#include "../../XControl_Protocol/Protocol_Define.h"
+#include "../../XControl_Protocol/Protocol_Error.h"
 
 extern BOOL bIsRun;
 extern XLOG xhLog;
@@ -60,27 +60,27 @@ extern XENGINE_CONFIGAPP st_APPConfig;
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi.lib")
 #ifdef _WIN64
 #ifdef _DEBUG
-#pragma comment(lib,"../x64/Debug/jsoncpp")
-#pragma comment(lib,"../x64/Debug/XControl_Configure.lib")
-#pragma comment(lib,"../x64/Debug/XControl_Infomation.lib")
-#pragma comment(lib,"../x64/Debug/XControl_Protocol.lib")
+#pragma comment(lib,"../../x64/Debug/jsoncpp")
+#pragma comment(lib,"../../x64/Debug/XControl_Configure.lib")
+#pragma comment(lib,"../../x64/Debug/XControl_Infomation.lib")
+#pragma comment(lib,"../../x64/Debug/XControl_Protocol.lib")
 #else
-#pragma comment(lib,"../x64/Release/jsoncpp")
-#pragma comment(lib,"../x64/Release/XControl_Configure.lib")
-#pragma comment(lib,"../x64/Release/XControl_Infomation.lib")
-#pragma comment(lib,"../x64/Release/XControl_Protocol.lib")
+#pragma comment(lib,"../../x64/Release/jsoncpp")
+#pragma comment(lib,"../../x64/Release/XControl_Configure.lib")
+#pragma comment(lib,"../../x64/Release/XControl_Infomation.lib")
+#pragma comment(lib,"../../x64/Release/XControl_Protocol.lib")
 #endif
 #else
 #ifdef _DEBUG
-#pragma comment(lib,"../Debug/jsoncpp")
-#pragma comment(lib,"../Debug/XControl_Configure.lib")
-#pragma comment(lib,"../Debug/XControl_Infomation.lib")
-#pragma comment(lib,"../Debug/XControl_Protocol.lib")
+#pragma comment(lib,"../../Debug/jsoncpp")
+#pragma comment(lib,"../../Debug/XControl_Configure.lib")
+#pragma comment(lib,"../../Debug/XControl_Infomation.lib")
+#pragma comment(lib,"../../Debug/XControl_Protocol.lib")
 #else
-#pragma comment(lib,"../Release/jsoncpp")
-#pragma comment(lib,"../Release/XControl_Configure.lib")
-#pragma comment(lib,"../Release/XControl_Infomation.lib")
-#pragma comment(lib,"../Release/XControl_Protocol.lib")
+#pragma comment(lib,"../../Release/jsoncpp")
+#pragma comment(lib,"../../Release/XControl_Configure.lib")
+#pragma comment(lib,"../../Release/XControl_Infomation.lib")
+#pragma comment(lib,"../../Release/XControl_Protocol.lib")
 #endif
 #endif
 #endif

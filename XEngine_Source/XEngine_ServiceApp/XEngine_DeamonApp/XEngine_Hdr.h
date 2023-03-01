@@ -14,8 +14,8 @@
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Error.h>
 using namespace std;
-#include "../XControl_Configure/Config_Define.h"
-#include "../XControl_Configure/Config_Error.h"
+#include "../../XControl_Configure/Config_Define.h"
+#include "../../XControl_Configure/Config_Error.h"
 #include "XEngine_APPEvents.h"
 #include "XEngine_Service.h"
 /********************************************************************
@@ -45,15 +45,15 @@ extern SERVICE_STATUS st_Status;
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
 #ifdef _WIN64
 #ifdef _DEBUG
-#pragma comment(lib,"../x64/Debug/XControl_Configure.lib")
+#pragma comment(lib,"../../x64/Debug/XControl_Configure.lib")
 #else
-#pragma comment(lib,"../x64/Release/XControl_Configure.lib")
+#pragma comment(lib,"../../x64/Release/XControl_Configure.lib")
 #endif
 #else
 #ifdef _DEBUG
-#pragma comment(lib,"../Debug/XControl_Configure.lib")
+#pragma comment(lib,"../../Debug/XControl_Configure.lib")
 #else
-#pragma comment(lib,"../Release/XControl_Configure.lib")
+#pragma comment(lib,"../../Release/XControl_Configure.lib")
 #endif
 #endif
 #endif

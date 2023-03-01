@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="XEngine_XControl.cpp">
+    <ClCompile Include="XEngine_XControlApp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="XControl_Config.cpp">
