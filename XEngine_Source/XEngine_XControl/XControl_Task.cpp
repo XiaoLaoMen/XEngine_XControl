@@ -12,7 +12,7 @@ XHTHREAD XControl_Thread_HttpTask()
 
 		_stprintf(tszTaskUrl, _T("api?function=gettask&serial=%llu"), m_nTaskSerial);
 
-		if (APIHelp_HttpRequest_Custom("GET", st_ServiceConfig.tszTaskUrl, NULL, NULL, &ptszMsgBody, &nBLen))
+		if (APIClient_Http_Request("GET", st_ServiceConfig.tszTaskUrl, NULL, NULL, &ptszMsgBody, &nBLen))
 	    {
 			XControl_Task_ProtocolParse(ptszMsgBody, nBLen);
 			BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBody);
@@ -57,26 +57,26 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		strcpy(tszFileUrl, st_JsonRoot["DownloadUrl"].asCString());
 		strcpy(tszSaveUrl, st_JsonRoot["SaveUrl"].asCString());
 
-		XHANDLE xhTask = DownLoad_Http_Create(tszFileUrl, tszSaveUrl);
+		XHANDLE xhTask = APIClient_File_Create(tszFileUrl, tszSaveUrl);
 		if (NULL == xhTask)
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:下载任务处理失败,错误码:%lX", Download_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:下载任务处理失败,错误码:%lX", APIClient_GetLastError());
 			return FALSE;
 		}
 		while (TRUE)
 		{
-			NETDOWNLOAD_TASKINFO st_TaskInfo;
-			memset(&st_TaskInfo, '\0', sizeof(NETDOWNLOAD_TASKINFO));
+			NETHELP_FILEINFO st_TaskInfo;
+			memset(&st_TaskInfo, '\0', sizeof(NETHELP_FILEINFO));
 
-			if (DownLoad_Http_Query(xhTask, &st_TaskInfo))
+			if (APIClient_File_Query(xhTask, &st_TaskInfo))
 			{
-				if (ENUM_XENGINE_DOWNLOAD_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus)
+				if (ENUM_NETHELP_APICLIENT_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus)
 				{
 					break;
 				}
 			}
 		}
-		DownLoad_Http_Delete(xhTask);
+		APIClient_File_Delete(xhTask);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DELETEFILE:
@@ -111,26 +111,26 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		strcpy(tszUPFile, st_JsonRoot["UPLoadFile"].asCString());
 		strcpy(tszUPUrl, st_JsonRoot["UPLoadUrl"].asCString());
 
-		XHANDLE xhTask = DownLoad_Ftp_Create(tszUPFile, tszUPUrl, FALSE, FALSE);
+		XHANDLE xhTask = APIClient_File_Create(tszUPFile, tszUPUrl, FALSE);
 		if (NULL == xhTask)
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:FTP上传任务处理失败,错误码:%lX", Download_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:FTP上传任务处理失败,错误码:%lX", APIClient_GetLastError());
 			return FALSE;
 		}
 		while (TRUE)
 		{
-			NETDOWNLOAD_TASKINFO st_TaskInfo;
-			memset(&st_TaskInfo, '\0', sizeof(NETDOWNLOAD_TASKINFO));
+			NETHELP_FILEINFO st_TaskInfo;
+			memset(&st_TaskInfo, '\0', sizeof(NETHELP_FILEINFO));
 
-			if (DownLoad_Ftp_Query(xhTask, &st_TaskInfo))
+			if (APIClient_File_Query(xhTask, &st_TaskInfo))
 			{
-				if (ENUM_XENGINE_DOWNLOAD_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus)
+				if (ENUM_NETHELP_APICLIENT_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus)
 				{
 					break;
 				}
 			}
 		}
-		DownLoad_Ftp_Delete(xhTask);
+		APIClient_File_Delete(xhTask);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_GETLIST:
@@ -199,7 +199,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 			CHAR tszHWBuffer[4096];
 			memset(tszHWBuffer, '\0', sizeof(tszHWBuffer));
 			XControl_Info_HardWare(tszHWBuffer, &nHWLen);
-			APIHelp_HttpRequest_Custom("POST", st_JsonRoot["tszIPAddr"].asCString(), tszHWBuffer);
+			APIClient_Http_Request("POST", st_JsonRoot["tszIPAddr"].asCString(), tszHWBuffer);
 		}
 		else
 		{
@@ -207,7 +207,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 			CHAR tszSWBuffer[4096];
 			memset(tszSWBuffer, '\0', sizeof(tszSWBuffer));
 			XControl_Info_SoftWare(tszSWBuffer, &nSWLen);
-			APIHelp_HttpRequest_Custom("POST", st_JsonRoot["tszIPAddr"].asCString(), tszSWBuffer);
+			APIClient_Http_Request("POST", st_JsonRoot["tszIPAddr"].asCString(), tszSWBuffer);
 		}
 	}
 		break;

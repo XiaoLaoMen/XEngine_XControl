@@ -24,10 +24,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_BaseLib/BaseLib_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Error.h>
-#include <XEngine_Include/XEngine_DownLoad/DownLoad_Define.h>
-#include <XEngine_Include/XEngine_DownLoad/DownLoad_Error.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Define.h>
-#include <XEngine_Include/XEngine_NetHelp/APIHelp_Error.h>
+#include <XEngine_Include/XEngine_NetHelp/APIClient_Define.h>
+#include <XEngine_Include/XEngine_NetHelp/APIClient_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
@@ -40,7 +38,6 @@ using namespace std;
 #include "../XControl_Protocol/Protocol_Error.h"
 
 extern BOOL bIsRun;
-extern BOOL bExist;
 extern XLOG xhLog;
 extern __int64u m_nTaskSerial;
 
@@ -59,9 +56,8 @@ extern XENGINE_CONFIGAPP st_APPConfig;
 #pragma comment(lib,"Ws2_32.lib")
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib.lib")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
-#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIHelp.lib")
+#pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi.lib")
-#pragma comment(lib,"XEngine_DownLoad/XEngine_DownLoad.lib")
 #ifdef _WIN64
 #ifdef _DEBUG
 #pragma comment(lib,"../x64/Debug/jsoncpp")
