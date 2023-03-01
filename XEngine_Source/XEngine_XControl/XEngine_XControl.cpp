@@ -1,7 +1,6 @@
 ﻿#include "XControl_Hdr.h"
 
 BOOL bIsRun = FALSE;
-BOOL bExist = FALSE;
 XLOG xhLog = NULL;
 __int64u m_nTaskSerial = 0;
 
@@ -26,7 +25,6 @@ void ServiceApp_Stop(int signo)
 			pSTDThread_App->join();
 		}
 		HelpComponents_XLog_Destroy(xhLog);
-		bExist = TRUE;
 		exit(0);
 	}
 }
@@ -119,10 +117,6 @@ int main(int argc, char** argv)
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，所有服务已经启动完毕,程序运行中,XEngine版本:%s,服务器发行次数:%d,版本;%s", BaseLib_OperatorVer_XGetStr(), st_ServiceConfig.st_Version.pStl_ListVer->size(), st_ServiceConfig.st_Version.pStl_ListVer->front().c_str());
 	while (TRUE)
 	{
-		if (bExist)
-		{
-			break;
-		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 NETSERVICE_APPEXIT:
