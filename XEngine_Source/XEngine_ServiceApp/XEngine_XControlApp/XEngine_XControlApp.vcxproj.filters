@@ -24,9 +24,6 @@
     <ClCompile Include="XControl_Handle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="XControl_Process.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="XControl_Task.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -39,9 +36,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="XControl_Hdr.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="XControl_Process.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="XControl_Task.h">

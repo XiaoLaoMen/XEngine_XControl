@@ -5,9 +5,7 @@ XLOG xhLog = NULL;
 __int64u m_nTaskSerial = 0;
 
 shared_ptr<std::thread> pSTDThread_Http = NULL;
-shared_ptr<std::thread> pSTDThread_App = NULL;
 XENGINE_SERVERCONFIG st_ServiceConfig;
-XENGINE_CONFIGAPP st_APPConfig;
 
 void ServiceApp_Stop(int signo)
 {
@@ -19,10 +17,6 @@ void ServiceApp_Stop(int signo)
 		if (NULL != pSTDThread_Http)
 		{
 			pSTDThread_Http->join();
-		}
-		if (NULL != pSTDThread_App)
-		{
-			pSTDThread_App->join();
 		}
 		HelpComponents_XLog_Destroy(xhLog);
 		exit(0);
@@ -40,7 +34,6 @@ int main(int argc, char** argv)
 
 	memset(&st_XLogConfig, '\0', sizeof(HELPCOMPONENTS_XLOG_CONFIGURE));
 	memset(&st_ServiceConfig, '\0', sizeof(XENGINE_SERVERCONFIG));
-	memset(&st_APPConfig, '\0', sizeof(XENGINE_CONFIGAPP));
 
 	if (!XControl_Parament(argc, argv))
 	{
@@ -105,14 +98,6 @@ int main(int argc, char** argv)
 		goto NETSERVICE_APPEXIT;
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，创建HTTP任务线程成功");
-	//启用进程守护线程
-	pSTDThread_App = make_shared<std::thread>(APPManage_Thread_Process);
-	if (!pSTDThread_App->joinable())
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "启动服务器，启动进程守护线程失败，无法继续...");
-		goto NETSERVICE_APPEXIT;
-	}
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，初始化进程的守护线程成功");
 
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，所有服务已经启动完毕,程序运行中,XEngine版本:%s,服务器发行次数:%d,版本;%s", BaseLib_OperatorVer_XGetStr(), st_ServiceConfig.st_Version.pStl_ListVer->size(), st_ServiceConfig.st_Version.pStl_ListVer->front().c_str());
 	while (TRUE)
@@ -128,10 +113,6 @@ NETSERVICE_APPEXIT:
 		if (NULL != pSTDThread_Http)
 		{
 			pSTDThread_Http->join();
-		}
-		if (NULL != pSTDThread_App)
-		{
-			pSTDThread_App->join();
 		}
 		HelpComponents_XLog_Destroy(xhLog);
 	}

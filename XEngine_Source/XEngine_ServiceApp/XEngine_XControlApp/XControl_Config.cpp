@@ -3,13 +3,8 @@
 BOOL XControl_Parament(int argc, char **argv)
 {
     LPCSTR lpszBaseCfg = "./XControl_Config/XEngine_Config.json";
-    LPCSTR lpszListCfg = "./XControl_Config/XEngine_ConfigList.json";
 
     if (!Config_Json_File(lpszBaseCfg, &st_ServiceConfig))
-    {
-        return FALSE;
-    }
-    if (!Config_Json_LoadList(lpszListCfg, &st_APPConfig))
     {
         return FALSE;
     }

@@ -42,15 +42,11 @@ extern XLOG xhLog;
 extern __int64u m_nTaskSerial;
 
 extern shared_ptr<std::thread> pSTDThread_Http;
-extern shared_ptr<std::thread> pSTDThread_TCP;
-extern shared_ptr<std::thread> pSTDThread_App;
 extern XENGINE_SERVERCONFIG st_ServiceConfig;
-extern XENGINE_CONFIGAPP st_APPConfig;
 
 #include "XControl_Config.h"
 #include "XControl_Handle.h"
 #include "XControl_Task.h"
-#include "XControl_Process.h"
 
 #ifdef _MSC_BUILD
 #pragma comment(lib,"Ws2_32.lib")

@@ -133,7 +133,6 @@
   <ItemGroup>
     <ClCompile Include="XControl_Config.cpp" />
     <ClCompile Include="XControl_Handle.cpp" />
-    <ClCompile Include="XControl_Process.cpp" />
     <ClCompile Include="XControl_Task.cpp" />
     <ClCompile Include="XEngine_XControlApp.cpp" />
   </ItemGroup>
@@ -141,7 +140,6 @@
     <ClInclude Include="XControl_Config.h" />
     <ClInclude Include="XControl_Handle.h" />
     <ClInclude Include="XControl_Hdr.h" />
-    <ClInclude Include="XControl_Process.h" />
     <ClInclude Include="XControl_Task.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
