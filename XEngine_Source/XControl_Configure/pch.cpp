@@ -33,7 +33,3 @@ extern "C" BOOL Config_Json_File(LPCSTR lpszConfigFile, XENGINE_SERVERCONFIG * p
 {
 	return m_ConfigJson.Config_Json_File(lpszConfigFile, pSt_FileConfig);
 }
-extern "C" BOOL Config_Json_LoadList(LPCSTR lpszConfigFile, XENGINE_CONFIGAPP * pSt_AppConfig)
-{
-	return m_ConfigJson.Config_Json_LoadList(lpszConfigFile, pSt_AppConfig);
-}
