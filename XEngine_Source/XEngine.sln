@@ -20,8 +20,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jsoncpp", "XEngine_ThirdPar
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XEngine_ServiceApp", "XEngine_ServiceApp", "{64107925-B842-4092-89BD-0B1158B3B06D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XEngine_DeamonApp", "XEngine_ServiceApp\XEngine_DeamonApp\XEngine_DeamonApp.vcxproj", "{ED8D9FCE-5350-4A42-BB4C-DDA787B07A64}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XEngine_XControlApp", "XEngine_ServiceApp\XEngine_XControlApp\XEngine_XControlApp.vcxproj", "{5B51E9F2-187A-4227-941C-9906C36AC697}"
 EndProject
 Global
@@ -64,14 +62,6 @@ Global
 		{F1736B3F-03A2-4FC7-B045-A12BA8D724FB}.Release|x64.Build.0 = Release|x64
 		{F1736B3F-03A2-4FC7-B045-A12BA8D724FB}.Release|x86.ActiveCfg = Release|Win32
 		{F1736B3F-03A2-4FC7-B045-A12BA8D724FB}.Release|x86.Build.0 = Release|Win32
-		{ED8D9FCE-5350-4A42-BB4C-DDA787B07A64}.Debug|x64.ActiveCfg = Debug|x64
-		{ED8D9FCE-5350-4A42-BB4C-DDA787B07A64}.Debug|x64.Build.0 = Debug|x64
-		{ED8D9FCE-5350-4A42-BB4C-DDA787B07A64}.Debug|x86.ActiveCfg = Debug|Win32
-		{ED8D9FCE-5350-4A42-BB4C-DDA787B07A64}.Debug|x86.Build.0 = Debug|Win32
-		{ED8D9FCE-5350-4A42-BB4C-DDA787B07A64}.Release|x64.ActiveCfg = Release|x64
-		{ED8D9FCE-5350-4A42-BB4C-DDA787B07A64}.Release|x64.Build.0 = Release|x64
-		{ED8D9FCE-5350-4A42-BB4C-DDA787B07A64}.Release|x86.ActiveCfg = Release|Win32
-		{ED8D9FCE-5350-4A42-BB4C-DDA787B07A64}.Release|x86.Build.0 = Release|Win32
 		{5B51E9F2-187A-4227-941C-9906C36AC697}.Debug|x64.ActiveCfg = Debug|x64
 		{5B51E9F2-187A-4227-941C-9906C36AC697}.Debug|x64.Build.0 = Debug|x64
 		{5B51E9F2-187A-4227-941C-9906C36AC697}.Debug|x86.ActiveCfg = Debug|Win32
@@ -86,7 +76,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F1736B3F-03A2-4FC7-B045-A12BA8D724FB} = {DD388444-40C7-408C-BBCD-2FDDA2887024}
-		{ED8D9FCE-5350-4A42-BB4C-DDA787B07A64} = {64107925-B842-4092-89BD-0B1158B3B06D}
 		{5B51E9F2-187A-4227-941C-9906C36AC697} = {64107925-B842-4092-89BD-0B1158B3B06D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

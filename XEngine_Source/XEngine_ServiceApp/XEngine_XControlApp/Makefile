@@ -8,7 +8,7 @@ LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_OPenSsl -lHelpComponents_X
 	  -ljsoncpp
 LIBEX = -ldl -lpthread 
 LOADSO = -Wl,-rpath=./,--disable-new-dtags
-LIBINCLUDE = XControl_Config.o XControl_Handle.o XControl_Task.o XControl_Process.o XEngine_XControl.o
+LIBINCLUDE = XControl_Config.o XControl_Handle.o XControl_Task.o XEngine_XControl.o
 
 ifeq ($(shell uname),Darwin)
 	LOADBIN = -L ../XControl_Infomation -L ../XControl_Configure -L ../XControl_Protocol \
@@ -43,8 +43,6 @@ XControl_Handle.o:./XControl_Handle.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./XControl_Handle.cpp
 XControl_Task.o:./XControl_Task.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./XControl_Task.cpp
-XControl_Process.o:./XControl_Process.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./XControl_Process.cpp
 	
 XEngine_XControl.o:./XEngine_XControl.cpp             
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(INCLUDE) ./XEngine_XControl.cpp   
