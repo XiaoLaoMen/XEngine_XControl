@@ -21,6 +21,9 @@
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
 #include <XEngine_Include/XEngine_ProtocolHdr.h>
+#include <XEngine_Include/XEngine_AVCoder/AVCollect_Define.h>
+#include <XEngine_Include/XEngine_AVCoder/VideoCoder_Define.h>
+#include <XEngine_Include/XEngine_AVCoder/AVHelp_Define.h>
 #include "../XControl_Protocol.h"
 using namespace std;
 #include "Protocol_Define.h"

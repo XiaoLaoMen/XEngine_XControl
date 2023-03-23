@@ -2,3 +2,5 @@ LIBRARY
 
 EXPORTS
 	Protocol_GetLastError
+
+	Protocol_Packet_EnumDevice

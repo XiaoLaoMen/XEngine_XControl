@@ -31,7 +31,10 @@ extern "C" DWORD Protocol_GetLastError(int* pInt_SysError)
 /************************************************************************/
 /*                        封装类函数                                    */
 /************************************************************************/
-
+extern "C" BOOL Protocol_Packet_EnumDevice(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO * **pppSt_AudioList, AVHELP_DEVICEINFO * **pppSt_VideoList, int nACount, int nVCount)
+{
+	return m_ProtocolPacket.Protocol_Packet_EnumDevice(ptszMsgBuffer, pInt_MsgLen, pppSt_AudioList, pppSt_VideoList, nACount, nVCount);
+}
 /************************************************************************/
 /*                        解析类函数                                    */
 /************************************************************************/

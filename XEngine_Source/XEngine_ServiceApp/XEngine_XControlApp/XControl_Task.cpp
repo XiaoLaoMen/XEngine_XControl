@@ -211,6 +211,23 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		}
 	}
 		break;
+	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ENUMDEVICE:
+	{
+		int nACount = 0;
+		int nVCount = 0;
+		AVHELP_DEVICEINFO** ppSt_AudioList;
+		AVHELP_DEVICEINFO** ppSt_VideoList;
+
+		int nMsgLen = 0;
+		TCHAR tszMsgBuffer[4096];
+		memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
+
+		AVHelp_Device_EnumDevice(&ppSt_AudioList, &ppSt_VideoList, &nACount, &nVCount);
+		Protocol_Packet_EnumDevice(tszMsgBuffer, &nMsgLen, &ppSt_AudioList, &ppSt_VideoList, nACount, nVCount);
+		BaseLib_OperatorMemory_Free((void***)&ppSt_AudioList, nACount);
+		BaseLib_OperatorMemory_Free((void***)&ppSt_VideoList, nVCount);
+	}
+		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SERIAL:
 		m_nTaskSerial = st_JsonRoot["nSerial"].asUInt64();
 		break;

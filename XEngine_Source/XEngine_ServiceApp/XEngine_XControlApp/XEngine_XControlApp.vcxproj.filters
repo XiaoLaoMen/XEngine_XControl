@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\XControl_Task">
+      <UniqueIdentifier>{8528cd75-9b7e-4a97-8df0-a64ead2b4cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\XControl_Task">
+      <UniqueIdentifier>{bdd41e23-d7cf-4e7e-888f-b4737a495b1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XEngine_XControlApp.cpp">
@@ -27,6 +33,9 @@
     <ClCompile Include="XControl_Task.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="XControl_Task\XControl_TaskRecord.cpp">
+      <Filter>源文件\XControl_Task</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XControl_Config.h">
@@ -40,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="XControl_Task.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="XControl_Task\XControl_TaskRecord.h">
+      <Filter>头文件\XControl_Task</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
