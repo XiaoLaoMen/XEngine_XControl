@@ -16,19 +16,15 @@
 typedef struct tag_XEngine_ServerConfig
 {
 	CHAR tszTaskUrl[MAX_PATH];
-	CHAR tszAPPDeamon[MAX_PATH];
 	BOOL bAutoStart;
 	BOOL bHideWnd;
 	struct
 	{
-		int nCheckTime;
-		int nErrorTime;
 		int nHTTPThreadTime;
 	}st_Time;
 	struct
 	{
 		CHAR tszLogControl[MAX_PATH];
-		CHAR tszLogDeamon[MAX_PATH];
 		int nMaxSize;
 		int nMaxCount;
 		int nLogLeave;

@@ -83,22 +83,19 @@ BOOL CConfigure_Json::Config_Json_File(LPCSTR lpszConfigFile, XENGINE_SERVERCONF
 	}
 
 	strcpy(pSt_FileConfig->tszTaskUrl, st_JsonRoot["tszTaskUrl"].asCString());
-	strcpy(pSt_FileConfig->tszAPPDeamon, st_JsonRoot["tszAPPDeamon"].asCString());
 	pSt_FileConfig->bAutoStart = st_JsonRoot["bAutoStart"].asInt();
 	pSt_FileConfig->bHideWnd = st_JsonRoot["bHideWnd"].asInt();
 
-	if (st_JsonRoot["ClientTime"].empty() || (3 != st_JsonRoot["ClientTime"].size()))
+	if (st_JsonRoot["ClientTime"].empty() || (1 != st_JsonRoot["ClientTime"].size()))
 	{
 		Config_IsErrorOccur = TRUE;
 		Config_dwErrorCode = ERROR_XCONTROL_MODULE_CONFIG_JSON_TIME;
 		return FALSE;
 	}
 	Json::Value st_JsonTime = st_JsonRoot["ClientTime"];
-	pSt_FileConfig->st_Time.nCheckTime = st_JsonTime["nCheckTime"].asInt();
-	pSt_FileConfig->st_Time.nErrorTime = st_JsonTime["nErrorTime"].asInt();
 	pSt_FileConfig->st_Time.nHTTPThreadTime = st_JsonTime["nHTTPThreadTime"].asInt();
 
-	if (st_JsonRoot["LogConfig"].empty() || (5 != st_JsonRoot["LogConfig"].size()))
+	if (st_JsonRoot["LogConfig"].empty() || (4 != st_JsonRoot["LogConfig"].size()))
 	{
 		Config_IsErrorOccur = TRUE;
 		Config_dwErrorCode = ERROR_XCONTROL_MODULE_CONFIG_JSON_XLOG;
@@ -109,7 +106,6 @@ BOOL CConfigure_Json::Config_Json_File(LPCSTR lpszConfigFile, XENGINE_SERVERCONF
 	pSt_FileConfig->st_XLog.nMaxCount = st_JsonXLog["nMaxCount"].asInt();
 	pSt_FileConfig->st_XLog.nLogLeave = st_JsonXLog["nLogLeave"].asInt();
 	strcpy(pSt_FileConfig->st_XLog.tszLogControl, st_JsonXLog["tszLogControl"].asCString());
-	strcpy(pSt_FileConfig->st_XLog.tszLogDeamon, st_JsonXLog["tszLogDeamon"].asCString());
 
 	if (st_JsonRoot["VersionList"].empty())
 	{
