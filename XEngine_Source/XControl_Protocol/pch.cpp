@@ -35,6 +35,10 @@ extern "C" BOOL Protocol_Packet_EnumDevice(TCHAR * ptszMsgBuffer, int* pInt_MsgL
 {
 	return m_ProtocolPacket.Protocol_Packet_EnumDevice(ptszMsgBuffer, pInt_MsgLen, pppSt_AudioList, pppSt_VideoList, nACount, nVCount);
 }
+extern "C" BOOL Protocol_Packet_ListFile(TCHAR * ptszMsgBuffer, int* pInt_MsgLen, CHAR * **pppszFileList, int nListCount)
+{
+	return m_ProtocolPacket.Protocol_Packet_ListFile(ptszMsgBuffer, pInt_MsgLen, pppszFileList, nListCount);
+}
 /************************************************************************/
 /*                        解析类函数                                    */
 /************************************************************************/

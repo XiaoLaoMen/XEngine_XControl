@@ -13,7 +13,7 @@ XHTHREAD XControl_Thread_HttpTask()
 		_stprintf(tszTaskUrl, _T("api?function=gettask&serial=%llu"), m_nTaskSerial);
 
 		if (APIClient_Http_Request("GET", st_ServiceConfig.tszTaskUrl, NULL, NULL, &ptszMsgBody, &nBLen))
-	    {
+		{
 			XControl_Task_ProtocolParse(ptszMsgBody, nBLen);
 			BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBody);
 		}
@@ -130,27 +130,37 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_GETLIST:
 	{
+		int nMsgLen = 0;
 		int nListCount = 0;
 		CHAR** ppszFileList;
+		CHAR tszMsgBuffer[4096];
 		CHAR tszFindPath[MAX_PATH];
 		CHAR tszPostUrl[MAX_PATH];
 
+		memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 		memset(tszFindPath, '\0', MAX_PATH);
 		memset(tszPostUrl, '\0', MAX_PATH);
+
 		strcpy(tszFindPath, st_ProtocolInfo.tszSourceStr);
 		strcpy(tszPostUrl, st_ProtocolInfo.tszDestStr);
 
 		if (SystemApi_File_EnumFile(tszFindPath, &ppszFileList, &nListCount))
 		{
-			XControl_Handle_PostListFile(ppszFileList, nListCount, tszPostUrl);
+			Protocol_Packet_ListFile(tszMsgBuffer, &nMsgLen, &ppszFileList, nListCount);
 			BaseLib_OperatorMemory_Free((XPPPMEM)&ppszFileList, nListCount);
+
+			if (!APIClient_Http_Request("POST", tszPostUrl, tszMsgBuffer))
+			{
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:发送文件列表失败,地址:%s,错误码:%lX", tszPostUrl, APIClient_GetLastError());
+				return FALSE;
+			}
 		}
 		else
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求文件列表失败,错误码:%lX", SystemApi_GetLastError());
 		}
 	}
-		break;
+	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_EXEC:
 	{
 		DWORD dwProcessID = 0;
@@ -162,7 +172,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		strcpy(tszExecFile, st_ProtocolInfo.tszSourceStr);
 		strcpy(tszExecShow, st_ProtocolInfo.tszDestStr);
 
-		if (SystemApi_Process_CreateProcess(&dwProcessID, tszExecFile,NULL, _ttoi(tszExecShow)))
+		if (SystemApi_Process_CreateProcess(&dwProcessID, tszExecFile, NULL, _ttoi(tszExecShow)))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "HTTP任务:请求创建进程成功,进程:%s", tszExecFile);
 		}
@@ -171,7 +181,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求创建进程:%s 失败,错误码:%lX", tszExecFile, SystemApi_GetLastError());
 		}
 	}
-		break;
+	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_POPMESSAGE:
 	{
 		CHAR tszMessageBox[MAX_PATH];
@@ -249,7 +259,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 			APIClient_Http_Request("POST", tszIPAddr, tszSWBuffer);
 		}
 	}
-		break;
+	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ENUMDEVICE:
 	{
 		int nACount = 0;
@@ -266,7 +276,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		BaseLib_OperatorMemory_Free((void***)&ppSt_AudioList, nACount);
 		BaseLib_OperatorMemory_Free((void***)&ppSt_VideoList, nVCount);
 	}
-		break;
+	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SERIAL:
 		CHAR tszSerial[MAX_PATH];
 		memset(tszSerial, '\0', MAX_PATH);
