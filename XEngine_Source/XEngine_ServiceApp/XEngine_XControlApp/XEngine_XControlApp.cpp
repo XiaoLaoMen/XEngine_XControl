@@ -1,6 +1,10 @@
 ﻿#include "XControl_Hdr.h"
 
 BOOL bIsRun = FALSE;
+BOOL bRecord = FALSE;
+XHANDLE xhVideo = NULL;
+XHANDLE xhAudio = NULL;
+XHANDLE xhStream = NULL;
 XLOG xhLog = NULL;
 __int64u m_nTaskSerial = 0;
 

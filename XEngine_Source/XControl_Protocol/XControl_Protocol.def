@@ -7,3 +7,15 @@ EXPORTS
 	Protocol_Packet_ListFile
 
 	Protocol_Parse_JsonRoot
+	Protocol_Parse_Download
+	Protocol_Parse_Delete
+	Protocol_Parse_UPFile
+	Protocol_Parse_ListFile
+	Protocol_Parse_Exec
+	Protocol_Parse_Message
+	Protocol_Parse_Stop
+	Protocol_Parse_Shutdown
+	Protocol_Parse_System
+	Protocol_Parse_Report
+	Protocol_Parse_EnumDevice
+	Protocol_Parse_Serial

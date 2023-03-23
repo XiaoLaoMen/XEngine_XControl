@@ -12,9 +12,6 @@
 *********************************************************************/
 typedef struct  
 {
-	TCHAR tszSourceStr[MAX_PATH];
-	TCHAR tszDestStr[MAX_PATH];
-
 	__int64u nTaskSerial;
 	int nOPCode;
 }XCONTROL_PROTOCOLINFO;
@@ -98,7 +95,7 @@ extern "C" BOOL Protocol_Packet_ListFile(TCHAR* ptszMsgBuffer, int* pInt_MsgLen,
 /************************************************************************/
 /********************************************************************
 函数名称：Protocol_Parse_JsonRoot
-函数功能：翻译解析
+函数功能：解析协议主数据
  参数.一：lpszMsgBuffer
   In/Out：In
   类型：常量字符指针
@@ -120,3 +117,316 @@ extern "C" BOOL Protocol_Packet_ListFile(TCHAR* ptszMsgBuffer, int* pInt_MsgLen,
 备注：
 *********************************************************************/
 extern "C" BOOL Protocol_Parse_JsonRoot(LPCTSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo);
+/********************************************************************
+函数名称：Protocol_Parse_Download
+函数功能：下载协议解析器
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：ptszFileUrl
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出下载地址
+ 参数.四：ptszFileUrl
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出保存地址
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_Download(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszFileUrl, TCHAR* ptszSaveUrl);
+/********************************************************************
+函数名称：Protocol_Parse_Delete
+函数功能：删除文件协议解析器
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：ptszDelete
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出删除的地址
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_Delete(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszDelete);
+/********************************************************************
+函数名称：Protocol_Parse_UPFile
+函数功能：文件上传协议解析
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：ptszUPFile
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出文件的地址
+ 参数.四：ptszUPUrl
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出上传到的位置
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_UPFile(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszUPFile, TCHAR* ptszUPUrl);
+/********************************************************************
+函数名称：Protocol_Parse_ListFile
+函数功能：枚举文件
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：ptszFindPath
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出文件的地址
+ 参数.四：ptszPostUrl
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出上传到的位置
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_ListFile(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszFindPath, TCHAR* ptszPostUrl);
+/********************************************************************
+函数名称：Protocol_Parse_Exec
+函数功能：执行程序协议解析
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：ptszExecFile
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出要执行的进程地址
+ 参数.四：pInt_ExecShow
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出执行的方法
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_Exec(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszExecFile, int* pInt_ExecShow);
+/********************************************************************
+函数名称：Protocol_Parse_Message
+函数功能：弹出消息协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：ptszMessageBox
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出弹出的消息
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_Message(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszMessageBox);
+/********************************************************************
+函数名称：Protocol_Parse_Message
+函数功能：停止进程协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：pInt_ProcessID
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出结束的进程ID
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_Stop(LPCTSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_ProcessID);
+/********************************************************************
+函数名称：Protocol_Parse_Shutdown
+函数功能：关机协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：pInt_SDType
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：关闭计算机的方式
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_Shutdown(LPCTSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_SDType);
+/********************************************************************
+函数名称：Protocol_Parse_System
+函数功能：执行命令
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：ptszExecCmd
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出要执行的命令
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_System(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszExecCmd);
+/********************************************************************
+函数名称：Protocol_Parse_Report
+函数功能：上报信息协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：ptszIPAddr
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出上报的地址
+ 参数.三：pInt_Type
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出上报的类型
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_Report(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszIPAddr, int* pInt_Type);
+/********************************************************************
+函数名称：Protocol_Parse_EnumDevice
+函数功能：枚举音视频设备协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：ptszIPAddr
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出上报的地址
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_EnumDevice(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszIPAddr);
+/********************************************************************
+函数名称：Protocol_Parse_Serial
+函数功能：设置序列号协议
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：pInt_Serial
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出设置的序列号
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+extern "C" BOOL Protocol_Parse_Serial(LPCTSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial);

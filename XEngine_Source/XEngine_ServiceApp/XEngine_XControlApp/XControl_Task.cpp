@@ -24,7 +24,11 @@ XHTHREAD XControl_Thread_HttpTask()
 //////////////////////////////////////////////////////////////////////////
 BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 {
+	int nSDLen = 0;
+	CHAR tszSDBuffer[4096];
 	XCONTROL_PROTOCOLINFO st_ProtocolInfo;
+	
+	memset(tszSDBuffer, '\0', sizeof(tszSDBuffer));
 	memset(&st_ProtocolInfo, '\0', sizeof(XCONTROL_PROTOCOLINFO));
 
 	if (!Protocol_Parse_JsonRoot(lpszMsgBuffer, nMsgLen, &st_ProtocolInfo))
@@ -49,8 +53,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 
 		memset(tszFileUrl, '\0', MAX_PATH);
 		memset(tszSaveUrl, '\0', MAX_PATH);
-		strcpy(tszFileUrl, st_ProtocolInfo.tszSourceStr);
-		strcpy(tszSaveUrl, st_ProtocolInfo.tszDestStr);
+		Protocol_Parse_Download(lpszMsgBuffer, nMsgLen, tszFileUrl, tszSaveUrl);
 
 		XHANDLE xhTask = APIClient_File_Create(tszFileUrl, tszSaveUrl);
 		if (NULL == xhTask)
@@ -78,7 +81,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		CHAR tszDelFile[MAX_PATH];
 		memset(tszDelFile, '\0', MAX_PATH);
 
-		strcpy(tszDelFile, st_ProtocolInfo.tszSourceStr);
+		Protocol_Parse_Delete(lpszMsgBuffer, nMsgLen, tszDelFile);
 		if (-1 == remove(tszDelFile))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:删除文件任务处理失败,错误码:%d", errno);
@@ -89,7 +92,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		CHAR tszDelDir[MAX_PATH];
 		memset(tszDelDir, '\0', MAX_PATH);
 
-		strcpy(tszDelDir, st_ProtocolInfo.tszSourceStr);
+		Protocol_Parse_Delete(lpszMsgBuffer, nMsgLen, tszDelDir);
 		if (!SystemApi_File_DeleteMutilFolder(tszDelDir))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:删除文件夹任务处理失败,错误码:%lX", SystemApi_GetLastError());
@@ -103,9 +106,8 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 
 		memset(tszUPFile, '\0', MAX_PATH);
 		memset(tszUPUrl, '\0', MAX_PATH);
-		strcpy(tszUPFile, st_ProtocolInfo.tszSourceStr);
-		strcpy(tszUPUrl, st_ProtocolInfo.tszDestStr);
 
+		Protocol_Parse_UPFile(lpszMsgBuffer, nMsgLen, tszUPFile, tszUPUrl);
 		XHANDLE xhTask = APIClient_File_Create(tszUPFile, tszUPUrl, FALSE);
 		if (NULL == xhTask)
 		{
@@ -130,26 +132,21 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_GETLIST:
 	{
-		int nMsgLen = 0;
 		int nListCount = 0;
 		CHAR** ppszFileList;
-		CHAR tszMsgBuffer[4096];
 		CHAR tszFindPath[MAX_PATH];
 		CHAR tszPostUrl[MAX_PATH];
 
-		memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 		memset(tszFindPath, '\0', MAX_PATH);
 		memset(tszPostUrl, '\0', MAX_PATH);
 
-		strcpy(tszFindPath, st_ProtocolInfo.tszSourceStr);
-		strcpy(tszPostUrl, st_ProtocolInfo.tszDestStr);
-
+		Protocol_Parse_ListFile(lpszMsgBuffer, nMsgLen, tszFindPath, tszPostUrl);
 		if (SystemApi_File_EnumFile(tszFindPath, &ppszFileList, &nListCount))
 		{
-			Protocol_Packet_ListFile(tszMsgBuffer, &nMsgLen, &ppszFileList, nListCount);
+			Protocol_Packet_ListFile(tszSDBuffer, &nSDLen, &ppszFileList, nListCount);
 			BaseLib_OperatorMemory_Free((XPPPMEM)&ppszFileList, nListCount);
 
-			if (!APIClient_Http_Request("POST", tszPostUrl, tszMsgBuffer))
+			if (!APIClient_Http_Request("POST", tszPostUrl, tszSDBuffer))
 			{
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:发送文件列表失败,地址:%s,错误码:%lX", tszPostUrl, APIClient_GetLastError());
 				return FALSE;
@@ -164,15 +161,13 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_EXEC:
 	{
 		DWORD dwProcessID = 0;
+		int nExeType = 0;
 		CHAR tszExecFile[MAX_PATH];
-		CHAR tszExecShow[MAX_PATH];
 
 		memset(tszExecFile, '\0', MAX_PATH);
-		memset(tszExecShow, '\0', MAX_PATH);
-		strcpy(tszExecFile, st_ProtocolInfo.tszSourceStr);
-		strcpy(tszExecShow, st_ProtocolInfo.tszDestStr);
 
-		if (SystemApi_Process_CreateProcess(&dwProcessID, tszExecFile, NULL, _ttoi(tszExecShow)))
+		Protocol_Parse_Exec(lpszMsgBuffer, nMsgLen, tszExecFile, &nExeType);
+		if (SystemApi_Process_CreateProcess(&dwProcessID, tszExecFile, NULL, nExeType))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "HTTP任务:请求创建进程成功,进程:%s", tszExecFile);
 		}
@@ -187,8 +182,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		CHAR tszMessageBox[MAX_PATH];
 		memset(tszMessageBox, '\0', MAX_PATH);
 
-		strcpy(tszMessageBox, st_ProtocolInfo.tszSourceStr);
-
+		Protocol_Parse_Message(lpszMsgBuffer, nMsgLen, tszMessageBox);
 #ifdef _MSC_BUILD
 		MessageBoxA(NULL, tszMessageBox, "提示", MB_OK);
 #endif
@@ -196,35 +190,34 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_STOPPROCESS:
-		CHAR tszProcessName[MAX_PATH];
-		memset(tszProcessName, '\0', MAX_PATH);
+	{
+		DWORD dwProcessID = 0;
 
-		strcpy(tszProcessName, st_ProtocolInfo.tszSourceStr);
-
-		if (!SystemApi_Process_Stop(tszProcessName))
+		Protocol_Parse_Stop(lpszMsgBuffer, nMsgLen, &dwProcessID);
+		if (!SystemApi_Process_Stop(NULL, dwProcessID))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求停止进程失败,错误码:%lX", SystemApi_GetLastError());
 			return FALSE;
 		}
+	}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SHUTDOWN:
-		CHAR tszShutDownType[MAX_PATH];
-		memset(tszShutDownType, '\0', MAX_PATH);
+	{
+		DWORD dwType = 0;
 
-		strcpy(tszShutDownType, st_ProtocolInfo.tszSourceStr);
-
-		if (!SystemApi_System_Shutdown(_ttoi(tszShutDownType)))
+		Protocol_Parse_Shutdown(lpszMsgBuffer, nMsgLen, &dwType);
+		if (!SystemApi_System_Shutdown(dwType))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求关机失败,错误码:%lX", SystemApi_GetLastError());
 			return FALSE;
 		}
+	}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ECMD:
 		CHAR tszExecCmd[MAX_PATH];
 		memset(tszExecCmd, '\0', MAX_PATH);
 
-		strcpy(tszExecCmd, st_ProtocolInfo.tszSourceStr);
-
+		Protocol_Parse_System(lpszMsgBuffer, nMsgLen, tszExecCmd);
 		if (-1 == system(tszExecCmd))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求执行命令失败,错误码:%lX", SystemApi_GetLastError());
@@ -233,16 +226,13 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_REPORT:
 	{
-		CHAR tszType[MAX_PATH];
+		int nType = 0;
 		CHAR tszIPAddr[MAX_PATH];
 
-		memset(tszType, '\0', MAX_PATH);
 		memset(tszIPAddr, '\0', MAX_PATH);
 
-		strcpy(tszType, st_ProtocolInfo.tszSourceStr);
-		strcpy(tszIPAddr, st_ProtocolInfo.tszDestStr);
-
-		if (0 == _ttoi(tszType))
+		Protocol_Parse_Report(lpszMsgBuffer, nMsgLen, tszIPAddr, &nType);
+		if (0 == nType)
 		{
 			int nHWLen = 4096;
 			CHAR tszHWBuffer[4096];
@@ -262,6 +252,9 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ENUMDEVICE:
 	{
+		CHAR tszIPAddr[MAX_PATH];
+		memset(tszIPAddr, '\0', MAX_PATH);
+		
 		int nACount = 0;
 		int nVCount = 0;
 		AVHELP_DEVICEINFO** ppSt_AudioList;
@@ -272,17 +265,19 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 
 		AVHelp_Device_EnumDevice(&ppSt_AudioList, &ppSt_VideoList, &nACount, &nVCount);
+
+		Protocol_Parse_EnumDevice(lpszMsgBuffer, nMsgLen, tszIPAddr);
 		Protocol_Packet_EnumDevice(tszMsgBuffer, &nMsgLen, &ppSt_AudioList, &ppSt_VideoList, nACount, nVCount);
 		BaseLib_OperatorMemory_Free((void***)&ppSt_AudioList, nACount);
 		BaseLib_OperatorMemory_Free((void***)&ppSt_VideoList, nVCount);
+
+		APIClient_Http_Request("POST", tszIPAddr, tszMsgBuffer);
 	}
 	break;
+	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_RECORD:
+		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SERIAL:
-		CHAR tszSerial[MAX_PATH];
-		memset(tszSerial, '\0', MAX_PATH);
-
-		strcpy(tszSerial, st_ProtocolInfo.tszSourceStr);
-		m_nTaskSerial = _ttoi64(tszSerial);
+		Protocol_Parse_Serial(lpszMsgBuffer, nMsgLen, &m_nTaskSerial);
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_USER:
 		break;

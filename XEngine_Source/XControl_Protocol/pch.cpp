@@ -46,3 +46,51 @@ extern "C" BOOL Protocol_Parse_JsonRoot(LPCTSTR lpszMsgBuffer, int nMsgLen, XCON
 {
 	return m_ProtocolParse.Protocol_Parse_JsonRoot(lpszMsgBuffer, nMsgLen, pSt_ProtocolInfo);
 }
+extern "C" BOOL Protocol_Parse_Download(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszFileUrl, TCHAR * ptszSaveUrl)
+{
+	return m_ProtocolParse.Protocol_Parse_Download(lpszMsgBuffer, nMsgLen, ptszFileUrl, ptszSaveUrl);
+}
+extern "C" BOOL Protocol_Parse_Delete(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszDelete)
+{
+	return m_ProtocolParse.Protocol_Parse_Delete(lpszMsgBuffer, nMsgLen, ptszDelete);
+}
+extern "C" BOOL Protocol_Parse_UPFile(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszUPFile, TCHAR * ptszUPUrl)
+{
+	return m_ProtocolParse.Protocol_Parse_UPFile(lpszMsgBuffer, nMsgLen, ptszUPFile, ptszUPUrl);
+}
+extern "C" BOOL Protocol_Parse_ListFile(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszFindPath, TCHAR * ptszPostUrl)
+{
+	return m_ProtocolParse.Protocol_Parse_ListFile(lpszMsgBuffer, nMsgLen, ptszFindPath, ptszPostUrl);
+}
+extern "C" BOOL Protocol_Parse_Exec(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszExecFile, int* pInt_ExecShow)
+{
+	return m_ProtocolParse.Protocol_Parse_Exec(lpszMsgBuffer, nMsgLen, ptszExecFile, pInt_ExecShow);
+}
+extern "C" BOOL Protocol_Parse_Message(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszMessageBox)
+{
+	return m_ProtocolParse.Protocol_Parse_Message(lpszMsgBuffer, nMsgLen, ptszMessageBox);
+}
+extern "C" BOOL Protocol_Parse_Stop(LPCTSTR lpszMsgBuffer, int nMsgLen, DWORD * pInt_ProcessID)
+{
+	return m_ProtocolParse.Protocol_Parse_Stop(lpszMsgBuffer, nMsgLen, pInt_ProcessID);
+}
+extern "C" BOOL Protocol_Parse_Shutdown(LPCTSTR lpszMsgBuffer, int nMsgLen, DWORD * pInt_SDType)
+{
+	return m_ProtocolParse.Protocol_Parse_Shutdown(lpszMsgBuffer, nMsgLen, pInt_SDType);
+}
+extern "C" BOOL Protocol_Parse_System(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszExecCmd)
+{
+	return m_ProtocolParse.Protocol_Parse_System(lpszMsgBuffer, nMsgLen, ptszExecCmd);
+}
+extern "C" BOOL Protocol_Parse_Report(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszIPAddr, int* pInt_Type)
+{
+	return m_ProtocolParse.Protocol_Parse_Report(lpszMsgBuffer, nMsgLen, ptszIPAddr, pInt_Type);
+}
+extern "C" BOOL Protocol_Parse_EnumDevice(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR * ptszIPAddr)
+{
+	return m_ProtocolParse.Protocol_Parse_EnumDevice(lpszMsgBuffer, nMsgLen, ptszIPAddr);
+}
+extern "C" BOOL Protocol_Parse_Serial(LPCTSTR lpszMsgBuffer, int nMsgLen, __int64u * pInt_Serial)
+{
+	return m_ProtocolParse.Protocol_Parse_Serial(lpszMsgBuffer, nMsgLen, pInt_Serial);
+}

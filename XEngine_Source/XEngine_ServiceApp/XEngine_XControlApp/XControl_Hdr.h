@@ -1,7 +1,6 @@
 ﻿#ifdef _MSC_BUILD
 #include <windows.h>
 #include <tchar.h>
-#include <io.h>
 #else
 #include <unistd.h>
 #include <sys/types.h>
@@ -32,11 +31,10 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCoder/AVCollect_Define.h>
 #include <XEngine_Include/XEngine_AVCoder/AVCollect_Error.h>
 #include <XEngine_Include/XEngine_AVCoder/VideoCoder_Define.h>
-#include <XEngine_Include/XEngine_AVCoder/VideoCoder_Error.h>
-#include <XEngine_Include/XEngine_AVCoder/AudioCoder_Define.h>
-#include <XEngine_Include/XEngine_AVCoder/AudioCoder_Error.h>
 #include <XEngine_Include/XEngine_AVCoder/AVHelp_Define.h>
 #include <XEngine_Include/XEngine_AVCoder/AVHelp_Error.h>
+#include <XEngine_Include/XEngine_StreamMedia/XClient_Define.h>
+#include <XEngine_Include/XEngine_StreamMedia/XClient_Error.h>
 #include "../../XControl_Protocol.h"
 #include "../../XControl_Configure/Config_Define.h"
 #include "../../XControl_Configure/Config_Error.h"
@@ -47,6 +45,10 @@ using namespace std;
 #include "./XControl_Task/XControl_TaskRecord.h"
 
 extern BOOL bIsRun;
+extern BOOL bRecord;
+extern XHANDLE xhVideo;
+extern XHANDLE xhAudio;
+extern XHANDLE xhStream;
 extern XLOG xhLog;
 extern __int64u m_nTaskSerial;
 
@@ -64,9 +66,8 @@ extern XENGINE_SERVERCONFIG st_ServiceConfig;
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi.lib")
 #pragma comment(lib,"XEngine_AVCoder/XEngine_AVCollect.lib")
-#pragma comment(lib,"XEngine_AVCoder/XEngine_VideoCoder.lib")
-#pragma comment(lib,"XEngine_AVCoder/XEngine_AudioCoder.lib")
 #pragma comment(lib,"XEngine_AVCoder/XEngine_AVHelp.lib")
+#pragma comment(lib,"XEngine_StreamMedia/StreamMedia_XClient.lib")
 #ifdef _WIN64
 #ifdef _DEBUG
 #pragma comment(lib,"../../x64/Debug/XControl_Configure.lib")
