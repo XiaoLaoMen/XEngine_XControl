@@ -38,3 +38,7 @@ extern "C" BOOL Protocol_Packet_EnumDevice(TCHAR * ptszMsgBuffer, int* pInt_MsgL
 /************************************************************************/
 /*                        解析类函数                                    */
 /************************************************************************/
+extern "C" BOOL Protocol_Parse_JsonRoot(LPCTSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO * pSt_ProtocolInfo)
+{
+	return m_ProtocolParse.Protocol_Parse_JsonRoot(lpszMsgBuffer, nMsgLen, pSt_ProtocolInfo);
+}

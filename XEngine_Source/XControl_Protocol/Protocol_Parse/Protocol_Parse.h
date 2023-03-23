@@ -17,6 +17,7 @@ public:
     CProtocol_Parse();
     ~CProtocol_Parse();
 public:
+    BOOL Protocol_Parse_JsonRoot(LPCTSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo);
 protected:
 private:
 };

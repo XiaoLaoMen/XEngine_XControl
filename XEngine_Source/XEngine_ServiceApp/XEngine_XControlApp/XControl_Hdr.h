@@ -13,9 +13,9 @@
 #include <string.h>
 #include <signal.h>
 #include <list>
+#include <string>
 #include <thread>
 #include <memory>
-#include <json/json.h>
 using namespace std;
 #include <XEngine_Include/XEngine_CommHdr.h>
 #include <XEngine_Include/XEngine_Types.h>
@@ -69,24 +69,20 @@ extern XENGINE_SERVERCONFIG st_ServiceConfig;
 #pragma comment(lib,"XEngine_AVCoder/XEngine_AVHelp.lib")
 #ifdef _WIN64
 #ifdef _DEBUG
-#pragma comment(lib,"../../x64/Debug/jsoncpp")
 #pragma comment(lib,"../../x64/Debug/XControl_Configure.lib")
 #pragma comment(lib,"../../x64/Debug/XControl_Infomation.lib")
 #pragma comment(lib,"../../x64/Debug/XControl_Protocol.lib")
 #else
-#pragma comment(lib,"../../x64/Release/jsoncpp")
 #pragma comment(lib,"../../x64/Release/XControl_Configure.lib")
 #pragma comment(lib,"../../x64/Release/XControl_Infomation.lib")
 #pragma comment(lib,"../../x64/Release/XControl_Protocol.lib")
 #endif
 #else
 #ifdef _DEBUG
-#pragma comment(lib,"../../Debug/jsoncpp")
 #pragma comment(lib,"../../Debug/XControl_Configure.lib")
 #pragma comment(lib,"../../Debug/XControl_Infomation.lib")
 #pragma comment(lib,"../../Debug/XControl_Protocol.lib")
 #else
-#pragma comment(lib,"../../Release/jsoncpp")
 #pragma comment(lib,"../../Release/XControl_Configure.lib")
 #pragma comment(lib,"../../Release/XControl_Infomation.lib")
 #pragma comment(lib,"../../Release/XControl_Protocol.lib")

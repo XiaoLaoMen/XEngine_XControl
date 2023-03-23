@@ -24,28 +24,23 @@ XHTHREAD XControl_Thread_HttpTask()
 //////////////////////////////////////////////////////////////////////////
 BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 {
-	Json::Value st_JsonRoot;
-	Json::CharReaderBuilder st_JsonBuild;
-	Json::CharReader* pSt_JsonReader(st_JsonBuild.newCharReader());
-	JSONCPP_STRING st_JsonError;
+	XCONTROL_PROTOCOLINFO st_ProtocolInfo;
+	memset(&st_ProtocolInfo, '\0', sizeof(XCONTROL_PROTOCOLINFO));
 
-	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	if (!Protocol_Parse_JsonRoot(lpszMsgBuffer, nMsgLen, &st_ProtocolInfo))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:JSON解析错误");
 		return FALSE;
 	}
-	delete pSt_JsonReader;
-	pSt_JsonReader = NULL;
 	//获得任务序列号
-	__int64u nTaskSerial = st_JsonRoot["nTaskSerial"].asUInt64();
-	if (nTaskSerial != m_nTaskSerial)
+	if (st_ProtocolInfo.nTaskSerial != m_nTaskSerial)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:任务序列号不正确");
 		return FALSE;
 	}
 	m_nTaskSerial++;
 	//执行任务
-	switch (st_JsonRoot["unOperatorCode"].asUInt())
+	switch (st_ProtocolInfo.nOPCode)
 	{
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DOWNFILE:
 	{
@@ -54,8 +49,8 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 
 		memset(tszFileUrl, '\0', MAX_PATH);
 		memset(tszSaveUrl, '\0', MAX_PATH);
-		strcpy(tszFileUrl, st_JsonRoot["DownloadUrl"].asCString());
-		strcpy(tszSaveUrl, st_JsonRoot["SaveUrl"].asCString());
+		strcpy(tszFileUrl, st_ProtocolInfo.tszSourceStr);
+		strcpy(tszSaveUrl, st_ProtocolInfo.tszDestStr);
 
 		XHANDLE xhTask = APIClient_File_Create(tszFileUrl, tszSaveUrl);
 		if (NULL == xhTask)
@@ -83,7 +78,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		CHAR tszDelFile[MAX_PATH];
 		memset(tszDelFile, '\0', MAX_PATH);
 
-		strcpy(tszDelFile, st_JsonRoot["DeleteFile"].asCString());
+		strcpy(tszDelFile, st_ProtocolInfo.tszSourceStr);
 		if (-1 == remove(tszDelFile))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:删除文件任务处理失败,错误码:%d", errno);
@@ -94,7 +89,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		CHAR tszDelDir[MAX_PATH];
 		memset(tszDelDir, '\0', MAX_PATH);
 
-		strcpy(tszDelDir, st_JsonRoot["DeleteDir"].asCString());
+		strcpy(tszDelDir, st_ProtocolInfo.tszSourceStr);
 		if (!SystemApi_File_DeleteMutilFolder(tszDelDir))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:删除文件夹任务处理失败,错误码:%lX", SystemApi_GetLastError());
@@ -108,8 +103,8 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 
 		memset(tszUPFile, '\0', MAX_PATH);
 		memset(tszUPUrl, '\0', MAX_PATH);
-		strcpy(tszUPFile, st_JsonRoot["UPLoadFile"].asCString());
-		strcpy(tszUPUrl, st_JsonRoot["UPLoadUrl"].asCString());
+		strcpy(tszUPFile, st_ProtocolInfo.tszSourceStr);
+		strcpy(tszUPUrl, st_ProtocolInfo.tszDestStr);
 
 		XHANDLE xhTask = APIClient_File_Create(tszUPFile, tszUPUrl, FALSE);
 		if (NULL == xhTask)
@@ -137,9 +132,17 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	{
 		int nListCount = 0;
 		CHAR** ppszFileList;
-		if (SystemApi_File_EnumFile(st_JsonRoot["FindPath"].asCString(), &ppszFileList, &nListCount))
+		CHAR tszFindPath[MAX_PATH];
+		CHAR tszPostUrl[MAX_PATH];
+
+		memset(tszFindPath, '\0', MAX_PATH);
+		memset(tszPostUrl, '\0', MAX_PATH);
+		strcpy(tszFindPath, st_ProtocolInfo.tszSourceStr);
+		strcpy(tszPostUrl, st_ProtocolInfo.tszDestStr);
+
+		if (SystemApi_File_EnumFile(tszFindPath, &ppszFileList, &nListCount))
 		{
-			XControl_Handle_PostListFile(ppszFileList, nListCount, st_JsonRoot["PostUrl"].asCString());
+			XControl_Handle_PostListFile(ppszFileList, nListCount, tszPostUrl);
 			BaseLib_OperatorMemory_Free((XPPPMEM)&ppszFileList, nListCount);
 		}
 		else
@@ -151,41 +154,68 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_EXEC:
 	{
 		DWORD dwProcessID = 0;
-		if (SystemApi_Process_CreateProcess(&dwProcessID, st_JsonRoot["ExecFile"].asCString(),NULL, st_JsonRoot["ExecShow"].asInt()))
+		CHAR tszExecFile[MAX_PATH];
+		CHAR tszExecShow[MAX_PATH];
+
+		memset(tszExecFile, '\0', MAX_PATH);
+		memset(tszExecShow, '\0', MAX_PATH);
+		strcpy(tszExecFile, st_ProtocolInfo.tszSourceStr);
+		strcpy(tszExecShow, st_ProtocolInfo.tszDestStr);
+
+		if (SystemApi_Process_CreateProcess(&dwProcessID, tszExecFile,NULL, _ttoi(tszExecShow)))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "HTTP任务:请求创建进程成功,进程:%s", st_JsonRoot["ExecFile"].asCString());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "HTTP任务:请求创建进程成功,进程:%s", tszExecFile);
 		}
 		else
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求创建进程:%s 失败,错误码:%lX", st_JsonRoot["ExecFile"].asCString(), SystemApi_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求创建进程:%s 失败,错误码:%lX", tszExecFile, SystemApi_GetLastError());
 		}
 	}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_POPMESSAGE:
 	{
+		CHAR tszMessageBox[MAX_PATH];
+		memset(tszMessageBox, '\0', MAX_PATH);
+
+		strcpy(tszMessageBox, st_ProtocolInfo.tszSourceStr);
+
 #ifdef _MSC_BUILD
-		MessageBoxA(NULL, st_JsonRoot["MessageBox"].asCString(), "提示", MB_OK);
-#else
+		MessageBoxA(NULL, tszMessageBox, "提示", MB_OK);
 #endif
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "HTTP任务:请求弹出消息:%s", st_JsonRoot["MessageBox"].asCString());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "HTTP任务:请求弹出消息:%s", tszMessageBox);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_STOPPROCESS:
-		if (!SystemApi_Process_Stop(st_JsonRoot["tszProcessName"].asCString()))
+		CHAR tszProcessName[MAX_PATH];
+		memset(tszProcessName, '\0', MAX_PATH);
+
+		strcpy(tszProcessName, st_ProtocolInfo.tszSourceStr);
+
+		if (!SystemApi_Process_Stop(tszProcessName))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求停止进程失败,错误码:%lX", SystemApi_GetLastError());
 			return FALSE;
 		}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SHUTDOWN:
-		if (!SystemApi_System_Shutdown((DWORD)st_JsonRoot["ShutDownType"].asInt64()))
+		CHAR tszShutDownType[MAX_PATH];
+		memset(tszShutDownType, '\0', MAX_PATH);
+
+		strcpy(tszShutDownType, st_ProtocolInfo.tszSourceStr);
+
+		if (!SystemApi_System_Shutdown(_ttoi(tszShutDownType)))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求关机失败,错误码:%lX", SystemApi_GetLastError());
 			return FALSE;
 		}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ECMD:
-		if (-1 == system(st_JsonRoot["tszExecCmd"].asCString()))
+		CHAR tszExecCmd[MAX_PATH];
+		memset(tszExecCmd, '\0', MAX_PATH);
+
+		strcpy(tszExecCmd, st_ProtocolInfo.tszSourceStr);
+
+		if (-1 == system(tszExecCmd))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求执行命令失败,错误码:%lX", SystemApi_GetLastError());
 			return FALSE;
@@ -193,13 +223,22 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_REPORT:
 	{
-		if (0 == st_JsonRoot["nType"].asInt())
+		CHAR tszType[MAX_PATH];
+		CHAR tszIPAddr[MAX_PATH];
+
+		memset(tszType, '\0', MAX_PATH);
+		memset(tszIPAddr, '\0', MAX_PATH);
+
+		strcpy(tszType, st_ProtocolInfo.tszSourceStr);
+		strcpy(tszIPAddr, st_ProtocolInfo.tszDestStr);
+
+		if (0 == _ttoi(tszType))
 		{
 			int nHWLen = 4096;
 			CHAR tszHWBuffer[4096];
 			memset(tszHWBuffer, '\0', sizeof(tszHWBuffer));
 			XControl_Info_HardWare(tszHWBuffer, &nHWLen);
-			APIClient_Http_Request("POST", st_JsonRoot["tszIPAddr"].asCString(), tszHWBuffer);
+			APIClient_Http_Request("POST", tszIPAddr, tszHWBuffer);
 		}
 		else
 		{
@@ -207,7 +246,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 			CHAR tszSWBuffer[4096];
 			memset(tszSWBuffer, '\0', sizeof(tszSWBuffer));
 			XControl_Info_SoftWare(tszSWBuffer, &nSWLen);
-			APIClient_Http_Request("POST", st_JsonRoot["tszIPAddr"].asCString(), tszSWBuffer);
+			APIClient_Http_Request("POST", tszIPAddr, tszSWBuffer);
 		}
 	}
 		break;
@@ -229,14 +268,18 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SERIAL:
-		m_nTaskSerial = st_JsonRoot["nSerial"].asUInt64();
+		CHAR tszSerial[MAX_PATH];
+		memset(tszSerial, '\0', MAX_PATH);
+
+		strcpy(tszSerial, st_ProtocolInfo.tszSourceStr);
+		m_nTaskSerial = _ttoi64(tszSerial);
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_USER:
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_NOTHINGTODO:
 		break;
 	default:
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求的操作码不支持,操作码:%d", st_JsonRoot["unOperatorCode"].asUInt());
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求的操作码不支持,操作码:%d", st_ProtocolInfo.nOPCode);
 		return FALSE;
 	}
 	return TRUE;

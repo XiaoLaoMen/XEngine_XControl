@@ -4,3 +4,5 @@ EXPORTS
 	Protocol_GetLastError
 
 	Protocol_Packet_EnumDevice
+
+	Protocol_Parse_JsonRoot
