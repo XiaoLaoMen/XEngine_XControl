@@ -1,21 +1,18 @@
 {
   "tszTaskUrl": "http://127.0.0.1:5580/",
-  "tszAPPDeamon": "./XEngine_XControl.exe",
   "bAutoStart": 0,
   "bHideWnd": 0,
   "ClientTime": {
-    "nCheckTime": 1,
-    "nErrorTime": 3,
     "nHTTPThreadTime": 1
   },
   "LogConfig": {
     "nMaxSize": 1024000,
     "nMaxCount": 10,
     "nLogLeave": 32,
-    "tszLogControl": "./XControl_Log/XEngien_Control.log",
-    "tszLogDeamon": "./XControl_Log/XEngien_Deamon.log"
+    "tszLogControl": "./XControl_Log/XEngien_XControl.log"
   },
   "VersionList": [
+    "4.0.0.1001 Build20230324",
     "3.4.0.1001 Build20221228",
     "3.3.1.1001 Build20221020",
     "3.3.0.1001 Build20220715",
