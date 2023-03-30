@@ -28,11 +28,11 @@ using namespace std;
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Define.h>
 #include <XEngine_Include/XEngine_SystemSdk/SystemApi_Error.h>
-#include <XEngine_Include/XEngine_AVCoder/AVCollect_Define.h>
-#include <XEngine_Include/XEngine_AVCoder/AVCollect_Error.h>
-#include <XEngine_Include/XEngine_AVCoder/VideoCoder_Define.h>
-#include <XEngine_Include/XEngine_AVCoder/AVHelp_Define.h>
-#include <XEngine_Include/XEngine_AVCoder/AVHelp_Error.h>
+#include <XEngine_Include/XEngine_AVCodec/AVCollect_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/AVCollect_Error.h>
+#include <XEngine_Include/XEngine_AVCodec/VideoCodec_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
+#include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
 #include <XEngine_Include/XEngine_StreamMedia/XClient_Define.h>
 #include <XEngine_Include/XEngine_StreamMedia/XClient_Error.h>
 #include "../../XControl_Protocol.h"
@@ -49,7 +49,7 @@ extern BOOL bRecord;
 extern XHANDLE xhVideo;
 extern XHANDLE xhAudio;
 extern XHANDLE xhStream;
-extern XLOG xhLog;
+extern XHANDLE xhLog;
 extern __int64u m_nTaskSerial;
 
 extern shared_ptr<std::thread> pSTDThread_Http;
@@ -65,8 +65,8 @@ extern XENGINE_SERVERCONFIG st_ServiceConfig;
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi.lib")
-#pragma comment(lib,"XEngine_AVCoder/XEngine_AVCollect.lib")
-#pragma comment(lib,"XEngine_AVCoder/XEngine_AVHelp.lib")
+#pragma comment(lib,"XEngine_AVCodec/XEngine_AVCollect.lib")
+#pragma comment(lib,"XEngine_AVCodec/XEngine_AVHelp.lib")
 #pragma comment(lib,"XEngine_StreamMedia/StreamMedia_XClient.lib")
 #ifdef _WIN64
 #ifdef _DEBUG

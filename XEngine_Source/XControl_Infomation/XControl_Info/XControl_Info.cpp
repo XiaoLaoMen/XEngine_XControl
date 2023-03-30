@@ -40,7 +40,7 @@ CXControl_Info::~CXControl_Info()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CXControl_Info::XControl_Info_HardWare(CHAR *ptszHWInfo,int *pInt_Len)
+BOOL CXControl_Info::XControl_Info_HardWare(CHAR* ptszHWInfo, int* pInt_Len)
 {
     BackManage_IsErrorOccur = FALSE;
 
@@ -53,21 +53,23 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR *ptszHWInfo,int *pInt_Len)
     int nDiskNumber = 0;
     CHAR** pptszRootName;
     CHAR tszOSName[MAX_PATH];
-    DWORD nOSVersion;
-    DWORD nOSBuild;
-    DWORD nOSPro;
-    CHAR tszOSInfo[1024];
+    CHAR tszOSVersion[MAX_PATH];
+    CHAR tszOSBuild[MAX_PATH];
+    DWORD nOSPro = 0;
+    CHAR tszOSInfo[2048];
     SYSTEMAPI_DISK_INFOMATION st_DiskInfo;
     SYSTEMAPI_CPU_INFOMATION st_CPUInfo;
     SYSTEMAPI_MEMORY_INFOMATION st_MemoryInfo;
     SYSTEMAPI_SERIAL_INFOMATION st_SDKSerial;
 
-    memset(tszOSName,'\0',sizeof(tszOSName));
-    memset(tszOSInfo,'\0',sizeof(tszOSInfo));
+    memset(tszOSName, '\0', sizeof(tszOSName));
+    memset(tszOSVersion, '\0', sizeof(tszOSVersion));
+    memset(tszOSBuild, '\0', sizeof(tszOSBuild));
+    memset(tszOSInfo, '\0', sizeof(tszOSInfo));
     memset(&st_MemoryInfo, '\0', sizeof(SYSTEMAPI_MEMORY_INFOMATION));
-    memset(&st_CPUInfo,'\0',sizeof(SYSTEMAPI_CPU_INFOMATION));
-    memset(&st_DiskInfo,'\0',sizeof(SYSTEMAPI_DISK_INFOMATION));
-    memset(&st_SDKSerial,'\0',sizeof(SYSTEMAPI_SERIAL_INFOMATION));
+    memset(&st_CPUInfo, '\0', sizeof(SYSTEMAPI_CPU_INFOMATION));
+    memset(&st_DiskInfo, '\0', sizeof(SYSTEMAPI_DISK_INFOMATION));
+    memset(&st_SDKSerial, '\0', sizeof(SYSTEMAPI_SERIAL_INFOMATION));
 
     if (!SystemApi_HardWare_GetDiskNumber(&pptszRootName, &nDiskNumber))
     {
@@ -79,7 +81,7 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR *ptszHWInfo,int *pInt_Len)
 
     CHAR tszDriveStr[MAX_PATH];
     memset(tszDriveStr, '\0', MAX_PATH);
-    
+
 #ifdef _MSC_BUILD
     GetLogicalDriveStringsA(MAX_PATH, tszDriveStr);
 #else
@@ -87,7 +89,7 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR *ptszHWInfo,int *pInt_Len)
     strcpy(tszDriveStr, lpszDir);
 #endif
 
-    if (!SystemApi_HardWare_GetDiskInfomation(tszDriveStr,&st_DiskInfo, XENGINE_SYSTEMSDK_API_SYSTEM_SIZE_MB))
+    if (!SystemApi_HardWare_GetDiskInfomation(tszDriveStr, &st_DiskInfo, XENGINE_SYSTEMSDK_API_SYSTEM_SIZE_MB))
     {
         BackManage_IsErrorOccur = TRUE;
         BackManage_dwErrorCode = SystemApi_GetLastError();
@@ -111,7 +113,7 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR *ptszHWInfo,int *pInt_Len)
         BackManage_dwErrorCode = SystemApi_GetLastError();
         return FALSE;
     }
-    if (!SystemApi_System_GetSystemVer(tszOSName,&nOSVersion,&nOSBuild,&nOSPro))
+    if (!SystemApi_System_GetSystemVer(tszOSName, tszOSVersion, tszOSBuild, &nOSPro))
     {
         BackManage_IsErrorOccur = TRUE;
         BackManage_dwErrorCode = SystemApi_GetLastError();
@@ -142,11 +144,11 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR *ptszHWInfo,int *pInt_Len)
     st_JsonSerial["BoardSerial"] = st_SDKSerial.tszBoardSerial;
     st_JsonSerial["SystemSerail"] = st_SDKSerial.tszSystemSerail;
 
-	int nListCount = 0;
+    int nListCount = 0;
     NETXAPI_CARDINFO** ppSt_ListIFInfo;
     NetXApi_Socket_GetCardInfo(&ppSt_ListIFInfo, &nListCount);
-	for (int i = 0; i < nListCount; i++)
-	{
+    for (int i = 0; i < nListCount; i++)
+    {
         Json::Value st_JsonIPAddr;
         st_JsonIPAddr["tszIFName"] = ppSt_ListIFInfo[i]->tszIFName;
         st_JsonIPAddr["tszIPAddr"] = ppSt_ListIFInfo[i]->tszIPAddr;
@@ -154,7 +156,7 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR *ptszHWInfo,int *pInt_Len)
         st_JsonIPAddr["tszDnsAddr"] = ppSt_ListIFInfo[i]->tszDnsAddr;
         st_JsonIPAddr["tszMacAddr"] = ppSt_ListIFInfo[i]->tszMacAddr;
         st_JsonNetCard.append(st_JsonIPAddr);
-	}
+    }
     BaseLib_OperatorMemory_Free((XPPPMEM)&ppSt_ListIFInfo, nListCount);
 
     st_JsonRoot["Disk"] = st_JsonDisk;
@@ -163,7 +165,7 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR *ptszHWInfo,int *pInt_Len)
     st_JsonRoot["Serial"] = st_JsonSerial;
     st_JsonRoot["NetCard"] = st_JsonNetCard;
 
-    sprintf(tszOSInfo, "%s %lu %lu %lu", tszOSName, nOSVersion, nOSBuild, nOSPro);
+    sprintf(tszOSInfo, "%s %s %s %lu", tszOSName, tszOSVersion, tszOSBuild, nOSPro);
     st_JsonRoot["Platfrom"] = tszOSInfo;
 
     if (*pInt_Len < (int)st_JsonRoot.toStyledString().length())
@@ -174,7 +176,7 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR *ptszHWInfo,int *pInt_Len)
         return FALSE;
     }
     *pInt_Len = st_JsonRoot.toStyledString().length();
-    memcpy(ptszHWInfo,st_JsonRoot.toStyledString().c_str(),*pInt_Len);
+    memcpy(ptszHWInfo, st_JsonRoot.toStyledString().c_str(), *pInt_Len);
 
     return TRUE;
 }
@@ -196,7 +198,7 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR *ptszHWInfo,int *pInt_Len)
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CXControl_Info::XControl_Info_SoftWare(CHAR *ptszSWInfo,int *pInt_Len)
+BOOL CXControl_Info::XControl_Info_SoftWare(CHAR* ptszSWInfo, int* pInt_Len)
 {
     BackManage_IsErrorOccur = FALSE;
 
@@ -207,15 +209,17 @@ BOOL CXControl_Info::XControl_Info_SoftWare(CHAR *ptszSWInfo,int *pInt_Len)
         return FALSE;
     }
     int nProcessCount;
-    DWORD nOSBuild;
     DWORD nOSProcessor;
-    DWORD nOSVersion;
+    CHAR tszOSBuild[MAX_PATH];
+    CHAR tszOSVersion[MAX_PATH];
     CHAR tszOSInfo[MAX_PATH];
     CHAR tszUPTime[MAX_PATH];
     CHAR tszOSUser[MAX_PATH];
     CHAR tszServicePacket[MAX_PATH];
     XENGINE_LIBTIMER st_LibTimer;
 
+    memset(tszOSBuild, '\0', MAX_PATH);
+    memset(tszOSVersion, '\0', MAX_PATH);
     memset(tszOSInfo, '\0', MAX_PATH);
     memset(tszUPTime, '\0', MAX_PATH);
     memset(tszOSUser, '\0', MAX_PATH);
@@ -223,25 +227,25 @@ BOOL CXControl_Info::XControl_Info_SoftWare(CHAR *ptszSWInfo,int *pInt_Len)
     memset(&st_LibTimer, '\0', sizeof(XENGINE_LIBTIMER));
 
 #ifdef _MSC_BUILD
-	DWORD dwMaxSize = MAX_PATH;
-	if (!GetComputerNameA(tszOSUser, &dwMaxSize))
-	{
-		BackManage_IsErrorOccur = TRUE;
-		BackManage_dwErrorCode = ERROR_NETENGINE_NETHELP_BACKMANAGE_GETINFO_SOFTWARE_GETNAME;
-		return FALSE;
-	}
+    DWORD dwMaxSize = MAX_PATH;
+    if (!GetComputerNameA(tszOSUser, &dwMaxSize))
+    {
+        BackManage_IsErrorOccur = TRUE;
+        BackManage_dwErrorCode = ERROR_NETENGINE_NETHELP_BACKMANAGE_GETINFO_SOFTWARE_GETNAME;
+        return FALSE;
+    }
 #else
-	struct passwd* pSt_Passwd = NULL;
-	pSt_Passwd = getpwuid(getuid());
-	if (NULL == pSt_Passwd)
-	{
-		BackManage_IsErrorOccur = TRUE;
-		BackManage_dwErrorCode = ERROR_NETENGINE_NETHELP_BACKMANAGE_GETINFO_SOFTWARE_GETNAME;
-		return FALSE;
-	}
+    struct passwd* pSt_Passwd = NULL;
+    pSt_Passwd = getpwuid(getuid());
+    if (NULL == pSt_Passwd)
+    {
+        BackManage_IsErrorOccur = TRUE;
+        BackManage_dwErrorCode = ERROR_NETENGINE_NETHELP_BACKMANAGE_GETINFO_SOFTWARE_GETNAME;
+        return FALSE;
+    }
     strcpy(tszOSUser, pSt_Passwd->pw_name);
 #endif
-    if (!SystemApi_System_GetSystemVer(tszOSInfo,&nOSVersion,&nOSBuild,&nOSProcessor))
+    if (!SystemApi_System_GetSystemVer(tszOSInfo, tszOSVersion, tszOSBuild, &nOSProcessor))
     {
         BackManage_IsErrorOccur = TRUE;
         BackManage_dwErrorCode = SystemApi_GetLastError();

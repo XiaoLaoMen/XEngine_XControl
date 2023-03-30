@@ -77,17 +77,17 @@ BOOL CProtocol_Packet::Protocol_Packet_EnumDevice(TCHAR* ptszMsgBuffer, int* pIn
 	for (int i = 0; i < nACount; i++)
 	{
 		Json::Value st_JsonObject;
-		st_JsonObject["nCardNumber"] = (*pppSt_AudioList)[i]->nCardNumber;
-		st_JsonObject["nDeviceNumber"] = (*pppSt_AudioList)[i]->nDeviceNumber;
-		st_JsonObject["tszName"] = (*pppSt_AudioList)[i]->tszName;
+		st_JsonObject["nDeviceInout"] = (*pppSt_AudioList)[i]->nDeviceInout;
+		st_JsonObject["nDeviceType"] = (*pppSt_AudioList)[i]->nDeviceType;
+		st_JsonObject["tszName"] = (*pppSt_AudioList)[i]->st_MetaInfo.tszKey;
 		st_JsonAudio.append(st_JsonObject);
 	}
 	for (int i = 0; i < nVCount; i++)
 	{
 		Json::Value st_JsonObject;
-		st_JsonObject["nCardNumber"] = (*pppSt_VideoList)[i]->nCardNumber;
-		st_JsonObject["nDeviceNumber"] = (*pppSt_VideoList)[i]->nDeviceNumber;
-		st_JsonObject["tszName"] = (*pppSt_VideoList)[i]->tszName;
+		st_JsonObject["nDeviceInout"] = (*pppSt_AudioList)[i]->nDeviceInout;
+		st_JsonObject["nDeviceType"] = (*pppSt_AudioList)[i]->nDeviceType;
+		st_JsonObject["tszName"] = (*pppSt_AudioList)[i]->st_MetaInfo.tszKey;
 		st_JsonVideo.append(st_JsonObject);
 	}
 	st_JsonArray["AArray"] = st_JsonAudio;

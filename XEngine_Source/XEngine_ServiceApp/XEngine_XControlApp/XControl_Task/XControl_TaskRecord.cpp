@@ -21,7 +21,7 @@ BOOL XControl_TaskRecord_Start(LPCTSTR lpszSMSUrl, BOOL bAudio)
 			return FALSE;
 		}
 		st_AVInfo.st_AudioInfo.bEnable = TRUE;
-		AVCollect_Audio_GetInfo(xhAudio, (ENUM_AVCOLLECT_AUDIOSAMPLEFORMAT*)&st_AVInfo.st_AudioInfo.nSampleFmt, &st_AVInfo.st_AudioInfo.nBitRate, &st_AVInfo.st_AudioInfo.nSampleRate, &st_AVInfo.st_AudioInfo.nChannel);
+		AVCollect_Audio_GetInfo(xhAudio, &st_AVInfo);
 	}
 	//屏幕采集
 	AVCOLLECT_SCREENINFO st_AVScreen;
@@ -41,7 +41,7 @@ BOOL XControl_TaskRecord_Start(LPCTSTR lpszSMSUrl, BOOL bAudio)
 	}
 
 	st_AVInfo.st_VideoInfo.bEnable = TRUE;
-	AVCollect_Video_GetInfo(xhVideo, &st_AVInfo.st_VideoInfo.nWidth, &st_AVInfo.st_VideoInfo.nHeight, &st_AVInfo.st_VideoInfo.nBitRate);
+	AVCollect_Video_GetInfo(xhVideo, &st_AVInfo);
 
 	xhStream = XClient_StreamPush_Init(lpszSMSUrl, &st_AVInfo);
 	if (NULL == xhStream)
