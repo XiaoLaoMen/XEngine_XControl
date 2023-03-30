@@ -7,7 +7,7 @@ void CALLBACK XEngine_AVCollect_CBAudio(uint8_t* punStringAudio, int nVLen, LPVO
 {
 }
 
-BOOL XControl_TaskRecord_Start(LPCTSTR lpszSMSUrl, BOOL bAudio)
+BOOL XControl_TaskRecord_Start(LPCSTR lpszSMSUrl, BOOL bAudio)
 {
 	XENGINE_PROTOCOL_AVINFO st_AVInfo;
 	memset(&st_AVInfo, '\0', sizeof(XENGINE_PROTOCOL_AVINFO));

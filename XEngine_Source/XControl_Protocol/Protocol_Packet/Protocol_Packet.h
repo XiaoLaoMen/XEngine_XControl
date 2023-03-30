@@ -17,8 +17,8 @@ public:
     CProtocol_Packet();
     ~CProtocol_Packet();
 public:
-    BOOL Protocol_Packet_EnumDevice(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO*** pppSt_AudioList, AVHELP_DEVICEINFO*** pppSt_VideoList, int nACount, int nVCount);
-    BOOL Protocol_Packet_ListFile(TCHAR* ptszMsgBuffer, int* pInt_MsgLen, CHAR*** pppszFileList, int nListCount);
+    BOOL Protocol_Packet_EnumDevice(CHAR* ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO*** pppSt_AudioList, AVHELP_DEVICEINFO*** pppSt_VideoList, int nACount, int nVCount);
+    BOOL Protocol_Packet_ListFile(CHAR* ptszMsgBuffer, int* pInt_MsgLen, CHAR*** pppszFileList, int nListCount);
 protected:
 private:
 };

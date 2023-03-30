@@ -261,7 +261,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		AVHELP_DEVICEINFO** ppSt_VideoList;
 
 		int nMsgLen = 0;
-		TCHAR tszMsgBuffer[4096];
+		CHAR tszMsgBuffer[4096];
 		memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 
 		AVHelp_Device_EnumDevice(&ppSt_AudioList, &ppSt_VideoList, &nACount, &nVCount);

@@ -17,19 +17,19 @@ public:
     CProtocol_Parse();
     ~CProtocol_Parse();
 public:
-    BOOL Protocol_Parse_JsonRoot(LPCTSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo);
-    BOOL Protocol_Parse_Download(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszFileUrl, TCHAR* ptszSaveUrl);
-    BOOL Protocol_Parse_Delete(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszDelete);
-    BOOL Protocol_Parse_UPFile(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszUPFile, TCHAR* ptszUPUrl);
-    BOOL Protocol_Parse_ListFile(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszFindPath, TCHAR* ptszPostUrl);
-    BOOL Protocol_Parse_Exec(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszExecFile, int* pInt_ExecShow);
-    BOOL Protocol_Parse_Message(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszMessageBox);
-    BOOL Protocol_Parse_Stop(LPCTSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_ProcessID);
-    BOOL Protocol_Parse_Shutdown(LPCTSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_SDType);
-    BOOL Protocol_Parse_System(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszExecCmd);
-    BOOL Protocol_Parse_Report(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszIPAddr, int* pInt_Type);
-    BOOL Protocol_Parse_EnumDevice(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszIPAddr);
-    BOOL Protocol_Parse_Serial(LPCTSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial);
+    BOOL Protocol_Parse_JsonRoot(LPCSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo);
+    BOOL Protocol_Parse_Download(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszFileUrl, CHAR* ptszSaveUrl);
+    BOOL Protocol_Parse_Delete(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszDelete);
+    BOOL Protocol_Parse_UPFile(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszUPFile, CHAR* ptszUPUrl);
+    BOOL Protocol_Parse_ListFile(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszFindPath, CHAR* ptszPostUrl);
+    BOOL Protocol_Parse_Exec(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszExecFile, int* pInt_ExecShow);
+    BOOL Protocol_Parse_Message(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszMessageBox);
+    BOOL Protocol_Parse_Stop(LPCSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_ProcessID);
+    BOOL Protocol_Parse_Shutdown(LPCSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_SDType);
+    BOOL Protocol_Parse_System(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszExecCmd);
+    BOOL Protocol_Parse_Report(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszIPAddr, int* pInt_Type);
+    BOOL Protocol_Parse_EnumDevice(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszIPAddr);
+    BOOL Protocol_Parse_Serial(LPCSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial);
 protected:
 private:
 };

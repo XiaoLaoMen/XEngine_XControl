@@ -43,7 +43,7 @@ CProtocol_Parse::~CProtocol_Parse()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_JsonRoot(LPCTSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo)
+BOOL CProtocol_Parse::Protocol_Parse_JsonRoot(LPCSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -96,7 +96,7 @@ BOOL CProtocol_Parse::Protocol_Parse_JsonRoot(LPCTSTR lpszMsgBuffer, int nMsgLen
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Download(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszFileUrl, TCHAR* ptszSaveUrl)
+BOOL CProtocol_Parse::Protocol_Parse_Download(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszFileUrl, CHAR* ptszSaveUrl)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -117,8 +117,8 @@ BOOL CProtocol_Parse::Protocol_Parse_Download(LPCTSTR lpszMsgBuffer, int nMsgLen
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
 		return FALSE;
 	}
-	_tcscpy(ptszFileUrl, st_JsonRoot["DownloadUrl"].asCString());
-	_tcscpy(ptszSaveUrl, st_JsonRoot["SaveUrl"].asCString());
+	strcpy(ptszFileUrl, st_JsonRoot["DownloadUrl"].asCString());
+	strcpy(ptszSaveUrl, st_JsonRoot["SaveUrl"].asCString());
 
 	return TRUE;
 }
@@ -145,7 +145,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Download(LPCTSTR lpszMsgBuffer, int nMsgLen
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Delete(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszDelete)
+BOOL CProtocol_Parse::Protocol_Parse_Delete(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszDelete)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -166,7 +166,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Delete(LPCTSTR lpszMsgBuffer, int nMsgLen, 
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
 		return FALSE;
 	}
-	_tcscpy(ptszDelete, st_JsonRoot["DeleteFile"].asCString());
+	strcpy(ptszDelete, st_JsonRoot["DeleteFile"].asCString());
 
 	return TRUE;
 }
@@ -198,7 +198,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Delete(LPCTSTR lpszMsgBuffer, int nMsgLen, 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_UPFile(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszUPFile, TCHAR* ptszUPUrl)
+BOOL CProtocol_Parse::Protocol_Parse_UPFile(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszUPFile, CHAR* ptszUPUrl)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -219,8 +219,8 @@ BOOL CProtocol_Parse::Protocol_Parse_UPFile(LPCTSTR lpszMsgBuffer, int nMsgLen, 
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
 		return FALSE;
 	}
-	_tcscpy(ptszUPFile, st_JsonRoot["UPLoadFile"].asCString());
-	_tcscpy(ptszUPUrl, st_JsonRoot["UPLoadUrl"].asCString());
+	strcpy(ptszUPFile, st_JsonRoot["UPLoadFile"].asCString());
+	strcpy(ptszUPUrl, st_JsonRoot["UPLoadUrl"].asCString());
 
 	return TRUE;
 }
@@ -252,7 +252,7 @@ BOOL CProtocol_Parse::Protocol_Parse_UPFile(LPCTSTR lpszMsgBuffer, int nMsgLen, 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_ListFile(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszFindPath, TCHAR* ptszPostUrl)
+BOOL CProtocol_Parse::Protocol_Parse_ListFile(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszFindPath, CHAR* ptszPostUrl)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -273,8 +273,8 @@ BOOL CProtocol_Parse::Protocol_Parse_ListFile(LPCTSTR lpszMsgBuffer, int nMsgLen
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
 		return FALSE;
 	}
-	_tcscpy(ptszFindPath, st_JsonRoot["FilePath"].asCString());
-	_tcscpy(ptszPostUrl, st_JsonRoot["PostUrl"].asCString());
+	strcpy(ptszFindPath, st_JsonRoot["FilePath"].asCString());
+	strcpy(ptszPostUrl, st_JsonRoot["PostUrl"].asCString());
 
 	return TRUE;
 }
@@ -306,7 +306,7 @@ BOOL CProtocol_Parse::Protocol_Parse_ListFile(LPCTSTR lpszMsgBuffer, int nMsgLen
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Exec(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszExecFile, int* pInt_ExecShow)
+BOOL CProtocol_Parse::Protocol_Parse_Exec(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszExecFile, int* pInt_ExecShow)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -328,7 +328,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Exec(LPCTSTR lpszMsgBuffer, int nMsgLen, TC
 		return FALSE;
 	}
 	*pInt_ExecShow = st_JsonRoot["ExecShow"].asInt();
-	_tcscpy(ptszExecFile, st_JsonRoot["ExecFile"].asCString());
+	strcpy(ptszExecFile, st_JsonRoot["ExecFile"].asCString());
 
 	return TRUE;
 }
@@ -355,7 +355,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Exec(LPCTSTR lpszMsgBuffer, int nMsgLen, TC
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Message(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszMessageBox)
+BOOL CProtocol_Parse::Protocol_Parse_Message(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszMessageBox)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -376,7 +376,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Message(LPCTSTR lpszMsgBuffer, int nMsgLen,
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
 		return FALSE;
 	}
-	_tcscpy(ptszMessageBox, st_JsonRoot["MessageBox"].asCString());
+	strcpy(ptszMessageBox, st_JsonRoot["MessageBox"].asCString());
 
 	return TRUE;
 }
@@ -403,7 +403,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Message(LPCTSTR lpszMsgBuffer, int nMsgLen,
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Stop(LPCTSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_ProcessID)
+BOOL CProtocol_Parse::Protocol_Parse_Stop(LPCSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_ProcessID)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -451,7 +451,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Stop(LPCTSTR lpszMsgBuffer, int nMsgLen, DW
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Shutdown(LPCTSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_SDType)
+BOOL CProtocol_Parse::Protocol_Parse_Shutdown(LPCSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_SDType)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -499,7 +499,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Shutdown(LPCTSTR lpszMsgBuffer, int nMsgLen
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_System(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszExecCmd)
+BOOL CProtocol_Parse::Protocol_Parse_System(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszExecCmd)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -520,7 +520,7 @@ BOOL CProtocol_Parse::Protocol_Parse_System(LPCTSTR lpszMsgBuffer, int nMsgLen, 
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
 		return FALSE;
 	}
-	_tcscpy(ptszExecCmd, st_JsonRoot["tszExecCmd"].asCString());
+	strcpy(ptszExecCmd, st_JsonRoot["tszExecCmd"].asCString());
 
 	return TRUE;
 }
@@ -552,7 +552,7 @@ BOOL CProtocol_Parse::Protocol_Parse_System(LPCTSTR lpszMsgBuffer, int nMsgLen, 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Report(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszIPAddr, int* pInt_Type)
+BOOL CProtocol_Parse::Protocol_Parse_Report(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszIPAddr, int* pInt_Type)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -574,7 +574,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Report(LPCTSTR lpszMsgBuffer, int nMsgLen, 
 		return FALSE;
 	}
 	*pInt_Type = st_JsonRoot["nType"].asInt();
-	_tcscpy(ptszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
+	strcpy(ptszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
 
 	return TRUE;
 }
@@ -601,7 +601,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Report(LPCTSTR lpszMsgBuffer, int nMsgLen, 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_EnumDevice(LPCTSTR lpszMsgBuffer, int nMsgLen, TCHAR* ptszIPAddr)
+BOOL CProtocol_Parse::Protocol_Parse_EnumDevice(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszIPAddr)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -622,7 +622,7 @@ BOOL CProtocol_Parse::Protocol_Parse_EnumDevice(LPCTSTR lpszMsgBuffer, int nMsgL
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
 		return FALSE;
 	}
-	_tcscpy(ptszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
+	strcpy(ptszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
 
 	return TRUE;
 }
@@ -649,7 +649,7 @@ BOOL CProtocol_Parse::Protocol_Parse_EnumDevice(LPCTSTR lpszMsgBuffer, int nMsgL
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Serial(LPCTSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial)
+BOOL CProtocol_Parse::Protocol_Parse_Serial(LPCSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial)
 {
 	Protocol_IsErrorOccur = FALSE;
 
