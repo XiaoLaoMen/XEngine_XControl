@@ -13,12 +13,12 @@ Lightweight background service management tool,control your computer with HTTP o
 1. Support a variety of task lists and custom tasks  
 2. Support some advanced features  
 3. Support HTTP task acceptance processing  
-4. support deamon local service and process and Strategy control
+4. Support screen record push stream
 
 #### Installation
 
 #### XEngine Evn
-you must install XEngine,need V7.46 or above,install XEngine can be refer to xengine Readme docment  
+you must install XEngine,need V8.2 or above,install XEngine can be refer to xengine Readme docment  
 GITEE:https://gitee.com/xyry/libxengine  
 GITHUB:https://github.com/libxengine/xengine
 
@@ -29,15 +29,15 @@ Linux Exection:sudo ./XEngine_LINEnv.sh -i 3
 Macos Exection:./XEngine_LINEnv.sh -i 3
 
 #### Windows
-use vs open and complie,support windows 7sp1 and above   
+use vs open and complie,support windows 10 and above   
 Just Run it.
 
 #### Linux
 Linux use Makefile to complie  
-supproted ubuntu x64 or RockyLinux x64  
+supproted ubuntu22.04 x64 or RockyLinux9 x64  
 
 #### MacOS
-Linux use Makefile to complie,terminal exection,Requires mac 12 and above  
+Linux use Makefile to complie,terminal exection,Requires mac 13
 
 ##### complie
 execute command in XEngine_Source path

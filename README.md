@@ -13,12 +13,12 @@ c c++
 1. 支持多种多样的任务列表和自定义任务  
 2. 支持一些高级特性  
 3. 支持HTTP任务接受处理   
-4. 支持守护本地服务和程序以及策略控制  
+4. 支持屏幕录像推流
 
 ## 安装教程
 
 #### XEngine环境
-必须安装XEngine,版本需要V7.46或者以上版本,安装XEngine可以参考其Readme文档  
+必须安装XEngine,版本需要V8.2或者以上版本,安装XEngine可以参考其Readme文档  
 GITEE:https://gitee.com/xyry/libxengine  
 GITHUB:https://github.com/libxengine/xengine
 
@@ -29,16 +29,16 @@ Linux执行:sudo ./XEngine_LINEnv.sh -i 3
 macos执行:./XEngine_LINEnv.sh -i 3  
 
 #### Windows
-使用VS打开并且编译,支持WINDOWS 7SP1以上系统  
+使用VS打开并且编译,支持WINDOWS 10以及以上系统  
 直接运行即可
 
 #### Linux
 Linux使用Makefile编译  
-UBUNTU20.04 x64或者RockyLinux8 x64均可  
+UBUNTU22.04 x64或者RockyLinux9 x64均可  
 在控制台运行
 
 #### MacOS
-使用makefile编译,控制台运行,需要mac 12以及以上版本  
+使用makefile编译,控制台运行,需要mac 13版本  
 在控制台运行
 
 ##### 编译命令
