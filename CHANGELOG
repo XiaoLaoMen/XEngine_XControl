@@ -1,3 +1,23 @@
+XEngine_XControl V4.0.0.1001
+
+添加:获取设备音视频列表
+添加:录像代码
+优化:退出代码
+优化:协议解析函数
+修改:协议解析代码全部移动到协议模块
+修改:匹配XENGINE 8.2版本
+修改:编译脚本
+删除:移出守护进程控制程序和代码
+
+added:get device audio and video list
+added:record code
+improved:exit process
+improved:protocol parse for protocol module
+modify:match xengine v8.2
+modify:makefile
+modify:protocol parse function move to protocol module
+delete:move deamon and control app into serverapp dir
+======================================================================================
 XEngine_XControl V3.4.0.1001
 
 增加:使用配置文件中的文件名为deamon日志名
