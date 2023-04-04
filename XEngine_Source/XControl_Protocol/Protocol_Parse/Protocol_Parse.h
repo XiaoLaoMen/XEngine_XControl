@@ -17,19 +17,19 @@ public:
     CProtocol_Parse();
     ~CProtocol_Parse();
 public:
-    BOOL Protocol_Parse_JsonRoot(LPCSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo);
-    BOOL Protocol_Parse_Download(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszFileUrl, CHAR* ptszSaveUrl);
-    BOOL Protocol_Parse_Delete(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszDelete);
-    BOOL Protocol_Parse_UPFile(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszUPFile, CHAR* ptszUPUrl);
-    BOOL Protocol_Parse_ListFile(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszFindPath, CHAR* ptszPostUrl);
-    BOOL Protocol_Parse_Exec(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszExecFile, int* pInt_ExecShow);
-    BOOL Protocol_Parse_Message(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszMessageBox);
-    BOOL Protocol_Parse_Stop(LPCSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_ProcessID);
-    BOOL Protocol_Parse_Shutdown(LPCSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_SDType);
-    BOOL Protocol_Parse_System(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszExecCmd);
-    BOOL Protocol_Parse_Report(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszIPAddr, int* pInt_Type);
-    BOOL Protocol_Parse_EnumDevice(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszIPAddr);
-    BOOL Protocol_Parse_Serial(LPCSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial);
+    XBOOL Protocol_Parse_JsonRoot(LPCXSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo);
+    XBOOL Protocol_Parse_Download(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFileUrl, XCHAR* ptszSaveUrl);
+    XBOOL Protocol_Parse_Delete(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszDelete);
+    XBOOL Protocol_Parse_UPFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszUPFile, XCHAR* ptszUPUrl);
+    XBOOL Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFindPath, XCHAR* ptszPostUrl);
+    XBOOL Protocol_Parse_Exec(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecFile, int* pInt_ExecShow);
+    XBOOL Protocol_Parse_Message(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMessageBox);
+    XBOOL Protocol_Parse_Stop(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_ProcessID);
+    XBOOL Protocol_Parse_Shutdown(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_SDType);
+    XBOOL Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecCmd);
+    XBOOL Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr, int* pInt_Type);
+    XBOOL Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr);
+    XBOOL Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial);
 protected:
 private:
 };

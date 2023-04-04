@@ -11,14 +11,14 @@
 //    Purpose:     后台管理服务导出函数实现
 //    History:
 *********************************************************************/
-BOOL BackManage_IsErrorOccur = FALSE;
-DWORD BackManage_dwErrorCode = 0;
+XBOOL BackManage_IsErrorOccur = FALSE;
+XLONG BackManage_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CXControl_Info m_XInfo;
 //////////////////////////////////////////////////////////////////////////
 //                    导出的函数
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD XInfo_GetLastError(int* pInt_SysError)
+extern "C" XLONG XInfo_GetLastError(int* pInt_SysError)
 {
 	if (NULL != pInt_SysError)
 	{
@@ -29,11 +29,11 @@ extern "C" DWORD XInfo_GetLastError(int* pInt_SysError)
 /************************************************************************/
 /*                    导出的系统信息获取函数                            */
 /************************************************************************/
-extern "C" BOOL XControl_Info_HardWare(CHAR * ptszHWInfo, int* pInt_Len)
+extern "C" XBOOL XControl_Info_HardWare(XCHAR * ptszHWInfo, int* pInt_Len)
 {
 	return m_XInfo.XControl_Info_HardWare(ptszHWInfo, pInt_Len);
 }
-extern "C" BOOL XControl_Info_SoftWare(CHAR * ptszSWInfo, int* pInt_Len)
+extern "C" XBOOL XControl_Info_SoftWare(XCHAR * ptszSWInfo, int* pInt_Len)
 {
 	return m_XInfo.XControl_Info_SoftWare(ptszSWInfo, pInt_Len);
 }

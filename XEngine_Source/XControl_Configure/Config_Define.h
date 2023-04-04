@@ -15,16 +15,16 @@
 //////////////////////////////////////////////////////////////////////////
 typedef struct tag_XEngine_ServerConfig
 {
-	CHAR tszTaskUrl[MAX_PATH];
-	BOOL bAutoStart;
-	BOOL bHideWnd;
+	XCHAR tszTaskUrl[MAX_PATH];
+	XBOOL bAutoStart;
+	XBOOL bHideWnd;
 	struct
 	{
 		int nHTTPThreadTime;
 	}st_Time;
 	struct
 	{
-		CHAR tszLogControl[MAX_PATH];
+		XCHAR tszLogControl[MAX_PATH];
 		int nMaxSize;
 		int nMaxCount;
 		int nLogLeave;
@@ -37,7 +37,7 @@ typedef struct tag_XEngine_ServerConfig
 //////////////////////////////////////////////////////////////////////////
 //                        导出的函数
 //////////////////////////////////////////////////////////////////////////
-extern "C" DWORD Config_GetLastError(int* pInt_SysError = NULL);
+extern "C" XLONG Config_GetLastError(int* pInt_SysError = NULL);
 /************************************************************************/
 /*                        配置读取导出                                  */
 /************************************************************************/
@@ -59,4 +59,4 @@ extern "C" DWORD Config_GetLastError(int* pInt_SysError = NULL);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" BOOL Config_Json_File(LPCSTR lpszConfigFile, XENGINE_SERVERCONFIG* pSt_FileConfig);
+extern "C" XBOOL Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCONFIG* pSt_FileConfig);

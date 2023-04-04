@@ -43,7 +43,7 @@ CProtocol_Parse::~CProtocol_Parse()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_JsonRoot(LPCSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo)
+XBOOL CProtocol_Parse::Protocol_Parse_JsonRoot(LPCXSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -96,7 +96,7 @@ BOOL CProtocol_Parse::Protocol_Parse_JsonRoot(LPCSTR lpszMsgBuffer, int nMsgLen,
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Download(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszFileUrl, CHAR* ptszSaveUrl)
+XBOOL CProtocol_Parse::Protocol_Parse_Download(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFileUrl, XCHAR* ptszSaveUrl)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -145,7 +145,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Download(LPCSTR lpszMsgBuffer, int nMsgLen,
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Delete(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszDelete)
+XBOOL CProtocol_Parse::Protocol_Parse_Delete(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszDelete)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -198,7 +198,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Delete(LPCSTR lpszMsgBuffer, int nMsgLen, C
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_UPFile(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszUPFile, CHAR* ptszUPUrl)
+XBOOL CProtocol_Parse::Protocol_Parse_UPFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszUPFile, XCHAR* ptszUPUrl)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -252,7 +252,7 @@ BOOL CProtocol_Parse::Protocol_Parse_UPFile(LPCSTR lpszMsgBuffer, int nMsgLen, C
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_ListFile(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszFindPath, CHAR* ptszPostUrl)
+XBOOL CProtocol_Parse::Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFindPath, XCHAR* ptszPostUrl)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -306,7 +306,7 @@ BOOL CProtocol_Parse::Protocol_Parse_ListFile(LPCSTR lpszMsgBuffer, int nMsgLen,
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Exec(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszExecFile, int* pInt_ExecShow)
+XBOOL CProtocol_Parse::Protocol_Parse_Exec(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecFile, int* pInt_ExecShow)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -355,7 +355,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Exec(LPCSTR lpszMsgBuffer, int nMsgLen, CHA
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Message(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszMessageBox)
+XBOOL CProtocol_Parse::Protocol_Parse_Message(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMessageBox)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -403,7 +403,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Message(LPCSTR lpszMsgBuffer, int nMsgLen, 
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Stop(LPCSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_ProcessID)
+XBOOL CProtocol_Parse::Protocol_Parse_Stop(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_ProcessID)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -451,7 +451,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Stop(LPCSTR lpszMsgBuffer, int nMsgLen, DWO
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Shutdown(LPCSTR lpszMsgBuffer, int nMsgLen, DWORD* pInt_SDType)
+XBOOL CProtocol_Parse::Protocol_Parse_Shutdown(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_SDType)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -499,7 +499,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Shutdown(LPCSTR lpszMsgBuffer, int nMsgLen,
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_System(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszExecCmd)
+XBOOL CProtocol_Parse::Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecCmd)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -552,7 +552,7 @@ BOOL CProtocol_Parse::Protocol_Parse_System(LPCSTR lpszMsgBuffer, int nMsgLen, C
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Report(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszIPAddr, int* pInt_Type)
+XBOOL CProtocol_Parse::Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr, int* pInt_Type)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -601,7 +601,7 @@ BOOL CProtocol_Parse::Protocol_Parse_Report(LPCSTR lpszMsgBuffer, int nMsgLen, C
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_EnumDevice(LPCSTR lpszMsgBuffer, int nMsgLen, CHAR* ptszIPAddr)
+XBOOL CProtocol_Parse::Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -649,7 +649,7 @@ BOOL CProtocol_Parse::Protocol_Parse_EnumDevice(LPCSTR lpszMsgBuffer, int nMsgLe
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Parse::Protocol_Parse_Serial(LPCSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial)
+XBOOL CProtocol_Parse::Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial)
 {
 	Protocol_IsErrorOccur = FALSE;
 

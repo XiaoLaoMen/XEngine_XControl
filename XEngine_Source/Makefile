@@ -9,12 +9,12 @@ XCONTROL_INFO_PATH = ./XControl_Infomation
 XCONTROL_CONFIG_PATH = ./XControl_Configure
 XCONTROL_PROTOCOL_PATH = ./XControl_Protocol
 
-XCONTROL_APP_PATH = ./XEngine_XControl
+XCONTROL_APP_PATH = ./XEngine_ServiceApp/XEngine_XControlApp
 
-NETENGINE_LIB = libjsoncpp.so libXControl_Infomation.so libXControl_Configure.so libXControl_Protocol.so XEngine_XControl.exe
+XENGINE_MODULE = libjsoncpp.so libXControl_Infomation.so libXControl_Configure.so libXControl_Protocol.so XEngine_XControl.exe
 
 .PHONY:MakeAll 
-MakeAll:$(NETENGINE_LIB)
+MakeAll:$(XENGINE_MODULE)
 	
 libjsoncpp.so:
 	make -C $(XCONTROL_JSON_PATH) $(FLAGS)
@@ -32,8 +32,8 @@ XEngine_XControl.exe:
 
 SetFlags_Install:
 	export FLAGS=InstallAll
-InstallAll:SetFlags_Install $(NETENGINE_LIB) 
+InstallAll:SetFlags_Install $(XENGINE_MODULE) 
 
 SetFlags_Clean:
 	export FLAGS=CleanAll
-CleanAll:SetFlags_Clean $(NETENGINE_LIB)
+CleanAll:SetFlags_Clean $(XENGINE_MODULE)

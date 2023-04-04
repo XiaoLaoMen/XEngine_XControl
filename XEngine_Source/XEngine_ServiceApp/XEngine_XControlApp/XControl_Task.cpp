@@ -2,15 +2,15 @@
 
 XHTHREAD XControl_Thread_HttpTask()
 {
-	TCHAR tszTaskUrl[MAX_PATH];
+	XCHAR tszTaskUrl[MAX_PATH];
 	memset(tszTaskUrl, '\0', MAX_PATH);
 
 	while (bIsRun)
 	{
 		int nBLen = 0;
-		CHAR* ptszMsgBody = NULL;
+		XCHAR* ptszMsgBody = NULL;
 
-		_stprintf(tszTaskUrl, _T("api?function=gettask&serial=%llu"), m_nTaskSerial);
+		sprintf(tszTaskUrl, "api?function=gettask&serial=%llu", m_nTaskSerial);
 
 		if (APIClient_Http_Request("GET", st_ServiceConfig.tszTaskUrl, NULL, NULL, &ptszMsgBody, &nBLen))
 		{
@@ -22,10 +22,10 @@ XHTHREAD XControl_Thread_HttpTask()
 	return 0;
 }
 //////////////////////////////////////////////////////////////////////////
-BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
+XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	int nSDLen = 0;
-	CHAR tszSDBuffer[4096];
+	XCHAR tszSDBuffer[4096];
 	XCONTROL_PROTOCOLINFO st_ProtocolInfo;
 	
 	memset(tszSDBuffer, '\0', sizeof(tszSDBuffer));
@@ -48,8 +48,8 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	{
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DOWNFILE:
 	{
-		CHAR tszFileUrl[MAX_PATH];
-		CHAR tszSaveUrl[MAX_PATH];
+		XCHAR tszFileUrl[MAX_PATH];
+		XCHAR tszSaveUrl[MAX_PATH];
 
 		memset(tszFileUrl, '\0', MAX_PATH);
 		memset(tszSaveUrl, '\0', MAX_PATH);
@@ -78,7 +78,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DELETEFILE:
-		CHAR tszDelFile[MAX_PATH];
+		XCHAR tszDelFile[MAX_PATH];
 		memset(tszDelFile, '\0', MAX_PATH);
 
 		Protocol_Parse_Delete(lpszMsgBuffer, nMsgLen, tszDelFile);
@@ -89,7 +89,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DELETEDIR:
-		CHAR tszDelDir[MAX_PATH];
+		XCHAR tszDelDir[MAX_PATH];
 		memset(tszDelDir, '\0', MAX_PATH);
 
 		Protocol_Parse_Delete(lpszMsgBuffer, nMsgLen, tszDelDir);
@@ -101,8 +101,8 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_UPFILE:
 	{
-		CHAR tszUPFile[MAX_PATH];
-		CHAR tszUPUrl[MAX_PATH];
+		XCHAR tszUPFile[MAX_PATH];
+		XCHAR tszUPUrl[MAX_PATH];
 
 		memset(tszUPFile, '\0', MAX_PATH);
 		memset(tszUPUrl, '\0', MAX_PATH);
@@ -133,9 +133,9 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_GETLIST:
 	{
 		int nListCount = 0;
-		CHAR** ppszFileList;
-		CHAR tszFindPath[MAX_PATH];
-		CHAR tszPostUrl[MAX_PATH];
+		XCHAR** ppszFileList;
+		XCHAR tszFindPath[MAX_PATH];
+		XCHAR tszPostUrl[MAX_PATH];
 
 		memset(tszFindPath, '\0', MAX_PATH);
 		memset(tszPostUrl, '\0', MAX_PATH);
@@ -160,9 +160,9 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_EXEC:
 	{
-		DWORD dwProcessID = 0;
+		XLONG dwProcessID = 0;
 		int nExeType = 0;
-		CHAR tszExecFile[MAX_PATH];
+		XCHAR tszExecFile[MAX_PATH];
 
 		memset(tszExecFile, '\0', MAX_PATH);
 
@@ -179,7 +179,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_POPMESSAGE:
 	{
-		CHAR tszMessageBox[MAX_PATH];
+		XCHAR tszMessageBox[MAX_PATH];
 		memset(tszMessageBox, '\0', MAX_PATH);
 
 		Protocol_Parse_Message(lpszMsgBuffer, nMsgLen, tszMessageBox);
@@ -191,7 +191,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_STOPPROCESS:
 	{
-		DWORD dwProcessID = 0;
+		XLONG dwProcessID = 0;
 
 		Protocol_Parse_Stop(lpszMsgBuffer, nMsgLen, &dwProcessID);
 		if (!SystemApi_Process_Stop(NULL, dwProcessID))
@@ -203,7 +203,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SHUTDOWN:
 	{
-		DWORD dwType = 0;
+		XLONG dwType = 0;
 
 		Protocol_Parse_Shutdown(lpszMsgBuffer, nMsgLen, &dwType);
 		if (!SystemApi_System_Shutdown(dwType))
@@ -214,7 +214,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ECMD:
-		CHAR tszExecCmd[MAX_PATH];
+		XCHAR tszExecCmd[MAX_PATH];
 		memset(tszExecCmd, '\0', MAX_PATH);
 
 		Protocol_Parse_System(lpszMsgBuffer, nMsgLen, tszExecCmd);
@@ -227,7 +227,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_REPORT:
 	{
 		int nType = 0;
-		CHAR tszIPAddr[MAX_PATH];
+		XCHAR tszIPAddr[MAX_PATH];
 
 		memset(tszIPAddr, '\0', MAX_PATH);
 
@@ -235,7 +235,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		if (0 == nType)
 		{
 			int nHWLen = 4096;
-			CHAR tszHWBuffer[4096];
+			XCHAR tszHWBuffer[4096];
 			memset(tszHWBuffer, '\0', sizeof(tszHWBuffer));
 			XControl_Info_HardWare(tszHWBuffer, &nHWLen);
 			APIClient_Http_Request("POST", tszIPAddr, tszHWBuffer);
@@ -243,7 +243,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		else
 		{
 			int nSWLen = 4096;
-			CHAR tszSWBuffer[4096];
+			XCHAR tszSWBuffer[4096];
 			memset(tszSWBuffer, '\0', sizeof(tszSWBuffer));
 			XControl_Info_SoftWare(tszSWBuffer, &nSWLen);
 			APIClient_Http_Request("POST", tszIPAddr, tszSWBuffer);
@@ -252,7 +252,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ENUMDEVICE:
 	{
-		CHAR tszIPAddr[MAX_PATH];
+		XCHAR tszIPAddr[MAX_PATH];
 		memset(tszIPAddr, '\0', MAX_PATH);
 		
 		int nACount = 0;
@@ -261,7 +261,7 @@ BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen)
 		AVHELP_DEVICEINFO** ppSt_VideoList;
 
 		int nMsgLen = 0;
-		CHAR tszMsgBuffer[4096];
+		XCHAR tszMsgBuffer[4096];
 		memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
 
 		AVHelp_Device_EnumDevice(&ppSt_AudioList, &ppSt_VideoList, &nACount, &nVCount);

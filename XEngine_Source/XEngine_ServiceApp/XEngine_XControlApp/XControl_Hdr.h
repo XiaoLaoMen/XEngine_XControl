@@ -33,8 +33,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCodec/VideoCodec_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
-#include <XEngine_Include/XEngine_StreamMedia/XClient_Define.h>
-#include <XEngine_Include/XEngine_StreamMedia/XClient_Error.h>
+#include <XEngine_Include/XEngine_StreamMedia/XStream_Define.h>
+#include <XEngine_Include/XEngine_StreamMedia/XStream_Error.h>
 #include "../../XControl_Protocol.h"
 #include "../../XControl_Configure/Config_Define.h"
 #include "../../XControl_Configure/Config_Error.h"
@@ -44,8 +44,8 @@ using namespace std;
 #include "../../XControl_Protocol/Protocol_Error.h"
 #include "./XControl_Task/XControl_TaskRecord.h"
 
-extern BOOL bIsRun;
-extern BOOL bRecord;
+extern XBOOL bIsRun;
+extern XBOOL bRecord;
 extern XHANDLE xhVideo;
 extern XHANDLE xhAudio;
 extern XHANDLE xhStream;

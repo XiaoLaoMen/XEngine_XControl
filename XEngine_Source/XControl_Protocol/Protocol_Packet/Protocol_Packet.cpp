@@ -58,7 +58,7 @@ CProtocol_Packet::~CProtocol_Packet()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Packet::Protocol_Packet_EnumDevice(CHAR* ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO*** pppSt_AudioList, AVHELP_DEVICEINFO*** pppSt_VideoList, int nACount, int nVCount)
+XBOOL CProtocol_Packet::Protocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO*** pppSt_AudioList, AVHELP_DEVICEINFO*** pppSt_VideoList, int nACount, int nVCount)
 {
 	Protocol_IsErrorOccur = FALSE;
 
@@ -129,7 +129,7 @@ BOOL CProtocol_Packet::Protocol_Packet_EnumDevice(CHAR* ptszMsgBuffer, int* pInt
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CProtocol_Packet::Protocol_Packet_ListFile(CHAR* ptszMsgBuffer, int* pInt_MsgLen, CHAR*** pppszFileList, int nListCount)
+XBOOL CProtocol_Packet::Protocol_Packet_ListFile(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** pppszFileList, int nListCount)
 {
 	Protocol_IsErrorOccur = FALSE;
 

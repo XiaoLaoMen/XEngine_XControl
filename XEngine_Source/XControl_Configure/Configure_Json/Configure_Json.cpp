@@ -40,7 +40,7 @@ CConfigure_Json::~CConfigure_Json()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CConfigure_Json::Config_Json_File(LPCSTR lpszConfigFile, XENGINE_SERVERCONFIG* pSt_FileConfig)
+XBOOL CConfigure_Json::Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCONFIG* pSt_FileConfig)
 {
 	Config_IsErrorOccur = FALSE;
 
@@ -62,7 +62,7 @@ BOOL CConfigure_Json::Config_Json_File(LPCSTR lpszConfigFile, XENGINE_SERVERCONF
 		return FALSE;
 	}
 	int nCount = 0;
-	CHAR tszMsgBuffer[4096];
+	XCHAR tszMsgBuffer[4096];
 	while (1)
 	{
 		int nRet = fread(tszMsgBuffer + nCount, 1, 2048, pSt_File);

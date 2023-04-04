@@ -17,7 +17,7 @@ public:
     CXControl_Info();
     ~CXControl_Info();
 public:
-    BOOL XControl_Info_HardWare(CHAR *ptszHWInfo, int *pInt_Len);
-    BOOL XControl_Info_SoftWare(CHAR *ptszSWInfo, int *pInt_Len);
+    XBOOL XControl_Info_HardWare(XCHAR *ptszHWInfo, int *pInt_Len);
+    XBOOL XControl_Info_SoftWare(XCHAR *ptszSWInfo, int *pInt_Len);
 private:
 };

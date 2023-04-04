@@ -1,4 +1,4 @@
 ﻿#pragma once
 
 XHTHREAD XControl_Thread_HttpTask();
-BOOL XControl_Task_ProtocolParse(LPCSTR lpszMsgBuffer, int nMsgLen);
+XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen);

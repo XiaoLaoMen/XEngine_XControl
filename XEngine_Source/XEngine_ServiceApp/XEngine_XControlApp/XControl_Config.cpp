@@ -1,8 +1,8 @@
 ﻿#include "XControl_Hdr.h"
 
-BOOL XControl_Parament(int argc, char **argv)
+XBOOL XControl_Parament(int argc, char **argv)
 {
-    LPCSTR lpszBaseCfg = "./XControl_Config/XEngine_Config.json";
+    LPCXSTR lpszBaseCfg = "./XControl_Config/XEngine_Config.json";
 
     if (!Config_Json_File(lpszBaseCfg, &st_ServiceConfig))
     {

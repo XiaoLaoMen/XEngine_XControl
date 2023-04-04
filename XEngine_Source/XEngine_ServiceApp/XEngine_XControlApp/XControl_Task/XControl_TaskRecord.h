@@ -1,3 +1,3 @@
 ﻿#pragma once
 
-BOOL XControl_TaskRecord_Start(LPCSTR lpszSMSUrl, BOOL bAudio);
+XBOOL XControl_TaskRecord_Start(LPCXSTR lpszSMSUrl, XBOOL bAudio);

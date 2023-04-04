@@ -40,7 +40,7 @@ CXControl_Info::~CXControl_Info()
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CXControl_Info::XControl_Info_HardWare(CHAR* ptszHWInfo, int* pInt_Len)
+XBOOL CXControl_Info::XControl_Info_HardWare(XCHAR* ptszHWInfo, int* pInt_Len)
 {
     BackManage_IsErrorOccur = FALSE;
 
@@ -51,12 +51,12 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR* ptszHWInfo, int* pInt_Len)
         return FALSE;
     }
     int nDiskNumber = 0;
-    CHAR** pptszRootName;
-    CHAR tszOSName[MAX_PATH];
-    CHAR tszOSVersion[MAX_PATH];
-    CHAR tszOSBuild[MAX_PATH];
-    DWORD nOSPro = 0;
-    CHAR tszOSInfo[2048];
+    XCHAR** pptszRootName;
+    XCHAR tszOSName[MAX_PATH];
+    XCHAR tszOSVersion[MAX_PATH];
+    XCHAR tszOSBuild[MAX_PATH];
+    XLONG nOSPro = 0;
+    XCHAR tszOSInfo[2048];
     SYSTEMAPI_DISK_INFOMATION st_DiskInfo;
     SYSTEMAPI_CPU_INFOMATION st_CPUInfo;
     SYSTEMAPI_MEMORY_INFOMATION st_MemoryInfo;
@@ -79,13 +79,13 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR* ptszHWInfo, int* pInt_Len)
     }
     BaseLib_OperatorMemory_Free((XPPPMEM)&pptszRootName, nDiskNumber);
 
-    CHAR tszDriveStr[MAX_PATH];
+    XCHAR tszDriveStr[MAX_PATH];
     memset(tszDriveStr, '\0', MAX_PATH);
 
 #ifdef _MSC_BUILD
     GetLogicalDriveStringsA(MAX_PATH, tszDriveStr);
 #else
-    LPCSTR lpszDir = _T("/");
+    LPCXSTR lpszDir = _T("/");
     strcpy(tszDriveStr, lpszDir);
 #endif
 
@@ -198,7 +198,7 @@ BOOL CXControl_Info::XControl_Info_HardWare(CHAR* ptszHWInfo, int* pInt_Len)
   意思：是否成功
 备注：
 *********************************************************************/
-BOOL CXControl_Info::XControl_Info_SoftWare(CHAR* ptszSWInfo, int* pInt_Len)
+XBOOL CXControl_Info::XControl_Info_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len)
 {
     BackManage_IsErrorOccur = FALSE;
 
@@ -209,13 +209,13 @@ BOOL CXControl_Info::XControl_Info_SoftWare(CHAR* ptszSWInfo, int* pInt_Len)
         return FALSE;
     }
     int nProcessCount;
-    DWORD nOSProcessor;
-    CHAR tszOSBuild[MAX_PATH];
-    CHAR tszOSVersion[MAX_PATH];
-    CHAR tszOSInfo[MAX_PATH];
-    CHAR tszUPTime[MAX_PATH];
-    CHAR tszOSUser[MAX_PATH];
-    CHAR tszServicePacket[MAX_PATH];
+    XLONG nOSProcessor;
+    XCHAR tszOSBuild[MAX_PATH];
+    XCHAR tszOSVersion[MAX_PATH];
+    XCHAR tszOSInfo[MAX_PATH];
+    XCHAR tszUPTime[MAX_PATH];
+    XCHAR tszOSUser[MAX_PATH];
+    XCHAR tszServicePacket[MAX_PATH];
     XENGINE_LIBTIMER st_LibTimer;
 
     memset(tszOSBuild, '\0', MAX_PATH);
@@ -227,7 +227,7 @@ BOOL CXControl_Info::XControl_Info_SoftWare(CHAR* ptszSWInfo, int* pInt_Len)
     memset(&st_LibTimer, '\0', sizeof(XENGINE_LIBTIMER));
 
 #ifdef _MSC_BUILD
-    DWORD dwMaxSize = MAX_PATH;
+    XLONG dwMaxSize = MAX_PATH;
     if (!GetComputerNameA(tszOSUser, &dwMaxSize))
     {
         BackManage_IsErrorOccur = TRUE;

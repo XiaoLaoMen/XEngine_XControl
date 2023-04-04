@@ -52,8 +52,8 @@ using namespace std;
 //    Purpose:     后台管理服务公用头文件
 //    History:
 *********************************************************************/
-extern BOOL BackManage_IsErrorOccur;
-extern DWORD BackManage_dwErrorCode;
+extern XBOOL BackManage_IsErrorOccur;
+extern XLONG BackManage_dwErrorCode;
 
 
 #ifdef _MSC_BUILD

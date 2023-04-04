@@ -1,7 +1,7 @@
 ﻿#include "XControl_Hdr.h"
 
-BOOL bIsRun = FALSE;
-BOOL bRecord = FALSE;
+XBOOL bIsRun = FALSE;
+XBOOL bRecord = FALSE;
 XHANDLE xhVideo = NULL;
 XHANDLE xhAudio = NULL;
 XHANDLE xhStream = NULL;
@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 #ifdef _MSC_BUILD
 	WSADATA st_WSAData;
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
-	LPCSTR lpszWndName = "XEngine_XControlApp";
+	LPCXSTR lpszWndName = "XEngine_XControlApp";
 #endif
 	bIsRun = TRUE;
 	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig;
@@ -72,11 +72,11 @@ int main(int argc, char** argv)
 	if (st_ServiceConfig.bHideWnd)
 	{
 #ifdef _MSC_BUILD
-		BOOL bIsFound = FALSE;
+		XBOOL bIsFound = FALSE;
 		SetConsoleTitleA(lpszWndName);
 		HWND hWnd = GetDesktopWindow();
 		hWnd = GetWindow(hWnd, GW_CHILD);
-		CHAR tszTitle[MAX_PATH];
+		XCHAR tszTitle[MAX_PATH];
 		while (NULL != hWnd)
 		{
 			memset(tszTitle, '\0', MAX_PATH);

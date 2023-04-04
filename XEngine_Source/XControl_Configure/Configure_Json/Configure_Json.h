@@ -17,5 +17,5 @@ public:
 	CConfigure_Json();
 	~CConfigure_Json();
 public:
-	BOOL Config_Json_File(LPCSTR lpszConfigFile, XENGINE_SERVERCONFIG* pSt_FileConfig);
+	XBOOL Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCONFIG* pSt_FileConfig);
 };

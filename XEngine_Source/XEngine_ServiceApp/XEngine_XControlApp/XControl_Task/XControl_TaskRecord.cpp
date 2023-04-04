@@ -1,13 +1,13 @@
 ﻿#include "../XControl_Hdr.h"
 
-void CALLBACK XEngine_AVCollect_CBScreen(uint8_t* punStringY, int nYLen, uint8_t* punStringU, int nULen, uint8_t* punStringV, int nVLen, LPVOID lParam)
+void CALLBACK XEngine_AVCollect_CBScreen(uint8_t* punStringY, int nYLen, uint8_t* punStringU, int nULen, uint8_t* punStringV, int nVLen, XPVOID lParam)
 {
 }
-void CALLBACK XEngine_AVCollect_CBAudio(uint8_t* punStringAudio, int nVLen, LPVOID lParam)
+void CALLBACK XEngine_AVCollect_CBAudio(uint8_t* punStringAudio, int nVLen, XPVOID lParam)
 {
 }
 
-BOOL XControl_TaskRecord_Start(LPCSTR lpszSMSUrl, BOOL bAudio)
+XBOOL XControl_TaskRecord_Start(LPCXSTR lpszSMSUrl, XBOOL bAudio)
 {
 	XENGINE_PROTOCOL_AVINFO st_AVInfo;
 	memset(&st_AVInfo, '\0', sizeof(XENGINE_PROTOCOL_AVINFO));
