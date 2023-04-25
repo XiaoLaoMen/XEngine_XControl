@@ -1,12 +1,12 @@
 ﻿#include "XControl_Hdr.h"
 
-XBOOL XControl_Parament(int argc, char **argv)
+bool XControl_Parament(int argc, char **argv)
 {
     LPCXSTR lpszBaseCfg = "./XControl_Config/XEngine_Config.json";
 
     if (!Config_Json_File(lpszBaseCfg, &st_ServiceConfig))
     {
-        return FALSE;
+        return false;
     }
 
     for (int i = 0;i < argc;i++)
@@ -14,23 +14,23 @@ XBOOL XControl_Parament(int argc, char **argv)
         if ((0 == strcmp("-h", argv[i])) || (0 == strcmp("-H", argv[i])))
         {
             XControl_ParamentHelp();
-            return FALSE;
+            return false;
         }
         if ((0 == strcmp("-v", argv[i])) || (0 == strcmp("-V", argv[i])))
         {
             printf("Version：%s\n", st_ServiceConfig.st_Version.pStl_ListVer->front().c_str());
-            return FALSE;
+            return false;
         }
         else if (0 == strcmp("-a", argv[i]))
         {
-            st_ServiceConfig.bAutoStart = TRUE;
+            st_ServiceConfig.bAutoStart = true;
         }
         else if (0 == strcmp("-w", argv[i]))
         {
-            st_ServiceConfig.bHideWnd = TRUE;
+            st_ServiceConfig.bHideWnd = true;
         }
     }
-    return TRUE;
+    return true;
 }
 void XControl_ParamentHelp()
 {

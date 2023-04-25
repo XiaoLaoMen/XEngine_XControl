@@ -1,7 +1,7 @@
 ﻿#include "XControl_Hdr.h"
 
-XBOOL bIsRun = FALSE;
-XBOOL bRecord = FALSE;
+bool bIsRun = false;
+bool bRecord = false;
 XHANDLE xhVideo = NULL;
 XHANDLE xhAudio = NULL;
 XHANDLE xhStream = NULL;
@@ -16,7 +16,7 @@ void ServiceApp_Stop(int signo)
 	if (bIsRun)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, "服务器退出...");
-		bIsRun = FALSE;
+		bIsRun = false;
 
 		if (NULL != pSTDThread_Http)
 		{
@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 	WSAStartup(MAKEWORD(2, 2), &st_WSAData);
 	LPCXSTR lpszWndName = "XEngine_XControlApp";
 #endif
-	bIsRun = TRUE;
+	bIsRun = true;
 	HELPCOMPONENTS_XLOG_CONFIGURE st_XLogConfig;
 
 	memset(&st_XLogConfig, '\0', sizeof(HELPCOMPONENTS_XLOG_CONFIGURE));
@@ -72,7 +72,7 @@ int main(int argc, char** argv)
 	if (st_ServiceConfig.bHideWnd)
 	{
 #ifdef _MSC_BUILD
-		XBOOL bIsFound = FALSE;
+		bool bIsFound = false;
 		SetConsoleTitleA(lpszWndName);
 		HWND hWnd = GetDesktopWindow();
 		hWnd = GetWindow(hWnd, GW_CHILD);
@@ -83,7 +83,7 @@ int main(int argc, char** argv)
 			GetWindowTextA(hWnd, tszTitle, MAX_PATH);
 			if (0 == strncmp(lpszWndName, tszTitle, strlen(lpszWndName)))
 			{
-				bIsFound = TRUE;
+				bIsFound = true;
 				break;
 			}
 			hWnd = GetNextWindow(hWnd, GW_HWNDNEXT);
@@ -103,8 +103,8 @@ int main(int argc, char** argv)
 	}
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，创建HTTP任务线程成功");
 
-	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，所有服务已经启动完毕,程序运行中,XEngine版本:%s,服务器发行次数:%d,版本;%s", BaseLib_OperatorVer_XGetStr(), st_ServiceConfig.st_Version.pStl_ListVer->size(), st_ServiceConfig.st_Version.pStl_ListVer->front().c_str());
-	while (TRUE)
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，所有服务已经启动完毕,程序运行中,XEngine版本:%s,服务器发行次数:%d,版本;%s", BaseLib_OperatorVer_XNumberStr(), st_ServiceConfig.st_Version.pStl_ListVer->size(), st_ServiceConfig.st_Version.pStl_ListVer->front().c_str());
+	while (true)
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
@@ -112,7 +112,7 @@ NETSERVICE_APPEXIT:
 	if (bIsRun)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_WARN, "后台控制服务关闭，服务器退出...");
-		bIsRun = FALSE;
+		bIsRun = false;
 
 		if (NULL != pSTDThread_Http)
 		{

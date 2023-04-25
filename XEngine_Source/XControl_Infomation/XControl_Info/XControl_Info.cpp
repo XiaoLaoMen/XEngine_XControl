@@ -40,15 +40,15 @@ CXControl_Info::~CXControl_Info()
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CXControl_Info::XControl_Info_HardWare(XCHAR* ptszHWInfo, int* pInt_Len)
+bool CXControl_Info::XControl_Info_HardWare(XCHAR* ptszHWInfo, int* pInt_Len)
 {
-    BackManage_IsErrorOccur = FALSE;
+    BackManage_IsErrorOccur = false;
 
     if ((NULL == ptszHWInfo) || (NULL == pInt_Len))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = ERROR_NETENGINE_NETHELP_BACKMANAGE_GETINFO_HARDWARE_PARAMENT;
-        return FALSE;
+        return false;
     }
     int nDiskNumber = 0;
     XCHAR** pptszRootName;
@@ -73,9 +73,9 @@ XBOOL CXControl_Info::XControl_Info_HardWare(XCHAR* ptszHWInfo, int* pInt_Len)
 
     if (!SystemApi_HardWare_GetDiskNumber(&pptszRootName, &nDiskNumber))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = SystemApi_GetLastError();
-        return FALSE;
+        return false;
     }
     BaseLib_OperatorMemory_Free((XPPPMEM)&pptszRootName, nDiskNumber);
 
@@ -91,33 +91,33 @@ XBOOL CXControl_Info::XControl_Info_HardWare(XCHAR* ptszHWInfo, int* pInt_Len)
 
     if (!SystemApi_HardWare_GetDiskInfomation(tszDriveStr, &st_DiskInfo, XENGINE_SYSTEMSDK_API_SYSTEM_SIZE_MB))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = SystemApi_GetLastError();
-        return FALSE;
+        return false;
     }
     if (!SystemApi_HardWare_GetCpuInfomation(&st_CPUInfo))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = SystemApi_GetLastError();
-        return FALSE;
+        return false;
     }
     if (!SystemApi_System_GetMemoryUsage(&st_MemoryInfo, XENGINE_SYSTEMSDK_API_SYSTEM_SIZE_MB))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = SystemApi_GetLastError();
-        return FALSE;
+        return false;
     }
     if (!SystemApi_HardWare_GetSerial(&st_SDKSerial))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = SystemApi_GetLastError();
-        return FALSE;
+        return false;
     }
     if (!SystemApi_System_GetSystemVer(tszOSName, tszOSVersion, tszOSBuild, &nOSPro))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = SystemApi_GetLastError();
-        return FALSE;
+        return false;
     }
 
     Json::Value st_JsonRoot;
@@ -171,14 +171,14 @@ XBOOL CXControl_Info::XControl_Info_HardWare(XCHAR* ptszHWInfo, int* pInt_Len)
     if (*pInt_Len < (int)st_JsonRoot.toStyledString().length())
     {
         *pInt_Len = st_JsonRoot.toStyledString().length();
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = ERROR_NETENGINE_NETHELP_BACKMANAGE_GETINFO_HARDWARE_LEN;
-        return FALSE;
+        return false;
     }
     *pInt_Len = st_JsonRoot.toStyledString().length();
     memcpy(ptszHWInfo, st_JsonRoot.toStyledString().c_str(), *pInt_Len);
 
-    return TRUE;
+    return true;
 }
 /********************************************************************
 函数名称：XControl_Info_SoftWare
@@ -198,15 +198,15 @@ XBOOL CXControl_Info::XControl_Info_HardWare(XCHAR* ptszHWInfo, int* pInt_Len)
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CXControl_Info::XControl_Info_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len)
+bool CXControl_Info::XControl_Info_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len)
 {
-    BackManage_IsErrorOccur = FALSE;
+    BackManage_IsErrorOccur = false;
 
     if ((NULL == ptszSWInfo) || (NULL == pInt_Len))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = ERROR_NETENGINE_NETHELP_BACKMANAGE_GETINFO_SOFTWARE_PARAMENT;
-        return FALSE;
+        return false;
     }
     int nProcessCount;
     XLONG nOSProcessor;
@@ -230,38 +230,38 @@ XBOOL CXControl_Info::XControl_Info_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len)
     XLONG dwMaxSize = MAX_PATH;
     if (!GetComputerNameA(tszOSUser, &dwMaxSize))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = ERROR_NETENGINE_NETHELP_BACKMANAGE_GETINFO_SOFTWARE_GETNAME;
-        return FALSE;
+        return false;
     }
 #else
     struct passwd* pSt_Passwd = NULL;
     pSt_Passwd = getpwuid(getuid());
     if (NULL == pSt_Passwd)
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = ERROR_NETENGINE_NETHELP_BACKMANAGE_GETINFO_SOFTWARE_GETNAME;
-        return FALSE;
+        return false;
     }
     strcpy(tszOSUser, pSt_Passwd->pw_name);
 #endif
     if (!SystemApi_System_GetSystemVer(tszOSInfo, tszOSVersion, tszOSBuild, &nOSProcessor))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = SystemApi_GetLastError();
-        return FALSE;
+        return false;
     }
     if (!SystemApi_System_GetProcessCount(&nProcessCount))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = SystemApi_GetLastError();
-        return FALSE;
+        return false;
     }
     if (!SystemApi_System_GetUpTime(&st_LibTimer))
     {
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = SystemApi_GetLastError();
-        return FALSE;
+        return false;
     }
     sprintf(tszUPTime, "%04d-%02d-%02d %02d:%02d:%02d", st_LibTimer.wYear, st_LibTimer.wMonth, st_LibTimer.wDay, st_LibTimer.wHour, st_LibTimer.wMinute, st_LibTimer.wSecond);
 
@@ -277,12 +277,12 @@ XBOOL CXControl_Info::XControl_Info_SoftWare(XCHAR* ptszSWInfo, int* pInt_Len)
     if (*pInt_Len < (int)st_JsonRoot.toStyledString().length())
     {
         *pInt_Len = st_JsonRoot.toStyledString().length();
-        BackManage_IsErrorOccur = TRUE;
+        BackManage_IsErrorOccur = true;
         BackManage_dwErrorCode = ERROR_NETENGINE_NETHELP_BACKMANAGE_GETINFO_SOFTWARE_LEN;
-        return FALSE;
+        return false;
     }
     *pInt_Len = st_JsonRoot.toStyledString().length();
     memcpy(ptszSWInfo, st_JsonRoot.toStyledString().c_str(), *pInt_Len);
 
-    return TRUE;
+    return true;
 }

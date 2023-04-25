@@ -58,15 +58,15 @@ CProtocol_Packet::~CProtocol_Packet()
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Packet::Protocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO*** pppSt_AudioList, AVHELP_DEVICEINFO*** pppSt_VideoList, int nACount, int nVCount)
+bool CProtocol_Packet::Protocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO*** pppSt_AudioList, AVHELP_DEVICEINFO*** pppSt_VideoList, int nACount, int nVCount)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonArray;
@@ -99,7 +99,7 @@ XBOOL CProtocol_Packet::Protocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pI
 
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Packet_ListFile
@@ -129,15 +129,15 @@ XBOOL CProtocol_Packet::Protocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pI
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Packet::Protocol_Packet_ListFile(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** pppszFileList, int nListCount)
+bool CProtocol_Packet::Protocol_Packet_ListFile(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** pppszFileList, int nListCount)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == ptszMsgBuffer) || (NULL == pInt_MsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	Json::Value st_JsonArray;
@@ -159,5 +159,5 @@ XBOOL CProtocol_Packet::Protocol_Packet_ListFile(XCHAR* ptszMsgBuffer, int* pInt
 	*pInt_MsgLen = Json::writeString(st_JsonBuilder, st_JsonRoot).length();
 	memcpy(ptszMsgBuffer, Json::writeString(st_JsonBuilder, st_JsonRoot).c_str(), *pInt_MsgLen);
 
-	return TRUE;
+	return true;
 }

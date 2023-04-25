@@ -43,15 +43,15 @@ CProtocol_Parse::~CProtocol_Parse()
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_JsonRoot(LPCXSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo)
+bool CProtocol_Parse::Protocol_Parse_JsonRoot(LPCXSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -60,13 +60,13 @@ XBOOL CProtocol_Parse::Protocol_Parse_JsonRoot(LPCXSTR lpszMsgBuffer, int nMsgLe
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	pSt_ProtocolInfo->nOPCode = st_JsonRoot["unOperatorCode"].asUInt();
 	pSt_ProtocolInfo->nTaskSerial = st_JsonRoot["nTaskSerial"].asUInt64();
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_Download
@@ -96,15 +96,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_JsonRoot(LPCXSTR lpszMsgBuffer, int nMsgLe
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_Download(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFileUrl, XCHAR* ptszSaveUrl)
+bool CProtocol_Parse::Protocol_Parse_Download(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFileUrl, XCHAR* ptszSaveUrl)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -113,14 +113,14 @@ XBOOL CProtocol_Parse::Protocol_Parse_Download(LPCXSTR lpszMsgBuffer, int nMsgLe
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	strcpy(ptszFileUrl, st_JsonRoot["DownloadUrl"].asCString());
 	strcpy(ptszSaveUrl, st_JsonRoot["SaveUrl"].asCString());
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_Delete
@@ -145,15 +145,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_Download(LPCXSTR lpszMsgBuffer, int nMsgLe
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_Delete(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszDelete)
+bool CProtocol_Parse::Protocol_Parse_Delete(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszDelete)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -162,13 +162,13 @@ XBOOL CProtocol_Parse::Protocol_Parse_Delete(LPCXSTR lpszMsgBuffer, int nMsgLen,
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	strcpy(ptszDelete, st_JsonRoot["DeleteFile"].asCString());
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_UPFile
@@ -198,15 +198,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_Delete(LPCXSTR lpszMsgBuffer, int nMsgLen,
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_UPFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszUPFile, XCHAR* ptszUPUrl)
+bool CProtocol_Parse::Protocol_Parse_UPFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszUPFile, XCHAR* ptszUPUrl)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -215,14 +215,14 @@ XBOOL CProtocol_Parse::Protocol_Parse_UPFile(LPCXSTR lpszMsgBuffer, int nMsgLen,
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	strcpy(ptszUPFile, st_JsonRoot["UPLoadFile"].asCString());
 	strcpy(ptszUPUrl, st_JsonRoot["UPLoadUrl"].asCString());
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_ListFile
@@ -252,15 +252,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_UPFile(LPCXSTR lpszMsgBuffer, int nMsgLen,
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFindPath, XCHAR* ptszPostUrl)
+bool CProtocol_Parse::Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFindPath, XCHAR* ptszPostUrl)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -269,14 +269,14 @@ XBOOL CProtocol_Parse::Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLe
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	strcpy(ptszFindPath, st_JsonRoot["FilePath"].asCString());
 	strcpy(ptszPostUrl, st_JsonRoot["PostUrl"].asCString());
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_Exec
@@ -306,15 +306,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLe
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_Exec(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecFile, int* pInt_ExecShow)
+bool CProtocol_Parse::Protocol_Parse_Exec(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecFile, int* pInt_ExecShow)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -323,14 +323,14 @@ XBOOL CProtocol_Parse::Protocol_Parse_Exec(LPCXSTR lpszMsgBuffer, int nMsgLen, X
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	*pInt_ExecShow = st_JsonRoot["ExecShow"].asInt();
 	strcpy(ptszExecFile, st_JsonRoot["ExecFile"].asCString());
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_Message
@@ -355,15 +355,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_Exec(LPCXSTR lpszMsgBuffer, int nMsgLen, X
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_Message(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMessageBox)
+bool CProtocol_Parse::Protocol_Parse_Message(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMessageBox)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -372,13 +372,13 @@ XBOOL CProtocol_Parse::Protocol_Parse_Message(LPCXSTR lpszMsgBuffer, int nMsgLen
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	strcpy(ptszMessageBox, st_JsonRoot["MessageBox"].asCString());
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_Message
@@ -403,15 +403,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_Message(LPCXSTR lpszMsgBuffer, int nMsgLen
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_Stop(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_ProcessID)
+bool CProtocol_Parse::Protocol_Parse_Stop(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_ProcessID)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -420,13 +420,13 @@ XBOOL CProtocol_Parse::Protocol_Parse_Stop(LPCXSTR lpszMsgBuffer, int nMsgLen, X
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	*pInt_ProcessID = st_JsonRoot["ProcessID"].asInt();
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_Shutdown
@@ -451,15 +451,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_Stop(LPCXSTR lpszMsgBuffer, int nMsgLen, X
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_Shutdown(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_SDType)
+bool CProtocol_Parse::Protocol_Parse_Shutdown(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_SDType)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -468,13 +468,13 @@ XBOOL CProtocol_Parse::Protocol_Parse_Shutdown(LPCXSTR lpszMsgBuffer, int nMsgLe
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	*pInt_SDType = st_JsonRoot["ShutDownType"].asInt();
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_System
@@ -499,15 +499,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_Shutdown(LPCXSTR lpszMsgBuffer, int nMsgLe
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecCmd)
+bool CProtocol_Parse::Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecCmd)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -516,13 +516,13 @@ XBOOL CProtocol_Parse::Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen,
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	strcpy(ptszExecCmd, st_JsonRoot["tszExecCmd"].asCString());
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_Report
@@ -552,15 +552,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen,
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr, int* pInt_Type)
+bool CProtocol_Parse::Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr, int* pInt_Type)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -569,14 +569,14 @@ XBOOL CProtocol_Parse::Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen,
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	*pInt_Type = st_JsonRoot["nType"].asInt();
 	strcpy(ptszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_EnumDevice
@@ -601,15 +601,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen,
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr)
+bool CProtocol_Parse::Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -618,13 +618,13 @@ XBOOL CProtocol_Parse::Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsg
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	strcpy(ptszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
 
-	return TRUE;
+	return true;
 }
 /********************************************************************
 函数名称：Protocol_Parse_Serial
@@ -649,15 +649,15 @@ XBOOL CProtocol_Parse::Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsg
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CProtocol_Parse::Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial)
+bool CProtocol_Parse::Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial)
 {
-	Protocol_IsErrorOccur = FALSE;
+	Protocol_IsErrorOccur = false;
 
 	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonRoot;
 	JSONCPP_STRING st_JsonError;
@@ -666,11 +666,11 @@ XBOOL CProtocol_Parse::Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen,
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
 	{
-		Protocol_IsErrorOccur = TRUE;
+		Protocol_IsErrorOccur = true;
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
-		return FALSE;
+		return false;
 	}
 	*pInt_Serial = st_JsonRoot["tszIPAddr"].asUInt64();
 
-	return TRUE;
+	return true;
 }

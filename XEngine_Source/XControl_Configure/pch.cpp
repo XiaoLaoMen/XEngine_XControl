@@ -11,7 +11,7 @@
 //    Purpose:     导出实现
 //    History:
 *********************************************************************/
-XBOOL Config_IsErrorOccur = FALSE;
+bool Config_IsErrorOccur = false;
 XLONG Config_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CConfigure_Json m_ConfigJson;
@@ -29,7 +29,7 @@ extern "C" XLONG Config_GetLastError(int* pInt_SysError)
 /************************************************************************/
 /*                        配置读取导出                                  */
 /************************************************************************/
-extern "C" XBOOL Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCONFIG * pSt_FileConfig)
+extern "C" bool Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCONFIG * pSt_FileConfig)
 {
 	return m_ConfigJson.Config_Json_File(lpszConfigFile, pSt_FileConfig);
 }

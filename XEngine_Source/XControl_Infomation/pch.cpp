@@ -11,7 +11,7 @@
 //    Purpose:     后台管理服务导出函数实现
 //    History:
 *********************************************************************/
-XBOOL BackManage_IsErrorOccur = FALSE;
+bool BackManage_IsErrorOccur = false;
 XLONG BackManage_dwErrorCode = 0;
 //////////////////////////////////////////////////////////////////////////
 CXControl_Info m_XInfo;
@@ -29,11 +29,11 @@ extern "C" XLONG XInfo_GetLastError(int* pInt_SysError)
 /************************************************************************/
 /*                    导出的系统信息获取函数                            */
 /************************************************************************/
-extern "C" XBOOL XControl_Info_HardWare(XCHAR * ptszHWInfo, int* pInt_Len)
+extern "C" bool XControl_Info_HardWare(XCHAR * ptszHWInfo, int* pInt_Len)
 {
 	return m_XInfo.XControl_Info_HardWare(ptszHWInfo, pInt_Len);
 }
-extern "C" XBOOL XControl_Info_SoftWare(XCHAR * ptszSWInfo, int* pInt_Len)
+extern "C" bool XControl_Info_SoftWare(XCHAR * ptszSWInfo, int* pInt_Len)
 {
 	return m_XInfo.XControl_Info_SoftWare(ptszSWInfo, pInt_Len);
 }

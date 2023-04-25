@@ -52,7 +52,7 @@ using namespace std;
 //    Purpose:     后台管理服务公用头文件
 //    History:
 *********************************************************************/
-extern XBOOL BackManage_IsErrorOccur;
+extern bool BackManage_IsErrorOccur;
 extern XLONG BackManage_dwErrorCode;
 
 

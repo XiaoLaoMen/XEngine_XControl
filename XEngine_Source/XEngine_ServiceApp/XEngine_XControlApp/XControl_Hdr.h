@@ -33,8 +33,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_AVCodec/VideoCodec_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Define.h>
 #include <XEngine_Include/XEngine_AVCodec/AVHelp_Error.h>
-#include <XEngine_Include/XEngine_StreamMedia/XStream_Define.h>
-#include <XEngine_Include/XEngine_StreamMedia/XStream_Error.h>
+#include <XEngine_Include/XEngine_StreamMedia/StreamClient_Define.h>
+#include <XEngine_Include/XEngine_StreamMedia/StreamClient_Error.h>
 #include "../../XControl_Protocol.h"
 #include "../../XControl_Configure/Config_Define.h"
 #include "../../XControl_Configure/Config_Error.h"
@@ -44,8 +44,8 @@ using namespace std;
 #include "../../XControl_Protocol/Protocol_Error.h"
 #include "./XControl_Task/XControl_TaskRecord.h"
 
-extern XBOOL bIsRun;
-extern XBOOL bRecord;
+extern bool bIsRun;
+extern bool bRecord;
 extern XHANDLE xhVideo;
 extern XHANDLE xhAudio;
 extern XHANDLE xhStream;
@@ -67,7 +67,7 @@ extern XENGINE_SERVERCONFIG st_ServiceConfig;
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVCollect.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVHelp.lib")
-#pragma comment(lib,"XEngine_StreamMedia/StreamMedia_XClient.lib")
+#pragma comment(lib,"XEngine_StreamMedia/StreamMedia_StreamClient.lib")
 #ifdef _WIN64
 #ifdef _DEBUG
 #pragma comment(lib,"../../x64/Debug/XControl_Configure.lib")

@@ -16,8 +16,8 @@
 typedef struct tag_XEngine_ServerConfig
 {
 	XCHAR tszTaskUrl[MAX_PATH];
-	XBOOL bAutoStart;
-	XBOOL bHideWnd;
+	bool bAutoStart;
+	bool bHideWnd;
 	struct
 	{
 		int nHTTPThreadTime;
@@ -59,4 +59,4 @@ extern "C" XLONG Config_GetLastError(int* pInt_SysError = NULL);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCONFIG* pSt_FileConfig);
+extern "C" bool Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCONFIG* pSt_FileConfig);

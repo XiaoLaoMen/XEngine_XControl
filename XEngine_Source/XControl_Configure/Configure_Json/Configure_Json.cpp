@@ -40,15 +40,15 @@ CConfigure_Json::~CConfigure_Json()
   意思：是否成功
 备注：
 *********************************************************************/
-XBOOL CConfigure_Json::Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCONFIG* pSt_FileConfig)
+bool CConfigure_Json::Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCONFIG* pSt_FileConfig)
 {
-	Config_IsErrorOccur = FALSE;
+	Config_IsErrorOccur = false;
 
 	if ((NULL == lpszConfigFile) || (NULL == pSt_FileConfig))
 	{
-		Config_IsErrorOccur = TRUE;
+		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_XCONTROL_MODULE_CONFIG_JSON_PARAMENT;
-		return FALSE;
+		return false;
 	}
 	JSONCPP_STRING st_JsonError;
 	Json::Value st_JsonRoot;
@@ -57,9 +57,9 @@ XBOOL CConfigure_Json::Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCO
 	FILE* pSt_File = fopen(lpszConfigFile, "rb");
 	if (NULL == pSt_File)
 	{
-		Config_IsErrorOccur = TRUE;
+		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_XCONTROL_MODULE_CONFIG_JSON_OPENFILE;
-		return FALSE;
+		return false;
 	}
 	int nCount = 0;
 	XCHAR tszMsgBuffer[4096];
@@ -77,9 +77,9 @@ XBOOL CConfigure_Json::Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCO
 	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
 	if (!pSt_JsonReader->parse(tszMsgBuffer, tszMsgBuffer + nCount, &st_JsonRoot, &st_JsonError))
 	{
-		Config_IsErrorOccur = TRUE;
+		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_XCONTROL_MODULE_CONFIG_JSON_PARSE;
-		return FALSE;
+		return false;
 	}
 
 	strcpy(pSt_FileConfig->tszTaskUrl, st_JsonRoot["tszTaskUrl"].asCString());
@@ -88,18 +88,18 @@ XBOOL CConfigure_Json::Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCO
 
 	if (st_JsonRoot["ClientTime"].empty() || (1 != st_JsonRoot["ClientTime"].size()))
 	{
-		Config_IsErrorOccur = TRUE;
+		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_XCONTROL_MODULE_CONFIG_JSON_TIME;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonTime = st_JsonRoot["ClientTime"];
 	pSt_FileConfig->st_Time.nHTTPThreadTime = st_JsonTime["nHTTPThreadTime"].asInt();
 
 	if (st_JsonRoot["LogConfig"].empty() || (4 != st_JsonRoot["LogConfig"].size()))
 	{
-		Config_IsErrorOccur = TRUE;
+		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_XCONTROL_MODULE_CONFIG_JSON_XLOG;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonXLog = st_JsonRoot["LogConfig"];
 	pSt_FileConfig->st_XLog.nMaxSize = st_JsonXLog["nMaxSize"].asInt();
@@ -109,9 +109,9 @@ XBOOL CConfigure_Json::Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCO
 
 	if (st_JsonRoot["VersionList"].empty())
 	{
-		Config_IsErrorOccur = TRUE;
+		Config_IsErrorOccur = true;
 		Config_dwErrorCode = ERROR_XCONTROL_MODULE_CONFIG_JSON_VERSION;
-		return FALSE;
+		return false;
 	}
 	Json::Value st_JsonVersion = st_JsonRoot["VersionList"];
 
@@ -120,5 +120,5 @@ XBOOL CConfigure_Json::Config_Json_File(LPCXSTR lpszConfigFile, XENGINE_SERVERCO
 	{
 		pSt_FileConfig->st_Version.pStl_ListVer->push_back(st_JsonVersion[i].asCString());
 	}
-	return TRUE;
+	return true;
 }

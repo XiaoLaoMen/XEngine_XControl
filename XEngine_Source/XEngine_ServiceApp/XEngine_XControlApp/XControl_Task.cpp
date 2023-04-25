@@ -22,7 +22,7 @@ XHTHREAD XControl_Thread_HttpTask()
 	return 0;
 }
 //////////////////////////////////////////////////////////////////////////
-XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
+bool XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	int nSDLen = 0;
 	XCHAR tszSDBuffer[4096];
@@ -34,13 +34,13 @@ XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 	if (!Protocol_Parse_JsonRoot(lpszMsgBuffer, nMsgLen, &st_ProtocolInfo))
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:JSON解析错误");
-		return FALSE;
+		return false;
 	}
 	//获得任务序列号
 	if (st_ProtocolInfo.nTaskSerial != m_nTaskSerial)
 	{
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:任务序列号不正确");
-		return FALSE;
+		return false;
 	}
 	m_nTaskSerial++;
 	//执行任务
@@ -59,9 +59,9 @@ XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 		if (NULL == xhTask)
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:下载任务处理失败,错误码:%lX", APIClient_GetLastError());
-			return FALSE;
+			return false;
 		}
-		while (TRUE)
+		while (true)
 		{
 			NETHELP_FILEINFO st_TaskInfo;
 			memset(&st_TaskInfo, '\0', sizeof(NETHELP_FILEINFO));
@@ -85,7 +85,7 @@ XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 		if (-1 == remove(tszDelFile))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:删除文件任务处理失败,错误码:%d", errno);
-			return FALSE;
+			return false;
 		}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DELETEDIR:
@@ -96,7 +96,7 @@ XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 		if (!SystemApi_File_DeleteMutilFolder(tszDelDir))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:删除文件夹任务处理失败,错误码:%lX", SystemApi_GetLastError());
-			return FALSE;
+			return false;
 		}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_UPFILE:
@@ -108,13 +108,13 @@ XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 		memset(tszUPUrl, '\0', MAX_PATH);
 
 		Protocol_Parse_UPFile(lpszMsgBuffer, nMsgLen, tszUPFile, tszUPUrl);
-		XHANDLE xhTask = APIClient_File_Create(tszUPFile, tszUPUrl, FALSE);
+		XHANDLE xhTask = APIClient_File_Create(tszUPFile, tszUPUrl, false);
 		if (NULL == xhTask)
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:FTP上传任务处理失败,错误码:%lX", APIClient_GetLastError());
-			return FALSE;
+			return false;
 		}
-		while (TRUE)
+		while (true)
 		{
 			NETHELP_FILEINFO st_TaskInfo;
 			memset(&st_TaskInfo, '\0', sizeof(NETHELP_FILEINFO));
@@ -149,7 +149,7 @@ XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 			if (!APIClient_Http_Request("POST", tszPostUrl, tszSDBuffer))
 			{
 				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:发送文件列表失败,地址:%s,错误码:%lX", tszPostUrl, APIClient_GetLastError());
-				return FALSE;
+				return false;
 			}
 		}
 		else
@@ -197,7 +197,7 @@ XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 		if (!SystemApi_Process_Stop(NULL, dwProcessID))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求停止进程失败,错误码:%lX", SystemApi_GetLastError());
-			return FALSE;
+			return false;
 		}
 	}
 		break;
@@ -209,7 +209,7 @@ XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 		if (!SystemApi_System_Shutdown(dwType))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求关机失败,错误码:%lX", SystemApi_GetLastError());
-			return FALSE;
+			return false;
 		}
 	}
 		break;
@@ -221,7 +221,7 @@ XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 		if (-1 == system(tszExecCmd))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求执行命令失败,错误码:%lX", SystemApi_GetLastError());
-			return FALSE;
+			return false;
 		}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_REPORT:
@@ -285,7 +285,7 @@ XBOOL XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 		break;
 	default:
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求的操作码不支持,操作码:%d", st_ProtocolInfo.nOPCode);
-		return FALSE;
+		return false;
 	}
-	return TRUE;
+	return true;
 }

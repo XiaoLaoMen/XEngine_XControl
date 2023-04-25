@@ -60,7 +60,7 @@ extern "C" XLONG Protocol_GetLastError(int* pInt_SysError = NULL);
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO*** pppSt_AudioList, AVHELP_DEVICEINFO*** pppSt_VideoList, int nACount, int nVCount);
+extern "C" bool Protocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, AVHELP_DEVICEINFO*** pppSt_AudioList, AVHELP_DEVICEINFO*** pppSt_VideoList, int nACount, int nVCount);
 /********************************************************************
 函数名称：Protocol_Packet_ListFile
 函数功能：打包文件列表信息
@@ -89,7 +89,7 @@ extern "C" XBOOL Protocol_Packet_EnumDevice(XCHAR* ptszMsgBuffer, int* pInt_MsgL
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Packet_ListFile(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** pppszFileList, int nListCount);
+extern "C" bool Protocol_Packet_ListFile(XCHAR* ptszMsgBuffer, int* pInt_MsgLen, XCHAR*** pppszFileList, int nListCount);
 /************************************************************************/
 /*                        解析类函数                                    */
 /************************************************************************/
@@ -116,7 +116,7 @@ extern "C" XBOOL Protocol_Packet_ListFile(XCHAR* ptszMsgBuffer, int* pInt_MsgLen
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_JsonRoot(LPCXSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo);
+extern "C" bool Protocol_Parse_JsonRoot(LPCXSTR lpszMsgBuffer, int nMsgLen, XCONTROL_PROTOCOLINFO* pSt_ProtocolInfo);
 /********************************************************************
 函数名称：Protocol_Parse_Download
 函数功能：下载协议解析器
@@ -145,7 +145,7 @@ extern "C" XBOOL Protocol_Parse_JsonRoot(LPCXSTR lpszMsgBuffer, int nMsgLen, XCO
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_Download(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFileUrl, XCHAR* ptszSaveUrl);
+extern "C" bool Protocol_Parse_Download(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFileUrl, XCHAR* ptszSaveUrl);
 /********************************************************************
 函数名称：Protocol_Parse_Delete
 函数功能：删除文件协议解析器
@@ -169,7 +169,7 @@ extern "C" XBOOL Protocol_Parse_Download(LPCXSTR lpszMsgBuffer, int nMsgLen, XCH
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_Delete(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszDelete);
+extern "C" bool Protocol_Parse_Delete(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszDelete);
 /********************************************************************
 函数名称：Protocol_Parse_UPFile
 函数功能：文件上传协议解析
@@ -198,7 +198,7 @@ extern "C" XBOOL Protocol_Parse_Delete(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_UPFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszUPFile, XCHAR* ptszUPUrl);
+extern "C" bool Protocol_Parse_UPFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszUPFile, XCHAR* ptszUPUrl);
 /********************************************************************
 函数名称：Protocol_Parse_ListFile
 函数功能：枚举文件
@@ -227,7 +227,7 @@ extern "C" XBOOL Protocol_Parse_UPFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFindPath, XCHAR* ptszPostUrl);
+extern "C" bool Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFindPath, XCHAR* ptszPostUrl);
 /********************************************************************
 函数名称：Protocol_Parse_Exec
 函数功能：执行程序协议解析
@@ -256,7 +256,7 @@ extern "C" XBOOL Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCH
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_Exec(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecFile, int* pInt_ExecShow);
+extern "C" bool Protocol_Parse_Exec(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecFile, int* pInt_ExecShow);
 /********************************************************************
 函数名称：Protocol_Parse_Message
 函数功能：弹出消息协议
@@ -280,7 +280,7 @@ extern "C" XBOOL Protocol_Parse_Exec(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* 
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_Message(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMessageBox);
+extern "C" bool Protocol_Parse_Message(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszMessageBox);
 /********************************************************************
 函数名称：Protocol_Parse_Message
 函数功能：停止进程协议
@@ -304,7 +304,7 @@ extern "C" XBOOL Protocol_Parse_Message(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHA
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_Stop(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_ProcessID);
+extern "C" bool Protocol_Parse_Stop(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_ProcessID);
 /********************************************************************
 函数名称：Protocol_Parse_Shutdown
 函数功能：关机协议
@@ -328,7 +328,7 @@ extern "C" XBOOL Protocol_Parse_Stop(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* 
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_Shutdown(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_SDType);
+extern "C" bool Protocol_Parse_Shutdown(LPCXSTR lpszMsgBuffer, int nMsgLen, XLONG* pInt_SDType);
 /********************************************************************
 函数名称：Protocol_Parse_System
 函数功能：执行命令
@@ -352,7 +352,7 @@ extern "C" XBOOL Protocol_Parse_Shutdown(LPCXSTR lpszMsgBuffer, int nMsgLen, XLO
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecCmd);
+extern "C" bool Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszExecCmd);
 /********************************************************************
 函数名称：Protocol_Parse_Report
 函数功能：上报信息协议
@@ -381,7 +381,7 @@ extern "C" XBOOL Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr, int* pInt_Type);
+extern "C" bool Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr, int* pInt_Type);
 /********************************************************************
 函数名称：Protocol_Parse_EnumDevice
 函数功能：枚举音视频设备协议
@@ -405,7 +405,7 @@ extern "C" XBOOL Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr);
+extern "C" bool Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr);
 /********************************************************************
 函数名称：Protocol_Parse_Serial
 函数功能：设置序列号协议
@@ -429,4 +429,4 @@ extern "C" XBOOL Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsgLen, X
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" XBOOL Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial);
+extern "C" bool Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial);
