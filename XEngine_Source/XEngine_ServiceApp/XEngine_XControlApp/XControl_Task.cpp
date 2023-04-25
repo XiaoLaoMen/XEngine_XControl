@@ -10,9 +10,9 @@ XHTHREAD XControl_Thread_HttpTask()
 		int nBLen = 0;
 		XCHAR* ptszMsgBody = NULL;
 
-		sprintf(tszTaskUrl, "api?function=gettask&serial=%llu", m_nTaskSerial);
+		sprintf(tszTaskUrl, st_ServiceConfig.tszTaskUrl, m_nTaskSerial);
 
-		if (APIClient_Http_Request("GET", st_ServiceConfig.tszTaskUrl, NULL, NULL, &ptszMsgBody, &nBLen))
+		if (APIClient_Http_Request("GET", tszTaskUrl, NULL, NULL, &ptszMsgBody, &nBLen))
 		{
 			XControl_Task_ProtocolParse(ptszMsgBody, nBLen);
 			BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBody);
