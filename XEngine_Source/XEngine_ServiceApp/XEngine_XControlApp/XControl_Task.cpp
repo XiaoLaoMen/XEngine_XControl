@@ -21,7 +21,7 @@ XHTHREAD XControl_Thread_HttpTask()
 			}
 			BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBody);
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(st_ServiceConfig.st_Time.nHTTPThreadTime));
+		std::this_thread::sleep_for(std::chrono::seconds(st_ServiceConfig.st_Time.nHTTPThreadTime));
 	}
 	return 0;
 }
