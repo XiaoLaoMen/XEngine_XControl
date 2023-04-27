@@ -57,7 +57,14 @@ bool XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 
 		memset(tszIPAddr, '\0', sizeof(tszIPAddr));
 		Protocol_Parse_Connect(lpszMsgBuffer, nMsgLen, tszIPAddr, &nPort);
-		XClient_TCPSelect_Create(&hSocket, tszIPAddr, nPort);
+
+		XClient_TCPSelect_DeleteEx(xhSocket, xhClient);
+		if (!XClient_TCPSelect_InsertEx(xhSocket, &xhClient, tszIPAddr, nPort, true))
+		{
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:连接到服务器任务处理失败,服务地地址:%s,端口:%d,错误码:%lX", tszIPAddr, nPort, SystemApi_GetLastError());
+			return false;
+		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "HTTP任务:连接到服务器任务处理成功,服务地地址:%s,端口:%d", tszIPAddr, nPort);
 	}
 	break;
 	default:

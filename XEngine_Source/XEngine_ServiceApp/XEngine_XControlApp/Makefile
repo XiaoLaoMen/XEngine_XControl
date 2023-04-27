@@ -10,7 +10,7 @@ LOADSO = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEn
 		 -L ../../XEngine_ThirdPart/jsoncpp
 LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_OPenSsl -lHelpComponents_XLog -lXEngine_ProcFile -lXEngine_SystemApi -lNetHelp_APIClient -lXEngine_AVCollect -lXEngine_AVHelp -lStreamMedia_XClient \
       -lXControl_Infomation -lXControl_Configure -lXControl_Protocol -ljsoncpp
-OBJECTS = XControl_Config.o XControl_Handle.o XControl_Task.o XEngine_XControlApp.o \
+OBJECTS = XControl_Config.o XControl_TCPTask.o XControl_HTTPTask.o XEngine_XControlApp.o \
           XControl_TaskRecord.o
 
 ifeq ($(RELEASE),1)
@@ -50,10 +50,10 @@ all:$(OBJECTS)
   
 XControl_Config.o:./XControl_Config.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XControl_Config.cpp 
-XControl_Handle.o:./XControl_Handle.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XControl_Handle.cpp
-XControl_Task.o:./XControl_Task.cpp
-	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XControl_Task.cpp
+XControl_TCPTask.o:./XControl_TCPTask.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XControl_TCPTask.cpp
+XControl_HTTPTask.o:./XControl_HTTPTask.cpp
+	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XControl_HTTPTask.cpp
 	
 XControl_TaskRecord.o:./XControl_Task/XControl_TaskRecord.cpp
 	$(CC) $(DEBUG) $(FLAGS) $(UNICODE) $(PLATVER) $(LOADHDR) ./XControl_Task/XControl_TaskRecord.cpp

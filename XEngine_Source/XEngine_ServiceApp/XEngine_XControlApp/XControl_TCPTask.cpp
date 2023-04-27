@@ -1,54 +1,41 @@
 ﻿#include "XControl_Hdr.h"
 
-XHTHREAD XControl_Thread_TCPTask()
+void CALLBACK XControl_TCPTask_Callback(XHANDLE xhToken, XNETHANDLE xhClient, XSOCKET hSocket, ENUM_NETCLIENT_TCPEVENTS enTCPClientEvents, LPCXSTR lpszMsgBuffer, int nLen, XPVOID lParam)
 {
-	XCHAR tszTaskUrl[MAX_PATH];
-	memset(tszTaskUrl, '\0', MAX_PATH);
+	XCHAR tszClient[128];
+	memset(tszClient, '\0', 128);
 
-	while (bIsRun)
+	_xstprintf(tszClient, _X("%lld"), xhClient);
+
+	if (!HelpComponents_Datas_PostEx(xhPacket, tszClient, lpszMsgBuffer, nLen))
 	{
-		int nBLen = 0;
-		int nCode = 0;
-		XCHAR* ptszMsgBody = NULL;
-
-		sprintf(tszTaskUrl, st_ServiceConfig.tszTaskUrl, m_nTaskSerial);
-
-		if (APIClient_Http_Request("GET", tszTaskUrl, NULL, &nCode, &ptszMsgBody, &nBLen))
-		{
-			if (200 == nCode)
-			{
-				XControl_TCPTask_ProtocolParse(ptszMsgBody, nBLen);
-			}
-			BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBody);
-		}
-		std::this_thread::sleep_for(std::chrono::seconds(st_ServiceConfig.st_Time.nHTTPThreadTime));
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP客户端,投递任务失败,错误码:%lX", Packets_GetLastError());
+		return;
 	}
-	return 0;
+
+	while (1)
+	{
+		int nMsgLen = 0;
+		XCHAR* ptszMsgBuffer;
+		XENGINE_PROTOCOLHDR st_ProtocolHdr;
+
+		if (!HelpComponents_Datas_GetMemoryEx(xhPacket, tszClient, &ptszMsgBuffer, &nMsgLen, &st_ProtocolHdr))
+		{
+			break;
+		}
+		XControl_TCPTask_ProtocolParse(&st_ProtocolHdr, ptszMsgBuffer, nMsgLen);
+	}
 }
 //////////////////////////////////////////////////////////////////////////
-bool XControl_TCPTask_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
+bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	int nSDLen = 0;
 	XCHAR tszSDBuffer[4096];
-	XCONTROL_PROTOCOLINFO st_ProtocolInfo;
 	
 	memset(tszSDBuffer, '\0', sizeof(tszSDBuffer));
-	memset(&st_ProtocolInfo, '\0', sizeof(XCONTROL_PROTOCOLINFO));
 
-	if (!Protocol_Parse_JsonRoot(lpszMsgBuffer, nMsgLen, &st_ProtocolInfo))
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:JSON解析错误");
-		return false;
-	}
-	//获得任务序列号
-	if (st_ProtocolInfo.nTaskSerial != m_nTaskSerial)
-	{
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:任务序列号不正确");
-		return false;
-	}
-	m_nTaskSerial++;
 	//执行任务
-	switch (st_ProtocolInfo.nOPCode)
+	switch (pSt_ProtocolHdr->unOperatorCode)
 	{
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DOWNFILE:
 	{
@@ -288,7 +275,7 @@ bool XControl_TCPTask_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_NOTHINGTODO:
 		break;
 	default:
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求的操作码不支持,操作码:%d", st_ProtocolInfo.nOPCode);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求的操作码不支持,操作码:%d",pSt_ProtocolHdr->unOperatorCode);
 		return false;
 	}
 	return true;

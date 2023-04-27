@@ -6,7 +6,9 @@ XHANDLE xhVideo = NULL;
 XHANDLE xhAudio = NULL;
 XHANDLE xhStream = NULL;
 XHANDLE xhLog = NULL;
-XSOCKET hSocket = 0;
+XHANDLE xhSocket = NULL;
+XHANDLE xhPacket = NULL;
+XNETHANDLE xhClient = 0;
 __int64u m_nTaskSerial = 0;
 
 shared_ptr<std::thread> pSTDThread_Http = NULL;
@@ -23,6 +25,8 @@ void ServiceApp_Stop(int signo)
 		{
 			pSTDThread_Http->join();
 		}
+		XClient_TCPSelect_StopEx(xhSocket);
+		HelpComponents_Datas_Destory(xhPacket);
 		HelpComponents_XLog_Destroy(xhLog);
 		exit(0);
 	}
@@ -61,6 +65,23 @@ int main(int argc, char** argv)
 	signal(SIGTERM, ServiceApp_Stop);
 	signal(SIGABRT, ServiceApp_Stop);
 	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，初始化信号处理成功");
+
+	xhPacket = HelpComponents_Datas_Init();
+	if (NULL == xhPacket)
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "启动服务中，启动组包器失败,错误:%lX", Packets_GetLastError());
+		goto NETSERVICE_APPEXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，启动组包器成功");
+
+	xhSocket = XClient_TCPSelect_StartEx(XControl_TCPTask_Callback);
+	if (NULL == xhSocket)
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "启动服务中，启动网络客户端失败,错误:%lX", XClient_GetLastError());
+		goto NETSERVICE_APPEXIT;
+	}
+	XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "启动服务中，启动网络客户端成功");
+
 	if (st_ServiceConfig.bAutoStart)
 	{
 		if (!SystemApi_Process_AutoStart("XEngine", "XEngine_XControl"))
@@ -119,6 +140,8 @@ NETSERVICE_APPEXIT:
 		{
 			pSTDThread_Http->join();
 		}
+		XClient_TCPSelect_StopEx(xhSocket);
+		HelpComponents_Datas_Destory(xhPacket);
 		HelpComponents_XLog_Destroy(xhLog);
 	}
 

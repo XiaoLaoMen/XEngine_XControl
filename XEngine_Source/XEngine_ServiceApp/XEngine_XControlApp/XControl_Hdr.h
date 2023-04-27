@@ -25,6 +25,8 @@ using namespace std;
 #include <XEngine_Include/XEngine_Client/XClient_Error.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Define.h>
 #include <XEngine_Include/XEngine_HelpComponents/XLog_Error.h>
+#include <XEngine_Include/XEngine_HelpComponents/Packets_Define.h>
+#include <XEngine_Include/XEngine_HelpComponents/Packets_Error.h>
 #include <XEngine_Include/XEngine_NetHelp/APIClient_Define.h>
 #include <XEngine_Include/XEngine_NetHelp/APIClient_Error.h>
 #include <XEngine_Include/XEngine_SystemSdk/ProcFile_Define.h>
@@ -52,7 +54,9 @@ extern XHANDLE xhVideo;
 extern XHANDLE xhAudio;
 extern XHANDLE xhStream;
 extern XHANDLE xhLog;
-extern XSOCKET hSocket;
+extern XHANDLE xhSocket;
+extern XHANDLE xhPacket;
+extern XNETHANDLE xhClient;
 extern __int64u m_nTaskSerial;
 
 extern shared_ptr<std::thread> pSTDThread_Http;
@@ -67,6 +71,7 @@ extern XENGINE_SERVERCONFIG st_ServiceConfig;
 #pragma comment(lib,"XEngine_BaseLib/XEngine_BaseLib.lib")
 #pragma comment(lib,"XEngine_Client/XClient_Socket.lib")
 #pragma comment(lib,"XEngine_HelpComponents/HelpComponents_XLog.lib")
+#pragma comment(lib,"XEngine_HelpComponents/HelpComponents_Packets.lib")
 #pragma comment(lib,"XEngine_NetHelp/NetHelp_APIClient.lib")
 #pragma comment(lib,"XEngine_SystemSdk/XEngine_SystemApi.lib")
 #pragma comment(lib,"XEngine_AVCodec/XEngine_AVCollect.lib")
