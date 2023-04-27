@@ -674,3 +674,58 @@ bool CProtocol_Parse::Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen, 
 
 	return true;
 }
+/********************************************************************
+函数名称：Protocol_Parse_Connect
+函数功能：连接协议解析
+ 参数.一：lpszMsgBuffer
+  In/Out：In
+  类型：常量字符指针
+  可空：N
+  意思：输入要解析的内容
+ 参数.二：nMsgLen
+  In/Out：In
+  类型：整数型
+  可空：N
+  意思：输入解析大小
+ 参数.三：ptszIPAddr
+  In/Out：Out
+  类型：字符指针
+  可空：N
+  意思：输出解析到的服务器地址
+ 参数.三：pInt_Port
+  In/Out：Out
+  类型：整数型指针
+  可空：N
+  意思：输出解析到的服务器端口
+返回值
+  类型：逻辑型
+  意思：是否成功
+备注：
+*********************************************************************/
+bool CProtocol_Parse::Protocol_Parse_Connect(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr, int* pInt_Port)
+{
+	Protocol_IsErrorOccur = false;
+
+	if ((NULL == lpszMsgBuffer) || (0 == nMsgLen))
+	{
+		Protocol_IsErrorOccur = true;
+		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARAMENT;
+		return false;
+	}
+	Json::Value st_JsonRoot;
+	JSONCPP_STRING st_JsonError;
+	Json::CharReaderBuilder st_JsonBuilder;
+
+	std::unique_ptr<Json::CharReader> const pSt_JsonReader(st_JsonBuilder.newCharReader());
+	if (!pSt_JsonReader->parse(lpszMsgBuffer, lpszMsgBuffer + nMsgLen, &st_JsonRoot, &st_JsonError))
+	{
+		Protocol_IsErrorOccur = true;
+		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
+		return false;
+	}
+
+	*pInt_Port = st_JsonRoot["nPort"].asInt();
+	_tcsxcpy(ptszIPAddr, st_JsonRoot["tszIPAddr"].asCString());
+
+	return true;
+}

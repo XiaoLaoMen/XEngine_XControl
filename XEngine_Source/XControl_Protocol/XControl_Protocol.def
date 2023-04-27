@@ -19,3 +19,4 @@ EXPORTS
 	Protocol_Parse_Report
 	Protocol_Parse_EnumDevice
 	Protocol_Parse_Serial
+	Protocol_Parse_Connect

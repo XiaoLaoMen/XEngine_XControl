@@ -94,3 +94,7 @@ extern "C" bool Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen, __int6
 {
 	return m_ProtocolParse.Protocol_Parse_Serial(lpszMsgBuffer, nMsgLen, pInt_Serial);
 }
+extern "C" bool Protocol_Parse_Connect(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszIPAddr, int* pInt_Port)
+{
+	return m_ProtocolParse.Protocol_Parse_Connect(lpszMsgBuffer, nMsgLen, ptszIPAddr, pInt_Port);
+}

@@ -30,6 +30,7 @@ public:
     bool Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr, int* pInt_Type);
     bool Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr);
     bool Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen, __int64u* pInt_Serial);
+    bool Protocol_Parse_Connect(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr, int* pInt_Port);
 protected:
 private:
 };
