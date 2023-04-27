@@ -64,7 +64,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 
 			if (APIClient_File_Query(xhTask, &st_TaskInfo))
 			{
-				if (ENUM_NETHELP_APICLIENT_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus)
+				if ((ENUM_NETHELP_APICLIENT_FILE_STATUS_INIT != st_TaskInfo.en_DownStatus) || (ENUM_NETHELP_APICLIENT_FILE_STATUS_DOWNLOADDING != st_TaskInfo.en_DownStatus))
 				{
 					break;
 				}
