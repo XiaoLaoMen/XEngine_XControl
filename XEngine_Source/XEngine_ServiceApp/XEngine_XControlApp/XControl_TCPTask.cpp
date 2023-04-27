@@ -34,6 +34,11 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 	
 	memset(tszSDBuffer, '\0', sizeof(tszSDBuffer));
 
+	if (ENUM_XENGINE_COMMUNICATION_PROTOCOL_TYPE_BACK != pSt_ProtocolHdr->unOperatorType)
+	{
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:协议错误,非后台协议");
+		return false;
+	}
 	//执行任务
 	switch (pSt_ProtocolHdr->unOperatorCode)
 	{
@@ -49,7 +54,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		XHANDLE xhTask = APIClient_File_Create(tszFileUrl, tszSaveUrl);
 		if (NULL == xhTask)
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:下载任务处理失败,错误码:%lX", APIClient_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:下载任务处理失败,错误码:%lX", APIClient_GetLastError());
 			return false;
 		}
 		while (true)
@@ -75,7 +80,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		Protocol_Parse_Delete(lpszMsgBuffer, nMsgLen, tszDelFile);
 		if (-1 == remove(tszDelFile))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:删除文件任务处理失败,错误码:%d", errno);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:删除文件任务处理失败,错误码:%d", errno);
 			return false;
 		}
 		break;
@@ -86,7 +91,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		Protocol_Parse_Delete(lpszMsgBuffer, nMsgLen, tszDelDir);
 		if (!SystemApi_File_DeleteMutilFolder(tszDelDir))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:删除文件夹任务处理失败,错误码:%lX", SystemApi_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:删除文件夹任务处理失败,错误码:%lX", SystemApi_GetLastError());
 			return false;
 		}
 		break;
@@ -102,7 +107,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		XHANDLE xhTask = APIClient_File_Create(tszUPFile, tszUPUrl, false);
 		if (NULL == xhTask)
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:FTP上传任务处理失败,错误码:%lX", APIClient_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:FTP上传任务处理失败,错误码:%lX", APIClient_GetLastError());
 			return false;
 		}
 		while (true)
@@ -139,13 +144,13 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 
 			if (!APIClient_Http_Request("POST", tszPostUrl, tszSDBuffer))
 			{
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:发送文件列表失败,地址:%s,错误码:%lX", tszPostUrl, APIClient_GetLastError());
+				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:发送文件列表失败,地址:%s,错误码:%lX", tszPostUrl, APIClient_GetLastError());
 				return false;
 			}
 		}
 		else
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求文件列表失败,错误码:%lX", SystemApi_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求文件列表失败,错误码:%lX", SystemApi_GetLastError());
 		}
 	}
 	break;
@@ -160,11 +165,11 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		Protocol_Parse_Exec(lpszMsgBuffer, nMsgLen, tszExecFile, &nExeType);
 		if (SystemApi_Process_CreateProcess(&dwProcessID, tszExecFile, NULL, nExeType))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "HTTP任务:请求创建进程成功,进程:%s", tszExecFile);
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "TCP任务:请求创建进程成功,进程:%s", tszExecFile);
 		}
 		else
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求创建进程:%s 失败,错误码:%lX", tszExecFile, SystemApi_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求创建进程:%s 失败,错误码:%lX", tszExecFile, SystemApi_GetLastError());
 		}
 	}
 	break;
@@ -177,7 +182,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 #ifdef _MSC_BUILD
 		MessageBoxA(NULL, tszMessageBox, "提示", MB_OK);
 #endif
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "HTTP任务:请求弹出消息:%s", tszMessageBox);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "TCP任务:请求弹出消息:%s", tszMessageBox);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_STOPPROCESS:
@@ -187,7 +192,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		Protocol_Parse_Stop(lpszMsgBuffer, nMsgLen, &dwProcessID);
 		if (!SystemApi_Process_Stop(NULL, dwProcessID))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求停止进程失败,错误码:%lX", SystemApi_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求停止进程失败,错误码:%lX", SystemApi_GetLastError());
 			return false;
 		}
 	}
@@ -199,7 +204,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		Protocol_Parse_Shutdown(lpszMsgBuffer, nMsgLen, &dwType);
 		if (!SystemApi_System_Shutdown(dwType))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求关机失败,错误码:%lX", SystemApi_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求关机失败,错误码:%lX", SystemApi_GetLastError());
 			return false;
 		}
 	}
@@ -211,7 +216,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		Protocol_Parse_System(lpszMsgBuffer, nMsgLen, tszExecCmd);
 		if (-1 == system(tszExecCmd))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求执行命令失败,错误码:%lX", SystemApi_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求执行命令失败,错误码:%lX", SystemApi_GetLastError());
 			return false;
 		}
 		break;
@@ -275,7 +280,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_NOTHINGTODO:
 		break;
 	default:
-		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:请求的操作码不支持,操作码:%d",pSt_ProtocolHdr->unOperatorCode);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求的操作码不支持,操作码:%d",pSt_ProtocolHdr->unOperatorCode);
 		return false;
 	}
 	return true;

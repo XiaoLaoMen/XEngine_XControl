@@ -1,7 +1,7 @@
 RELEASE = 0
 UNICODE = 0
-
-FLAGS = RELEASE=$(RELEASE)
+PLATFORM=linux
+FLAGS= 
 
 XCONTROL_JSON_PATH = ./XEngine_ThirdPart/jsoncpp
 
@@ -17,23 +17,14 @@ XENGINE_MODULE = libjsoncpp.so libXControl_Infomation.so libXControl_Configure.s
 MakeAll:$(XENGINE_MODULE)
 	
 libjsoncpp.so:
-	make -C $(XCONTROL_JSON_PATH) $(FLAGS)
+	make -C $(XCONTROL_JSON_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
 
 libXControl_Infomation.so:
-	make -C $(XCONTROL_INFO_PATH) $(FLAGS)
+	make -C $(XCONTROL_INFO_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
 libXControl_Configure.so:
-	make -C $(XCONTROL_CONFIG_PATH) $(FLAGS)
+	make -C $(XCONTROL_CONFIG_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
 libXControl_Protocol.so:
-	make -C $(XCONTROL_PROTOCOL_PATH) $(FLAGS)
+	make -C $(XCONTROL_PROTOCOL_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
 	
 XEngine_XControl.exe:
-	make -C $(XCONTROL_APP_PATH) $(FLAGS)
-
-
-SetFlags_Install:
-	export FLAGS=InstallAll
-InstallAll:SetFlags_Install $(XENGINE_MODULE) 
-
-SetFlags_Clean:
-	export FLAGS=CleanAll
-CleanAll:SetFlags_Clean $(XENGINE_MODULE)
+	make -C $(XCONTROL_APP_PATH) PLATFORM=$(PLATFORM) $(FLAGS)
