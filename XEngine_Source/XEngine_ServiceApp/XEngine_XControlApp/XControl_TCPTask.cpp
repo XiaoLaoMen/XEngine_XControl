@@ -135,12 +135,10 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		int nListCount = 0;
 		XCHAR** ppszFileList;
 		XCHAR tszFindPath[MAX_PATH];
-		XCHAR tszPostUrl[MAX_PATH];
 
 		memset(tszFindPath, '\0', MAX_PATH);
-		memset(tszPostUrl, '\0', MAX_PATH);
 
-		Protocol_Parse_ListFile(lpszMsgBuffer, nMsgLen, tszFindPath, tszPostUrl);
+		Protocol_Parse_ListFile(lpszMsgBuffer, nMsgLen, tszFindPath);
 		if (!SystemApi_File_EnumFile(tszFindPath, &ppszFileList, &nListCount))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求文件列表失败,错误码:%lX", SystemApi_GetLastError());
@@ -148,6 +146,9 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		}
 		Protocol_Packet_ListFile(tszSDBuffer, &nSDLen, &ppszFileList, nListCount);
 		BaseLib_OperatorMemory_Free((XPPPMEM)&ppszFileList, nListCount);
+
+		pSt_ProtocolHdr->unPacketSize = nSDLen;
+		XClient_TCPSelect_SendEx(xhSocket, xhClient, (LPCXSTR)pSt_ProtocolHdr, sizeof(XENGINE_PROTOCOLHDR));
 		XClient_TCPSelect_SendEx(xhSocket, xhClient, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:获取文件列表成功,回复大小:"), nSDLen);
 	}
@@ -222,52 +223,41 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_REPORT:
 	{
 		int nType = 0;
-		XCHAR tszIPAddr[MAX_PATH];
-
-		memset(tszIPAddr, '\0', MAX_PATH);
-
-		Protocol_Parse_Report(lpszMsgBuffer, nMsgLen, tszIPAddr, &nType);
+		Protocol_Parse_Report(lpszMsgBuffer, nMsgLen, &nType);
 		if (0 == nType)
 		{
-			int nHWLen = 4096;
-			XCHAR tszHWBuffer[4096];
-			memset(tszHWBuffer, '\0', sizeof(tszHWBuffer));
-			XControl_Info_HardWare(tszHWBuffer, &nHWLen);
-			APIClient_Http_Request("POST", tszIPAddr, tszHWBuffer);
+			XControl_Info_HardWare(tszSDBuffer, &nSDLen);
+
+			pSt_ProtocolHdr->unPacketSize = nSDLen;
+			XClient_TCPSelect_SendEx(xhSocket, xhClient, (LPCXSTR)pSt_ProtocolHdr, sizeof(XENGINE_PROTOCOLHDR));
+			XClient_TCPSelect_SendEx(xhSocket, xhClient, tszSDBuffer, nSDLen);
 		}
 		else
 		{
-			int nSWLen = 4096;
-			XCHAR tszSWBuffer[4096];
-			memset(tszSWBuffer, '\0', sizeof(tszSWBuffer));
-			XControl_Info_SoftWare(tszSWBuffer, &nSWLen);
-			APIClient_Http_Request("POST", tszIPAddr, tszSWBuffer);
+			XControl_Info_SoftWare(tszSDBuffer, &nSDLen);
+
+			pSt_ProtocolHdr->unPacketSize = nSDLen;
+			XClient_TCPSelect_SendEx(xhSocket, xhClient, (LPCXSTR)pSt_ProtocolHdr, sizeof(XENGINE_PROTOCOLHDR));
+			XClient_TCPSelect_SendEx(xhSocket, xhClient, tszSDBuffer, nSDLen);
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:请求上报信息成功"));
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ENUMDEVICE:
 	{
-		XCHAR tszIPAddr[MAX_PATH];
-		memset(tszIPAddr, '\0', MAX_PATH);
-		
 		int nACount = 0;
 		int nVCount = 0;
 		AVHELP_DEVICEINFO** ppSt_AudioList;
 		AVHELP_DEVICEINFO** ppSt_VideoList;
 
-		int nMsgLen = 0;
-		XCHAR tszMsgBuffer[4096];
-		memset(tszMsgBuffer, '\0', sizeof(tszMsgBuffer));
-
 		AVHelp_Device_EnumDevice(&ppSt_AudioList, &ppSt_VideoList, &nACount, &nVCount);
-
-		Protocol_Parse_EnumDevice(lpszMsgBuffer, nMsgLen, tszIPAddr);
-		Protocol_Packet_EnumDevice(tszMsgBuffer, &nMsgLen, &ppSt_AudioList, &ppSt_VideoList, nACount, nVCount);
+		Protocol_Packet_EnumDevice(tszSDBuffer, &nSDLen, &ppSt_AudioList, &ppSt_VideoList, nACount, nVCount);
 		BaseLib_OperatorMemory_Free((void***)&ppSt_AudioList, nACount);
 		BaseLib_OperatorMemory_Free((void***)&ppSt_VideoList, nVCount);
 
-		APIClient_Http_Request("POST", tszIPAddr, tszMsgBuffer);
+		pSt_ProtocolHdr->unPacketSize = nSDLen;
+		XClient_TCPSelect_SendEx(xhSocket, xhClient, (LPCXSTR)pSt_ProtocolHdr, sizeof(XENGINE_PROTOCOLHDR));
+		XClient_TCPSelect_SendEx(xhSocket, xhClient, tszSDBuffer, nSDLen);
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:请求枚举音视频设备成功,音频设备个数:%d,视频设备个数:%d"), nACount, nVCount);
 	}
 	break;

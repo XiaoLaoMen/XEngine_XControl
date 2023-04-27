@@ -58,9 +58,9 @@ extern "C" bool Protocol_Parse_UPFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR 
 {
 	return m_ProtocolParse.Protocol_Parse_UPFile(lpszMsgBuffer, nMsgLen, ptszUPFile, ptszUPUrl);
 }
-extern "C" bool Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszFindPath, XCHAR * ptszPostUrl)
+extern "C" bool Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszFindPath)
 {
-	return m_ProtocolParse.Protocol_Parse_ListFile(lpszMsgBuffer, nMsgLen, ptszFindPath, ptszPostUrl);
+	return m_ProtocolParse.Protocol_Parse_ListFile(lpszMsgBuffer, nMsgLen, ptszFindPath);
 }
 extern "C" bool Protocol_Parse_Exec(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszExecFile, int* pInt_ExecShow)
 {
@@ -82,13 +82,9 @@ extern "C" bool Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR 
 {
 	return m_ProtocolParse.Protocol_Parse_System(lpszMsgBuffer, nMsgLen, ptszExecCmd);
 }
-extern "C" bool Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszIPAddr, int* pInt_Type)
+extern "C" bool Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_Type)
 {
-	return m_ProtocolParse.Protocol_Parse_Report(lpszMsgBuffer, nMsgLen, ptszIPAddr, pInt_Type);
-}
-extern "C" bool Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR * ptszIPAddr)
-{
-	return m_ProtocolParse.Protocol_Parse_EnumDevice(lpszMsgBuffer, nMsgLen, ptszIPAddr);
+	return m_ProtocolParse.Protocol_Parse_Report(lpszMsgBuffer, nMsgLen, pInt_Type);
 }
 extern "C" bool Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen, __int64u * pInt_Serial)
 {

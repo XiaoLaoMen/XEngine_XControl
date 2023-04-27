@@ -217,17 +217,12 @@ extern "C" bool Protocol_Parse_UPFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR*
   类型：字符指针
   可空：N
   意思：输出文件的地址
- 参数.四：ptszPostUrl
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出上传到的位置
 返回值
   类型：逻辑型
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" bool Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFindPath, XCHAR* ptszPostUrl);
+extern "C" bool Protocol_Parse_ListFile(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszFindPath);
 /********************************************************************
 函数名称：Protocol_Parse_Exec
 函数功能：执行程序协议解析
@@ -366,11 +361,6 @@ extern "C" bool Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR*
   类型：整数型
   可空：N
   意思：输入解析大小
- 参数.三：ptszIPAddr
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出上报的地址
  参数.三：pInt_Type
   In/Out：Out
   类型：字符指针
@@ -381,31 +371,7 @@ extern "C" bool Protocol_Parse_System(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR*
   意思：是否成功
 备注：
 *********************************************************************/
-extern "C" bool Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr, int* pInt_Type);
-/********************************************************************
-函数名称：Protocol_Parse_EnumDevice
-函数功能：枚举音视频设备协议
- 参数.一：lpszMsgBuffer
-  In/Out：In
-  类型：常量字符指针
-  可空：N
-  意思：输入要解析的内容
- 参数.二：nMsgLen
-  In/Out：In
-  类型：整数型
-  可空：N
-  意思：输入解析大小
- 参数.三：ptszIPAddr
-  In/Out：Out
-  类型：字符指针
-  可空：N
-  意思：输出上报的地址
-返回值
-  类型：逻辑型
-  意思：是否成功
-备注：
-*********************************************************************/
-extern "C" bool Protocol_Parse_EnumDevice(LPCXSTR lpszMsgBuffer, int nMsgLen, XCHAR* ptszIPAddr);
+extern "C" bool Protocol_Parse_Report(LPCXSTR lpszMsgBuffer, int nMsgLen, int* pInt_Type);
 /********************************************************************
 函数名称：Protocol_Parse_Serial
 函数功能：设置序列号协议
