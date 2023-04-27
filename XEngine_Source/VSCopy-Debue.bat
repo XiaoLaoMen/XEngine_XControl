@@ -6,4 +6,4 @@ copy /y "D:\XEngine\XEngine_SourceCode\Debug\NetHelp_APIClient.dll" "./"
 
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVCollect.dll" "./"
 copy /y "D:\XEngine\XEngine_SourceCode\Debug\XEngine_AVHelp.dll" "./"
-copy /y "D:\XEngine\XEngine_SourceCode\Debug\StreamMedia_XClient.dll" "./"
+copy /y "D:\XEngine\XEngine_SourceCode\Debug\StreamMedia_StreamClient.dll" "./"

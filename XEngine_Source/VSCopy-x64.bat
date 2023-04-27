@@ -6,7 +6,7 @@ copy /y "%XEngine_Lib64%\XEngine_NetHelp\NetHelp_APIClient.dll" "./"
 
 copy /y "%XEngine_Lib64%\XEngine_AVCodec\XEngine_AVCollect.dll" "./"
 copy /y "%XEngine_Lib64%\XEngine_AVCodec\XEngine_AVHelp.dll" "./"
-copy /y "%XEngine_Lib64%\XEngine_StreamMedia\StreamMedia_XClient.dll" "./"
+copy /y "%XEngine_Lib64%\XEngine_StreamMedia\StreamMedia_StreamClient.dll" "./"
 
 copy /y "%XEngine_Lib64%\XEngine_LibEx\libcrypto-3-x64.dll" "./"
 copy /y "%XEngine_Lib64%\XEngine_LibEx\libssl-3-x64.dll" "./"
