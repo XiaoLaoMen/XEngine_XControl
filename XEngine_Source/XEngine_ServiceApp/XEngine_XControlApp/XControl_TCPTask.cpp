@@ -71,6 +71,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 			}
 		}
 		APIClient_File_Delete(xhTask);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:下载任务处理成功,下载地址:%s,保存地址:%s"), tszFileUrl, tszSaveUrl);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DELETEFILE:
@@ -83,6 +84,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:删除文件任务处理失败,错误码:%d", errno);
 			return false;
 		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:删除文件处理成功,删除的文件:%s"), tszDelFile);
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_DELETEDIR:
 		XCHAR tszDelDir[MAX_PATH];
@@ -94,6 +96,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:删除文件夹任务处理失败,错误码:%lX", SystemApi_GetLastError());
 			return false;
 		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:删除文件夹处理成功,删除的文件夹:%s"), tszDelDir);
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_UPFILE:
 	{
@@ -124,6 +127,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 			}
 		}
 		APIClient_File_Delete(xhTask);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:上传文件处理成功,上传的文件:%s,上传的地址:%s"), tszUPFile, tszUPUrl);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_GETLIST:
@@ -137,21 +141,15 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		memset(tszPostUrl, '\0', MAX_PATH);
 
 		Protocol_Parse_ListFile(lpszMsgBuffer, nMsgLen, tszFindPath, tszPostUrl);
-		if (SystemApi_File_EnumFile(tszFindPath, &ppszFileList, &nListCount))
-		{
-			Protocol_Packet_ListFile(tszSDBuffer, &nSDLen, &ppszFileList, nListCount);
-			BaseLib_OperatorMemory_Free((XPPPMEM)&ppszFileList, nListCount);
-
-			if (!APIClient_Http_Request("POST", tszPostUrl, tszSDBuffer))
-			{
-				XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:发送文件列表失败,地址:%s,错误码:%lX", tszPostUrl, APIClient_GetLastError());
-				return false;
-			}
-		}
-		else
+		if (!SystemApi_File_EnumFile(tszFindPath, &ppszFileList, &nListCount))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求文件列表失败,错误码:%lX", SystemApi_GetLastError());
+			return false;
 		}
+		Protocol_Packet_ListFile(tszSDBuffer, &nSDLen, &ppszFileList, nListCount);
+		BaseLib_OperatorMemory_Free((XPPPMEM)&ppszFileList, nListCount);
+		XClient_TCPSelect_SendEx(xhSocket, xhClient, tszSDBuffer, nSDLen);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:获取文件列表成功,回复大小:"), nSDLen);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_EXEC:
@@ -163,14 +161,12 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		memset(tszExecFile, '\0', MAX_PATH);
 
 		Protocol_Parse_Exec(lpszMsgBuffer, nMsgLen, tszExecFile, &nExeType);
-		if (SystemApi_Process_CreateProcess(&dwProcessID, tszExecFile, NULL, nExeType))
-		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "TCP任务:请求创建进程成功,进程:%s", tszExecFile);
-		}
-		else
+		if (!SystemApi_Process_CreateProcess(&dwProcessID, tszExecFile, NULL, nExeType))
 		{
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求创建进程:%s 失败,错误码:%lX", tszExecFile, SystemApi_GetLastError());
+			return false;
 		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "TCP任务:请求创建进程成功,进程:%s", tszExecFile);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_POPMESSAGE:
@@ -195,6 +191,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求停止进程失败,错误码:%lX", SystemApi_GetLastError());
 			return false;
 		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:请求停止进程成功,进程ID:%ld"), dwProcessID);
 	}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SHUTDOWN:
@@ -207,6 +204,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求关机失败,错误码:%lX", SystemApi_GetLastError());
 			return false;
 		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:请求关闭系统成功,关闭方式:%ld"), dwType);
 	}
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ECMD:
@@ -219,6 +217,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "TCP任务:请求执行命令失败,错误码:%lX", SystemApi_GetLastError());
 			return false;
 		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:请求执行命令成功,执行的命令:%s"), tszExecCmd);
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_REPORT:
 	{
@@ -244,6 +243,7 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 			XControl_Info_SoftWare(tszSWBuffer, &nSWLen);
 			APIClient_Http_Request("POST", tszIPAddr, tszSWBuffer);
 		}
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:请求上报信息成功"));
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_ENUMDEVICE:
@@ -268,12 +268,14 @@ bool XControl_TCPTask_ProtocolParse(XENGINE_PROTOCOLHDR* pSt_ProtocolHdr, LPCXST
 		BaseLib_OperatorMemory_Free((void***)&ppSt_VideoList, nVCount);
 
 		APIClient_Http_Request("POST", tszIPAddr, tszMsgBuffer);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:请求枚举音视频设备成功,音频设备个数:%d,视频设备个数:%d"), nACount, nVCount);
 	}
 	break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_RECORD:
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_SERIAL:
 		Protocol_Parse_Serial(lpszMsgBuffer, nMsgLen, &m_nTaskSerial);
+		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, _X("TCP任务:请求设置序列号成功,序列号:%lld,"), m_nTaskSerial);
 		break;
 	case XENGINE_COMMUNICATION_PROTOCOL_OPERATOR_CODE_BS_USER:
 		break;

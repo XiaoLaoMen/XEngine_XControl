@@ -61,7 +61,7 @@ bool XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 		XClient_TCPSelect_DeleteEx(xhSocket, xhClient);
 		if (!XClient_TCPSelect_InsertEx(xhSocket, &xhClient, tszIPAddr, nPort, true))
 		{
-			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:连接到服务器任务处理失败,服务地地址:%s,端口:%d,错误码:%lX", tszIPAddr, nPort, SystemApi_GetLastError());
+			XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_ERROR, "HTTP任务:连接到服务器任务处理失败,服务地地址:%s,端口:%d,错误码:%lX", tszIPAddr, nPort, XClient_GetLastError());
 			return false;
 		}
 		XLOG_PRINT(xhLog, XENGINE_HELPCOMPONENTS_XLOG_IN_LOGLEVEL_INFO, "HTTP任务:连接到服务器任务处理成功,服务地地址:%s,端口:%d", tszIPAddr, nPort);
