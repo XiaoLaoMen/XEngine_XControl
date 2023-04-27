@@ -670,7 +670,7 @@ bool CProtocol_Parse::Protocol_Parse_Serial(LPCXSTR lpszMsgBuffer, int nMsgLen, 
 		Protocol_dwErrorCode = ERROR_CONTROL_MODULE_PROTOCOL_PARSE;
 		return false;
 	}
-	*pInt_Serial = st_JsonRoot["tszIPAddr"].asUInt64();
+	*pInt_Serial = st_JsonRoot["nSerial"].asUInt64();
 
 	return true;
 }
