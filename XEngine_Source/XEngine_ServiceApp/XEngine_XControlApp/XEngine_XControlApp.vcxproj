@@ -144,17 +144,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="XControl_Config.cpp" />
-    <ClCompile Include="XControl_Handle.cpp" />
-    <ClCompile Include="XControl_Task.cpp" />
+    <ClCompile Include="XControl_HTTPTask.cpp" />
     <ClCompile Include="XControl_Task\XControl_TaskRecord.cpp" />
+    <ClCompile Include="XControl_TCPTask.cpp" />
     <ClCompile Include="XEngine_XControlApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XControl_Config.h" />
-    <ClInclude Include="XControl_Handle.h" />
     <ClInclude Include="XControl_Hdr.h" />
-    <ClInclude Include="XControl_Task.h" />
+    <ClInclude Include="XControl_HTTPTask.h" />
     <ClInclude Include="XControl_Task\XControl_TaskRecord.h" />
+    <ClInclude Include="XControl_TCPTask.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

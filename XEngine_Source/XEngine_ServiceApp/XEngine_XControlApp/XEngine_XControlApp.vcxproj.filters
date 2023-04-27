@@ -27,31 +27,31 @@
     <ClCompile Include="XControl_Config.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="XControl_Handle.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="XControl_Task.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="XControl_Task\XControl_TaskRecord.cpp">
       <Filter>源文件\XControl_Task</Filter>
+    </ClCompile>
+    <ClCompile Include="XControl_TCPTask.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="XControl_HTTPTask.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XControl_Config.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="XControl_Handle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="XControl_Hdr.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="XControl_Task.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="XControl_Task\XControl_TaskRecord.h">
       <Filter>头文件\XControl_Task</Filter>
+    </ClInclude>
+    <ClInclude Include="XControl_TCPTask.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="XControl_HTTPTask.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

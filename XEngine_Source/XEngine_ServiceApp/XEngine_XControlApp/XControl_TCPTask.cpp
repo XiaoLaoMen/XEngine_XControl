@@ -1,6 +1,6 @@
 ﻿#include "XControl_Hdr.h"
 
-XHTHREAD XControl_Thread_HttpTask()
+XHTHREAD XControl_Thread_TCPTask()
 {
 	XCHAR tszTaskUrl[MAX_PATH];
 	memset(tszTaskUrl, '\0', MAX_PATH);
@@ -17,7 +17,7 @@ XHTHREAD XControl_Thread_HttpTask()
 		{
 			if (200 == nCode)
 			{
-				XControl_Task_ProtocolParse(ptszMsgBody, nBLen);
+				XControl_TCPTask_ProtocolParse(ptszMsgBody, nBLen);
 			}
 			BaseLib_OperatorMemory_FreeCStyle((XPPMEM)&ptszMsgBody);
 		}
@@ -26,7 +26,7 @@ XHTHREAD XControl_Thread_HttpTask()
 	return 0;
 }
 //////////////////////////////////////////////////////////////////////////
-bool XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
+bool XControl_TCPTask_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
 	int nSDLen = 0;
 	XCHAR tszSDBuffer[4096];

@@ -6,6 +6,7 @@ XHANDLE xhVideo = NULL;
 XHANDLE xhAudio = NULL;
 XHANDLE xhStream = NULL;
 XHANDLE xhLog = NULL;
+XSOCKET hSocket = 0;
 __int64u m_nTaskSerial = 0;
 
 shared_ptr<std::thread> pSTDThread_Http = NULL;
