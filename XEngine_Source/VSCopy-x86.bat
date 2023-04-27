@@ -1,7 +1,9 @@
 copy /y "%XEngine_Lib32%\XEngine_BaseLib\XEngine_BaseLib.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_Core\XEngine_NetXApi.dll" "./"
+copy /y "%XEngine_Lib32%\XEngine_Client\XClient_Socket.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_SystemSdk\XEngine_SystemApi.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_HelpComponents\HelpComponents_XLog.dll" "./"
+copy /y "%XEngine_Lib32%\XEngine_HelpComponents\HelpComponents_Packets.dll" "./"
 copy /y "%XEngine_Lib32%\XEngine_NetHelp\NetHelp_APIClient.dll" "./"
 
 copy /y "%XEngine_Lib32%\XEngine_AVCodec\XEngine_AVCollect.dll" "./"
