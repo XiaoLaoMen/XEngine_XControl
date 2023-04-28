@@ -12,13 +12,14 @@ c c++
 #### 软件特性
 1. 支持多种多样的任务列表和自定义任务  
 2. 支持一些高级特性  
-3. 支持HTTP任务接受处理   
+3. 支持TCP接受处理   
 4. 支持屏幕录像推流
+5. 支持HTTP作为连接服务
 
 ## 安装教程
 
 #### XEngine环境
-必须安装XEngine,版本需要V8.2或者以上版本,安装XEngine可以参考其Readme文档  
+必须安装XEngine,版本需要V8.10或者以上版本,安装XEngine可以参考其Readme文档  
 GITEE:https://gitee.com/xyry/libxengine  
 GITHUB:https://github.com/libxengine/xengine
 
@@ -37,15 +38,18 @@ Linux使用Makefile编译
 UBUNTU22.04 x64或者RockyLinux9 x64均可  
 在控制台运行
 
-#### MacOS
-使用makefile编译,控制台运行,需要mac 13版本  
-在控制台运行
-
 ##### 编译命令
 在XEngine_Source目录下执行命令
 make 编译  
 make FLAGS=InstallAll 安装库程序  
 make FLAGS=CleanAll 清理编译  
+
+#### MacOS
+使用makefile编译,控制台运行,需要mac 13版本  
+在控制台运行
+
+##### 编译命令
+参考Linux
 
 #### 使用说明
 

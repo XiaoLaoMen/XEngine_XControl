@@ -12,13 +12,14 @@ Lightweight background service management tool,control your computer with HTTP o
 #### Software feature
 1. Support a variety of task lists and custom tasks  
 2. Support some advanced features  
-3. Support HTTP task acceptance processing  
+3. Support TCP task acceptance processing  
 4. Support screen record push stream
+5. Support HTTP Connect Forward
 
 #### Installation
 
 #### XEngine Evn
-you must install XEngine,need V8.2 or above,install XEngine can be refer to xengine Readme docment  
+you must install XEngine,need V8.10 or above,install XEngine can be refer to xengine Readme docment  
 GITEE:https://gitee.com/xyry/libxengine  
 GITHUB:https://github.com/libxengine/xengine
 
@@ -36,14 +37,17 @@ Just Run it.
 Linux use Makefile to complie  
 supproted ubuntu22.04 x64 or RockyLinux9 x64  
 
-#### MacOS
-Linux use Makefile to complie,terminal exection,Requires mac 13
-
 ##### complie
 execute command in XEngine_Source path
 make complie  
 make FLAGS=InstallAll install  
 make FLAGS=CleanAll clear  
+
+#### MacOS
+Linux use Makefile to complie,terminal exection,Requires mac 13
+
+##### complie
+Refer To Linux
 
 #### use
 
