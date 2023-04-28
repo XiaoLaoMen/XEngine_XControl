@@ -28,11 +28,7 @@ XHTHREAD XControl_Thread_HttpTask()
 //////////////////////////////////////////////////////////////////////////
 bool XControl_Task_ProtocolParse(LPCXSTR lpszMsgBuffer, int nMsgLen)
 {
-	int nSDLen = 0;
-	XCHAR tszSDBuffer[4096];
 	XCONTROL_PROTOCOLINFO st_ProtocolInfo;
-	
-	memset(tszSDBuffer, '\0', sizeof(tszSDBuffer));
 	memset(&st_ProtocolInfo, '\0', sizeof(XCONTROL_PROTOCOLINFO));
 
 	if (!Protocol_Parse_JsonRoot(lpszMsgBuffer, nMsgLen, &st_ProtocolInfo))

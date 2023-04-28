@@ -5,10 +5,10 @@ PLATDIR =
 RELEASE = 0
 UNICODE = 0
 LOADHDR = -I ./ -I ../XEngine_ThirdPart/jsoncpp
-LOADSO = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Core -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents -L /usr/local/lib/XEngine_Release/XEngine_SystemSdk -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -L /usr/local/lib/XEngine_Release/XEngine_AVCodec -L /usr/local/lib/XEngine_Release/XEngine_StreamMedia \
+LOADSO = -L /usr/local/lib/XEngine_Release/XEngine_BaseLib -L /usr/local/lib/XEngine_Release/XEngine_Client -L /usr/local/lib/XEngine_Release/XEngine_HelpComponents -L /usr/local/lib/XEngine_Release/XEngine_SystemSdk -L /usr/local/lib/XEngine_Release/XEngine_NetHelp -L /usr/local/lib/XEngine_Release/XEngine_AVCodec -L /usr/local/lib/XEngine_Release/XEngine_StreamMedia \
          -L ../../XControl_Infomation -L ../../XControl_Configure -L ../../XControl_Protocol \
 		 -L ../../XEngine_ThirdPart/jsoncpp
-LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXEngine_OPenSsl -lHelpComponents_XLog -lXEngine_ProcFile -lXEngine_SystemApi -lNetHelp_APIClient -lXEngine_AVCollect -lXEngine_AVHelp -lStreamMedia_XClient \
+LIB = -lXEngine_BaseLib -lXEngine_Algorithm -lXClient_Socket -lHelpComponents_XLog -lHelpComponents_Packets -lXEngine_ProcFile -lXEngine_SystemApi -lNetHelp_APIClient -lXEngine_AVCollect -lXEngine_AVHelp -lStreamMedia_StreamClient \
       -lXControl_Infomation -lXControl_Configure -lXControl_Protocol -ljsoncpp
 OBJECTS = XControl_Config.o XControl_TCPTask.o XControl_HTTPTask.o XEngine_XControlApp.o \
           XControl_TaskRecord.o

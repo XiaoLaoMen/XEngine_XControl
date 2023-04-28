@@ -85,7 +85,7 @@ bool CXControl_Info::XControl_Info_HardWare(XCHAR* ptszHWInfo, int* pInt_Len)
 #ifdef _MSC_BUILD
     GetLogicalDriveStringsA(MAX_PATH, tszDriveStr);
 #else
-    LPCXSTR lpszDir = _T("/");
+    LPCXSTR lpszDir = _X("/");
     strcpy(tszDriveStr, lpszDir);
 #endif
 
