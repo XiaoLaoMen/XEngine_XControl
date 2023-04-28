@@ -1,3 +1,31 @@
+XEngine_XControl V4.1.0.1001
+
+添加:tcp客户端支持
+添加:连接协议解析
+更新:匹配XEngine V8.10版本
+修改:http返回非200 HTTP现在不做处理了
+修改:http任务时间单位从毫秒改为秒
+修改:现在区分HTTP和TCP任务了
+修改:post 相应URL现在不需要而是直接返回了
+修正:获取任务URL不正确
+修正:序列号解析协议错误
+修正:tcp任务没有成功日志的问题
+修正:可能下载退出不生效的问题
+删除:handle文件代码
+
+added:tcp client support
+added:connect protocol parse for protocol module
+update:match xengine v8.10
+modify:does not process body for non-200 http code now
+modify:http task time unit to second from millsecond
+modify:task code name to httptask
+modify:post url reply is delete and that is direct reply now
+fixed:get task url is incorrent
+fixed:parse serial procotol
+fixed:does not success log for tcp task
+fixed:maybe download does not exist and packet is incorrent
+delete:handle code file
+======================================================================================
 XEngine_XControl V4.0.0.1001
 
 添加:获取设备音视频列表

@@ -1,5 +1,5 @@
 {
-  "tszTaskUrl": "http://127.0.0.1:5580/",
+  "tszTaskUrl": "http://app.xyry.org:5501/api?function=gettask&serial=%llu",
   "bAutoStart": 0,
   "bHideWnd": 0,
   "ClientTime": {
@@ -12,6 +12,7 @@
     "tszLogControl": "./XControl_Log/XEngien_XControl.log"
   },
   "VersionList": [
+    "4.1.0.1001 Build20230428",
     "4.0.0.1001 Build20230404",
     "3.4.0.1001 Build20221228",
     "3.3.1.1001 Build20221020",
